@@ -1,0 +1,28 @@
+﻿<?xml version="1.0" encoding="utf-8" standalone="no"?>
+<RevitAddIns>
+  <AddIn Type="Command">
+    <Name>LucidToolbar</Name>
+    <Assembly>LucidToolbar.dll</Assembly>
+    <AddInId>
+      E90DADD5-9DB2-4269-97DD-EEBEF3CDDEE8
+    </AddInId>
+    <FullClassName>LucidToolbar.PlacePipeElement</FullClassName>
+    <Text>PlacePipeElement</Text>
+    <Description>Place Pipe element in the document</Description>
+    <VendorId>Max Sun</VendorId>
+    <VendorDescription>max.sun@lucidconsulting.com.au</VendorDescription>
+    <VisibilityMode>NotVisibleWhenNoActiveDocument</VisibilityMode>
+  </AddIn>
+  <AddIn Type="Application">
+    <Name>ApplicationPlugin</Name>
+    <Assembly>LucidToolbar.dll</Assembly>
+    <AddInId>
+      5C1F4426-F7BE-42EF-9B8B-C4BD0FE8CD68
+    </AddInId>
+    <FullClassName>LucidToolbar.ExternalApplication</FullClassName>
+    <VendorId>Max Sun</VendorId>
+    <VendorDescription>max.sun@lucidconsulting.com.au</VendorDescription>
+  </AddIn>
+
+</RevitAddIns>
+
