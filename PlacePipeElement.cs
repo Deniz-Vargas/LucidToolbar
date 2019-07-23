@@ -46,6 +46,8 @@ namespace LucidToolbar
             .WhereElementIsElementType()
             .Cast<PipeType>()
             .First(x => x.Name == "ABS - Solvent Welded_BMA");
+            //
+            
 
             //Try Catch Condition
             try
@@ -56,10 +58,13 @@ namespace LucidToolbar
                     {
                         trans.Start();
                         //Create Pipe 
-                        Pipe.Create(doc, pipeSysTypeId, pipeType.Id, level.Id, new XYZ(0, 0, 0), new XYZ(100, 0, 0));
+                        //Pipe.Create(doc, pipeSysTypeId, pipeType.Id, level.Id, new XYZ(0, 0, 0), new XYZ(100, 0, 0));
+                        ExternalApplication.Press.Keys("PI");
+
                         trans.Commit();
                     }
                 }
+                
                 return Result.Succeeded;
             }
             catch (Exception e)

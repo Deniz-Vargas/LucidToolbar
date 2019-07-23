@@ -1,5 +1,7 @@
 ﻿<?xml version="1.0" encoding="utf-8" standalone="no"?>
 <RevitAddIns>
+  
+  
   <AddIn Type="Command">
     <Name>LucidToolbar</Name>
     <Assembly>LucidToolbar.dll</Assembly>
@@ -13,6 +15,8 @@
     <VendorDescription>max.sun@lucidconsulting.com.au</VendorDescription>
     <VisibilityMode>NotVisibleWhenNoActiveDocument</VisibilityMode>
   </AddIn>
+  
+  
   <AddIn Type="Application">
     <Name>ApplicationPlugin</Name>
     <Assembly>LucidToolbar.dll</Assembly>
