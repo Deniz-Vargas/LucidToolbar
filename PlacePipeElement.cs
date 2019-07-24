@@ -7,7 +7,7 @@ using Autodesk.Revit.DB;
 using Autodesk.Revit.UI;
 using Autodesk.Revit.Attributes;
 using Autodesk.Revit.DB.Plumbing;
-
+using Autodesk.Revit.ApplicationServices;
 
 namespace LucidToolbar
 {
@@ -15,8 +15,71 @@ namespace LucidToolbar
 
     public class PlacePipeElement : IExternalCommand
     {
+        PipeType GetFirstPipeTypeNamed(Document doc, string name )
+        {
+            // built-in parameter storing this 
+            // pipe type's name:
+
+            BuiltInParameter bip
+              = BuiltInParameter.SYMBOL_NAME_PARAM;
+
+            ParameterValueProvider provider
+              = new ParameterValueProvider(
+                new ElementId(bip));
+
+            FilterStringRuleEvaluator evaluator
+              = new FilterStringEquals();
+
+            FilterRule rule = new FilterStringRule(
+              provider, evaluator, name, false);
+
+            ElementParameterFilter filter
+              = new ElementParameterFilter(rule);
+
+            FilteredElementCollector collector
+              = new FilteredElementCollector(doc)
+                .OfClass(typeof(PipeType))
+                .WherePasses(filter);
+
+            return collector.FirstElement() as PipeType;
+        }
+
+        static Pipe GetFirstPipeUsingType(Document doc, PipeType pipeType)
+        {
+            // built-in parameter storing this 
+            // pipe's pipe type element id:
+
+            BuiltInParameter bip
+              = BuiltInParameter.ELEM_TYPE_PARAM;
+
+            ParameterValueProvider provider
+              = new ParameterValueProvider(
+                new ElementId(bip));
+
+            FilterNumericRuleEvaluator evaluator
+              = new FilterNumericEquals();
+
+            FilterRule rule = new FilterElementIdRule(
+              provider, evaluator, pipeType.Id);
+
+            ElementParameterFilter filter
+              = new ElementParameterFilter(rule);
+
+            FilteredElementCollector collector
+              = new FilteredElementCollector(doc)
+                .OfClass(typeof(Pipe))
+                .WherePasses(filter);
+
+            return collector.FirstElement() as Pipe;
+
+        }
+
         public Result Execute(ExternalCommandData commandData, ref string message, ElementSet elements)
         {
+            UIApplication uiapp = commandData.Application;
+
+            Application app = uiapp.Application;
+
             //Get UIDocument
             UIDocument uidoc = commandData.Application.ActiveUIDocument;
 
@@ -42,12 +105,87 @@ namespace LucidToolbar
             //Get pipetype
             FilteredElementCollector collector1 = new FilteredElementCollector(doc);
 
-            PipeType pipeType = collector1.OfClass(typeof(PipeType))
-            .WhereElementIsElementType()
-            .Cast<PipeType>()
-            .First(x => x.Name == "ABS - Solvent Welded_BMA");
+            //PipeType pipeType = collector1.OfClass(typeof(PipeType))
+            //.WhereElementIsElementType()
+            //.Cast<PipeType>()
+            //.First(x => x.Name == "ABS - Solvent Welded_BMA");
             //
-            
+
+            string pipeTypeName = "ABS - Solvent Welded_BMA";
+
+            // name of target pipe type that we want to use:
+            PipeType pipeType = GetFirstPipeTypeNamed(doc, pipeTypeName);
+
+            Pipe pipe = GetFirstPipeUsingType(doc, pipeType);
+
+            // select the pipe in the UI
+
+            ElementId eleId = pipe.GetTypeId();
+            Element ele = doc.GetElement(eleId);
+            ICollection<ElementId> selectedIds = uidoc.Selection.GetElementIds();
+
+            selectedIds.Add(eleId);
+
+            uidoc.Selection.SetElementIds(eleId);
+
+            //if (0 == uidoc.Selection.SetElementIds(ElementId))
+            //{
+            //    // no pipe with the correct pipe type found
+
+            //    FilteredElementCollector collectorEle
+            //      = new FilteredElementCollector(doc);
+
+            //    Level ll = collectorEle
+            //      .OfClass(typeof(Level))
+            //      .FirstElement() as Level;
+
+            //    // place a new pipe with the 
+            //    // correct pipe type in the project
+
+            //    Line geomLine = app.Create.NewLineBound(
+            //      XYZ.Zero, new XYZ(2, 0, 0));
+
+            //    Transaction t = new Transaction(
+            //      doc, "Create dummy pipe");
+
+            //    t.Start();
+
+            //    Pipe pp = Pipe.Create(doc, pipeSysTypeId, pipeType.Id, level.Id, new XYZ(0, 0, 0), new XYZ(100, 0, 0));
+
+            //    t.Commit();
+
+            //    // Select the new pipe in the project
+
+            //    uidoc.Selection.Elements.Add(pp);
+
+            //    // Start command create similar. In the 
+            //    // property menu, our pipe type is set current
+
+            //    Press.Keys("CS");
+
+            //    // select the new pipe in the project, 
+            //    // so we can delete it
+
+            //    uidoc.Selection.Elements.Add(pp);
+
+            //    // erase the selected pipe (remark: 
+            //    // doc.delete(nw) may not be used, 
+            //    // this command will undo)
+
+            //    Press.Keys("DE");
+
+            //    // start up pipe command
+
+            //    Press.Keys("WA");
+            //}
+            //else
+            //{
+            //    // the correct pipe is already selected:
+
+            //    Press.Keys("CS"); // start "create similar"
+            //}
+            //return Result.Succeeded;
+
 
             //Try Catch Condition
             try
@@ -58,19 +196,23 @@ namespace LucidToolbar
                     {
                         trans.Start();
                         //Create Pipe 
-                        //Pipe.Create(doc, pipeSysTypeId, pipeType.Id, level.Id, new XYZ(0, 0, 0), new XYZ(100, 0, 0));
-                        ExternalApplication.Press.Keys("PI");
+                        Pipe pp = Pipe.Create(doc, pipeSysTypeId, pipeType.Id, level.Id, new XYZ(0, 0, 0), new XYZ(100, 0, 0));
 
+                        //ExternalApplication.Press.Keys("Ctrl + Z");
+                        //ExternalApplication.Press.Keys("PI");
                         trans.Commit();
+                        //ExternalApplication.Press.Keys("PI");
+                        ExternalApplication.Press.Keys("CS");
                     }
                 }
-                
+
                 return Result.Succeeded;
             }
             catch (Exception e)
             {
                 message = e.Message;
                 return Result.Failed;
+                //}
             }
         }
     }

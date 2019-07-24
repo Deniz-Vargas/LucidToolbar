@@ -8,6 +8,7 @@ using System.Reflection;
 using System.Windows.Media.Imaging;
 using System.Runtime.InteropServices;
 using Autodesk.Revit.ApplicationServices;
+using Autodesk.Revit.DB;
 
 namespace LucidToolbar
 {
@@ -110,10 +111,10 @@ namespace LucidToolbar
                     OneKey(revitHandle, letter);
                 }
             }
-
+            
         }
 
-
-
     }
+    
 }
+
