@@ -8,6 +8,7 @@ using Autodesk.Revit.UI;
 using Autodesk.Revit.Attributes;
 using Autodesk.Revit.DB.Plumbing;
 using Autodesk.Revit.ApplicationServices;
+using Autodesk.Revit.UI.Selection;
 
 namespace LucidToolbar
 {
@@ -103,7 +104,7 @@ namespace LucidToolbar
             ElementId pipeSysTypeId = sysCollector.FirstElementId();
 
             //Get pipetype
-            FilteredElementCollector collector1 = new FilteredElementCollector(doc);
+            //FilteredElementCollector collector1 = new FilteredElementCollector(doc);
 
             //PipeType pipeType = collector1.OfClass(typeof(PipeType))
             //.WhereElementIsElementType()
@@ -111,7 +112,7 @@ namespace LucidToolbar
             //.First(x => x.Name == "ABS - Solvent Welded_BMA");
             //
 
-            string pipeTypeName = "ABS - Solvent Welded_BMA";
+            string pipeTypeName = "LCE_H_PI_Carbon Steel - Threaded & Butt Welded_BMA";
 
             // name of target pipe type that we want to use:
             PipeType pipeType = GetFirstPipeTypeNamed(doc, pipeTypeName);
@@ -120,13 +121,10 @@ namespace LucidToolbar
 
             // select the pipe in the UI
 
-            ElementId eleId = pipe.GetTypeId();
-            Element ele = doc.GetElement(eleId);
-            ICollection<ElementId> selectedIds = uidoc.Selection.GetElementIds();
 
-            selectedIds.Add(eleId);
 
-            uidoc.Selection.SetElementIds(eleId);
+
+            //doc.Delete(selectedIds);
 
             //if (0 == uidoc.Selection.SetElementIds(ElementId))
             //{
@@ -192,17 +190,42 @@ namespace LucidToolbar
             {
                 using (Transaction trans = new Transaction(doc, "Place Family"))
                 {
-                    if (null != pipeType)
+                    if (null != pipe) //If there is Existing pipe matched the target pipeType
                     {
-                        trans.Start();
-                        //Create Pipe 
-                        Pipe pp = Pipe.Create(doc, pipeSysTypeId, pipeType.Id, level.Id, new XYZ(0, 0, 0), new XYZ(100, 0, 0));
+                        ElementId eleId = pipe.GetTypeId();
+                        Element ele = doc.GetElement(eleId);
+                        ICollection<ElementId> selectedIds = uidoc.Selection.GetElementIds();
+                        selectedIds.Add(ele.Id);
 
-                        //ExternalApplication.Press.Keys("Ctrl + Z");
-                        //ExternalApplication.Press.Keys("PI");
-                        trans.Commit();
-                        //ExternalApplication.Press.Keys("PI");
+                        trans.Start();
+                        uidoc.Selection.SetElementIds(selectedIds);
+                       
                         ExternalApplication.Press.Keys("CS");
+                        trans.Commit();
+                    }
+                    else
+                    {
+                        //FilteredElementCollector collector1 = new FilteredElementCollector(doc);
+
+                        //PipeType dummyPipeType = collector1.OfClass(typeof(PipeType))
+                        //.WhereElementIsElementType()
+                        //.Cast<PipeType>()
+                        //.First(x => x.Name == "ABS - Solvent Welded_BMA");
+                        ////Create dummy Pipe 
+
+                        trans.Start();
+
+                        Pipe dmpp = Pipe.Create(doc, pipeSysTypeId, pipeType.Id, level.Id, new XYZ(0, 0, 0), new XYZ(100, 0, 0));
+                        Pipe dummyPipe = GetFirstPipeUsingType(doc, pipeType);
+                        ElementId eleId = dummyPipe.GetTypeId();
+                        Element ele = doc.GetElement(eleId);
+                        ICollection<ElementId> selectedIds = uidoc.Selection.GetElementIds();
+                        selectedIds.Add(dmpp.Id);
+                        trans.Commit();
+
+                        uidoc.Selection.SetElementIds(selectedIds);
+                        ExternalApplication.Press.Keys("DE");
+                        ExternalApplication.Press.Keys("PI");
                     }
                 }
 

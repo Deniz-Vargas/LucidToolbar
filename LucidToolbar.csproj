@@ -85,6 +85,11 @@
       <Version>1.0.0</Version>
     </PackageReference>
   </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Form1.resx">
+      <DependentUpon>Form1.cs</DependentUpon>
+    </EmbeddedResource>
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <PropertyGroup>
     <PostBuildEvent>copy "C:\Users\Max.Sun\source\repos\LucidToolbar\bin\Debug" "C:\Users\Max.Sun\AppData\Roaming\Autodesk\Revit\Addins\2019"
