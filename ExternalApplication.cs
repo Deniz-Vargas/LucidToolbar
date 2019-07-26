@@ -27,7 +27,7 @@ namespace LucidToolbar
 
             string path = Assembly.GetExecutingAssembly().Location;
 
-            PushButtonData button = new PushButtonData("HydraulicTools", "PlacePipeElement", path, "LucidToolbar.PlacePipeElement");
+            PushButtonData button = new PushButtonData("Hydraulic Tools", "Hydraulic Tools", path, "LucidToolbar.PlacePipeElement");
 
             RibbonPanel panel = application.CreateRibbonPanel("Lucid Tools", "Hydraulic");
 
@@ -39,7 +39,8 @@ namespace LucidToolbar
             PushButton pushButton = panel.AddItem(button) as PushButton;
             pushButton.LargeImage = image;
             //S:\Bluesky\Project Files\RevitTools[Testing]\output - onlinepngtools.png
-
+            //Show Form1 
+            //System.Windows.Forms.Application.Run(new Form1());
             return Result.Succeeded;
 
         }

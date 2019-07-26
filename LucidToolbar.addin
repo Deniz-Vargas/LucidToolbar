@@ -6,7 +6,7 @@
     <Name>LucidToolbar</Name>
     <Assembly>LucidToolbar.dll</Assembly>
     <AddInId>
-      E90DADD5-9DB2-4269-97DD-EEBEF3CDDEE8
+      00CD88A2-DFC8-47A7-B9DA-87B3E1E5D09B
     </AddInId>
     <FullClassName>LucidToolbar.PlacePipeElement</FullClassName>
     <Text>PlacePipeElement</Text>
@@ -21,7 +21,7 @@
     <Name>ApplicationPlugin</Name>
     <Assembly>LucidToolbar.dll</Assembly>
     <AddInId>
-      5C1F4426-F7BE-42EF-9B8B-C4BD0FE8CD68
+      DE4D2E9F-D6BB-4D76-88E0-950C9ACA0771
     </AddInId>
     <FullClassName>LucidToolbar.ExternalApplication</FullClassName>
     <VendorId>Max Sun</VendorId>
@@ -29,4 +29,3 @@
   </AddIn>
 
 </RevitAddIns>
-

@@ -9,6 +9,9 @@ using Autodesk.Revit.Attributes;
 using Autodesk.Revit.DB.Plumbing;
 using Autodesk.Revit.ApplicationServices;
 using Autodesk.Revit.UI.Selection;
+using LucidToolbar;
+using System.Windows.Forms;
+
 
 namespace LucidToolbar
 {
@@ -20,7 +23,7 @@ namespace LucidToolbar
         {
             // built-in parameter storing this 
             // pipe type's name:
-
+            
             BuiltInParameter bip
               = BuiltInParameter.SYMBOL_NAME_PARAM;
 
@@ -79,7 +82,7 @@ namespace LucidToolbar
         {
             UIApplication uiapp = commandData.Application;
 
-            Application app = uiapp.Application;
+            Autodesk.Revit.ApplicationServices.Application app = uiapp.Application;
 
             //Get UIDocument
             UIDocument uidoc = commandData.Application.ActiveUIDocument;
@@ -120,7 +123,8 @@ namespace LucidToolbar
             Pipe pipe = GetFirstPipeUsingType(doc, pipeType);
 
             // select the pipe in the UI
-
+            //Show Form1 
+            System.Windows.Forms.Application.Run(new Form1());
 
 
 
@@ -192,6 +196,7 @@ namespace LucidToolbar
                 {
                     if (null != pipe) //If there is Existing pipe matched the target pipeType
                     {
+                        //Form1.ActiveForm.Activate();
                         ElementId eleId = pipe.GetTypeId();
                         Element ele = doc.GetElement(eleId);
                         ICollection<ElementId> selectedIds = uidoc.Selection.GetElementIds();
@@ -214,6 +219,9 @@ namespace LucidToolbar
                         ////Create dummy Pipe 
 
                         trans.Start();
+                        
+
+
 
                         Pipe dmpp = Pipe.Create(doc, pipeSysTypeId, pipeType.Id, level.Id, new XYZ(0, 0, 0), new XYZ(100, 0, 0));
                         Pipe dummyPipe = GetFirstPipeUsingType(doc, pipeType);
