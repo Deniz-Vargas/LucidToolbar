@@ -7,10 +7,7 @@ using Autodesk.Revit.DB;
 using Autodesk.Revit.UI;
 using Autodesk.Revit.Attributes;
 using Autodesk.Revit.DB.Plumbing;
-using Autodesk.Revit.ApplicationServices;
-using Autodesk.Revit.UI.Selection;
-using LucidToolbar;
-using System.Windows.Forms;
+
 
 
 namespace LucidToolbar
@@ -19,11 +16,11 @@ namespace LucidToolbar
 
     public class PlacePipeElement : IExternalCommand
     {
-        PipeType GetFirstPipeTypeNamed(Document doc, string name )
+        PipeType GetFirstPipeTypeNamed(Document doc, string name)
         {
             // built-in parameter storing this 
             // pipe type's name:
-            
+
             BuiltInParameter bip
               = BuiltInParameter.SYMBOL_NAME_PARAM;
 
@@ -124,8 +121,8 @@ namespace LucidToolbar
 
             // select the pipe in the UI
             //Show Form1 
-            System.Windows.Forms.Application.Run(new Form1());
-
+            //System.Windows.Forms.Application.Run(new Form1());
+            
 
 
             //doc.Delete(selectedIds);
@@ -204,14 +201,13 @@ namespace LucidToolbar
 
                         trans.Start();
                         uidoc.Selection.SetElementIds(selectedIds);
-                       
-                        ExternalApplication.Press.Keys("CS");
+
+                        Press.Keys("CS");
                         trans.Commit();
                     }
                     else
                     {
                         //FilteredElementCollector collector1 = new FilteredElementCollector(doc);
-
                         //PipeType dummyPipeType = collector1.OfClass(typeof(PipeType))
                         //.WhereElementIsElementType()
                         //.Cast<PipeType>()
@@ -219,10 +215,6 @@ namespace LucidToolbar
                         ////Create dummy Pipe 
 
                         trans.Start();
-                        
-
-
-
                         Pipe dmpp = Pipe.Create(doc, pipeSysTypeId, pipeType.Id, level.Id, new XYZ(0, 0, 0), new XYZ(100, 0, 0));
                         Pipe dummyPipe = GetFirstPipeUsingType(doc, pipeType);
                         ElementId eleId = dummyPipe.GetTypeId();
@@ -232,8 +224,8 @@ namespace LucidToolbar
                         trans.Commit();
 
                         uidoc.Selection.SetElementIds(selectedIds);
-                        ExternalApplication.Press.Keys("DE");
-                        ExternalApplication.Press.Keys("PI");
+                        Press.Keys("DE");
+                        Press.Keys("PI");
                     }
                 }
 
@@ -246,5 +238,7 @@ namespace LucidToolbar
                 //}
             }
         }
+
+
     }
 }

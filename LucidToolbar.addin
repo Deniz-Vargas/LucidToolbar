@@ -18,10 +18,10 @@
   
   
   <AddIn Type="Application">
-    <Name>ApplicationPlugin</Name>
+    <Name>LucidToolbar</Name>
     <Assembly>LucidToolbar.dll</Assembly>
     <AddInId>
-      DE4D2E9F-D6BB-4D76-88E0-950C9ACA0771
+      1ED0D2F4-16F8-4A72-97DA-8A50E5D514CC  
     </AddInId>
     <FullClassName>LucidToolbar.ExternalApplication</FullClassName>
     <VendorId>Max Sun</VendorId>
