@@ -1,244 +1,244 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using Autodesk.Revit.DB;
-using Autodesk.Revit.UI;
-using Autodesk.Revit.Attributes;
-using Autodesk.Revit.DB.Plumbing;
+﻿//using System;
+//using System.Collections.Generic;
+//using System.Linq;
+//using System.Text;
+//using System.Threading.Tasks;
+//using Autodesk.Revit.DB;
+//using Autodesk.Revit.UI;
+//using Autodesk.Revit.Attributes;
+//using Autodesk.Revit.DB.Plumbing;
 
 
 
-namespace LucidToolbar
-{
-    [TransactionAttribute(TransactionMode.Manual)]
+//namespace LucidToolbar
+//{
+//    [TransactionAttribute(TransactionMode.Manual)]
 
-    public class PlacePipeElement : IExternalCommand
-    {
-        PipeType GetFirstPipeTypeNamed(Document doc, string name)
-        {
-            // built-in parameter storing this 
-            // pipe type's name:
+//    public class PlacePipeElement : IExternalCommand
+//    {
+//        PipeType GetFirstPipeTypeNamed(Document doc, string name)
+//        {
+//            // built-in parameter storing this 
+//            // pipe type's name:
 
-            BuiltInParameter bip
-              = BuiltInParameter.SYMBOL_NAME_PARAM;
+//            BuiltInParameter bip
+//              = BuiltInParameter.SYMBOL_NAME_PARAM;
 
-            ParameterValueProvider provider
-              = new ParameterValueProvider(
-                new ElementId(bip));
+//            ParameterValueProvider provider
+//              = new ParameterValueProvider(
+//                new ElementId(bip));
 
-            FilterStringRuleEvaluator evaluator
-              = new FilterStringEquals();
+//            FilterStringRuleEvaluator evaluator
+//              = new FilterStringEquals();
 
-            FilterRule rule = new FilterStringRule(
-              provider, evaluator, name, false);
+//            FilterRule rule = new FilterStringRule(
+//              provider, evaluator, name, false);
 
-            ElementParameterFilter filter
-              = new ElementParameterFilter(rule);
+//            ElementParameterFilter filter
+//              = new ElementParameterFilter(rule);
 
-            FilteredElementCollector collector
-              = new FilteredElementCollector(doc)
-                .OfClass(typeof(PipeType))
-                .WherePasses(filter);
+//            FilteredElementCollector collector
+//              = new FilteredElementCollector(doc)
+//                .OfClass(typeof(PipeType))
+//                .WherePasses(filter);
 
-            return collector.FirstElement() as PipeType;
-        }
+//            return collector.FirstElement() as PipeType;
+//        }
 
-        static Pipe GetFirstPipeUsingType(Document doc, PipeType pipeType)
-        {
-            // built-in parameter storing this 
-            // pipe's pipe type element id:
+//        static Pipe GetFirstPipeUsingType(Document doc, PipeType pipeType)
+//        {
+//            // built-in parameter storing this 
+//            // pipe's pipe type element id:
 
-            BuiltInParameter bip
-              = BuiltInParameter.ELEM_TYPE_PARAM;
+//            BuiltInParameter bip
+//              = BuiltInParameter.ELEM_TYPE_PARAM;
 
-            ParameterValueProvider provider
-              = new ParameterValueProvider(
-                new ElementId(bip));
+//            ParameterValueProvider provider
+//              = new ParameterValueProvider(
+//                new ElementId(bip));
 
-            FilterNumericRuleEvaluator evaluator
-              = new FilterNumericEquals();
+//            FilterNumericRuleEvaluator evaluator
+//              = new FilterNumericEquals();
 
-            FilterRule rule = new FilterElementIdRule(
-              provider, evaluator, pipeType.Id);
+//            FilterRule rule = new FilterElementIdRule(
+//              provider, evaluator, pipeType.Id);
 
-            ElementParameterFilter filter
-              = new ElementParameterFilter(rule);
+//            ElementParameterFilter filter
+//              = new ElementParameterFilter(rule);
 
-            FilteredElementCollector collector
-              = new FilteredElementCollector(doc)
-                .OfClass(typeof(Pipe))
-                .WherePasses(filter);
+//            FilteredElementCollector collector
+//              = new FilteredElementCollector(doc)
+//                .OfClass(typeof(Pipe))
+//                .WherePasses(filter);
 
-            return collector.FirstElement() as Pipe;
+//            return collector.FirstElement() as Pipe;
 
-        }
+//        }
 
-        public Result Execute(ExternalCommandData commandData, ref string message, ElementSet elements)
-        {
-            UIApplication uiapp = commandData.Application;
+//        public Result Execute(ExternalCommandData commandData, ref string message, ElementSet elements)
+//        {
+//            UIApplication uiapp = commandData.Application;
 
-            Autodesk.Revit.ApplicationServices.Application app = uiapp.Application;
+//            Autodesk.Revit.ApplicationServices.Application app = uiapp.Application;
 
-            //Get UIDocument
-            UIDocument uidoc = commandData.Application.ActiveUIDocument;
+//            //Get UIDocument
+//            UIDocument uidoc = commandData.Application.ActiveUIDocument;
 
-            //Get Document
-            Document doc = uidoc.Document;
+//            //Get Document
+//            Document doc = uidoc.Document;
 
-            //Get Level
-            Level level = new FilteredElementCollector(doc)
-            .OfCategory(BuiltInCategory.OST_Levels)
-            .WhereElementIsNotElementType()
-            .Cast<Level>()
-            .First(x => x.Name == "Ground Floor");
+//            //Get Level
+//            Level level = new FilteredElementCollector(doc)
+//            .OfCategory(BuiltInCategory.OST_Levels)
+//            .WhereElementIsNotElementType()
+//            .Cast<Level>()
+//            .First(x => x.Name == "Ground Floor");
 
-            //Get Family Symbol
-            FilteredElementCollector collector = new FilteredElementCollector(doc);
-            collector.OfCategory(BuiltInCategory.OST_PipingSystem).Where(ps => ps.Name == "Domestic Cold Water");
+//            //Get Family Symbol
+//            FilteredElementCollector collector = new FilteredElementCollector(doc);
+//            collector.OfCategory(BuiltInCategory.OST_PipingSystem).Where(ps => ps.Name == "Domestic Hot Water");
 
-            // Create piping system
-            FilteredElementCollector sysCollector = new FilteredElementCollector(doc);
-            sysCollector.OfClass(typeof(PipingSystemType));
-            ElementId pipeSysTypeId = sysCollector.FirstElementId();
+//            // Create piping system
+//            FilteredElementCollector sysCollector = new FilteredElementCollector(doc);
+//            sysCollector.OfClass(typeof(PipingSystemType));
+//            ElementId pipeSysTypeId = sysCollector.FirstElementId();
 
-            //Get pipetype
-            //FilteredElementCollector collector1 = new FilteredElementCollector(doc);
+//            //Get pipetype
+//            //FilteredElementCollector collector1 = new FilteredElementCollector(doc);
 
-            //PipeType pipeType = collector1.OfClass(typeof(PipeType))
-            //.WhereElementIsElementType()
-            //.Cast<PipeType>()
-            //.First(x => x.Name == "ABS - Solvent Welded_BMA");
-            //
+//            //PipeType pipeType = collector1.OfClass(typeof(PipeType))
+//            //.WhereElementIsElementType()
+//            //.Cast<PipeType>()
+//            //.First(x => x.Name == "ABS - Solvent Welded_BMA");
+//            //
 
-            string pipeTypeName = "LCE_H_PI_Carbon Steel - Threaded & Butt Welded_BMA";
+//            string pipeTypeName = "LCE_H_PI_Carbon Steel - Threaded & Butt Welded_BMA";
 
-            // name of target pipe type that we want to use:
-            PipeType pipeType = GetFirstPipeTypeNamed(doc, pipeTypeName);
+//            // name of target pipe type that we want to use:
+//            PipeType pipeType = GetFirstPipeTypeNamed(doc, pipeTypeName);
 
-            Pipe pipe = GetFirstPipeUsingType(doc, pipeType);
+//            Pipe pipe = GetFirstPipeUsingType(doc, pipeType);
 
-            // select the pipe in the UI
-            //Show Form1 
-            //System.Windows.Forms.Application.Run(new Form1());
-            
+//            // select the pipe in the UI
+//            //Show Form1 
+//            //System.Windows.Forms.Application.Run(new Form1());
 
 
-            //doc.Delete(selectedIds);
 
-            //if (0 == uidoc.Selection.SetElementIds(ElementId))
-            //{
-            //    // no pipe with the correct pipe type found
+//            //doc.Delete(selectedIds);
 
-            //    FilteredElementCollector collectorEle
-            //      = new FilteredElementCollector(doc);
+//            //if (0 == uidoc.Selection.SetElementIds(ElementId))
+//            //{
+//            //    // no pipe with the correct pipe type found
 
-            //    Level ll = collectorEle
-            //      .OfClass(typeof(Level))
-            //      .FirstElement() as Level;
+//            //    FilteredElementCollector collectorEle
+//            //      = new FilteredElementCollector(doc);
 
-            //    // place a new pipe with the 
-            //    // correct pipe type in the project
+//            //    Level ll = collectorEle
+//            //      .OfClass(typeof(Level))
+//            //      .FirstElement() as Level;
 
-            //    Line geomLine = app.Create.NewLineBound(
-            //      XYZ.Zero, new XYZ(2, 0, 0));
+//            //    // place a new pipe with the 
+//            //    // correct pipe type in the project
 
-            //    Transaction t = new Transaction(
-            //      doc, "Create dummy pipe");
+//            //    Line geomLine = app.Create.NewLineBound(
+//            //      XYZ.Zero, new XYZ(2, 0, 0));
 
-            //    t.Start();
+//            //    Transaction t = new Transaction(
+//            //      doc, "Create dummy pipe");
 
-            //    Pipe pp = Pipe.Create(doc, pipeSysTypeId, pipeType.Id, level.Id, new XYZ(0, 0, 0), new XYZ(100, 0, 0));
+//            //    t.Start();
 
-            //    t.Commit();
+//            //    Pipe pp = Pipe.Create(doc, pipeSysTypeId, pipeType.Id, level.Id, new XYZ(0, 0, 0), new XYZ(100, 0, 0));
 
-            //    // Select the new pipe in the project
+//            //    t.Commit();
 
-            //    uidoc.Selection.Elements.Add(pp);
+//            //    // Select the new pipe in the project
 
-            //    // Start command create similar. In the 
-            //    // property menu, our pipe type is set current
+//            //    uidoc.Selection.Elements.Add(pp);
 
-            //    Press.Keys("CS");
+//            //    // Start command create similar. In the 
+//            //    // property menu, our pipe type is set current
 
-            //    // select the new pipe in the project, 
-            //    // so we can delete it
+//            //    Press.Keys("CS");
 
-            //    uidoc.Selection.Elements.Add(pp);
+//            //    // select the new pipe in the project, 
+//            //    // so we can delete it
 
-            //    // erase the selected pipe (remark: 
-            //    // doc.delete(nw) may not be used, 
-            //    // this command will undo)
+//            //    uidoc.Selection.Elements.Add(pp);
 
-            //    Press.Keys("DE");
+//            //    // erase the selected pipe (remark: 
+//            //    // doc.delete(nw) may not be used, 
+//            //    // this command will undo)
 
-            //    // start up pipe command
+//            //    Press.Keys("DE");
 
-            //    Press.Keys("WA");
-            //}
-            //else
-            //{
-            //    // the correct pipe is already selected:
+//            //    // start up pipe command
 
-            //    Press.Keys("CS"); // start "create similar"
-            //}
-            //return Result.Succeeded;
+//            //    Press.Keys("WA");
+//            //}
+//            //else
+//            //{
+//            //    // the correct pipe is already selected:
 
+//            //    Press.Keys("CS"); // start "create similar"
+//            //}
+//            //return Result.Succeeded;
 
-            //Try Catch Condition
-            try
-            {
-                using (Transaction trans = new Transaction(doc, "Place Family"))
-                {
-                    if (null != pipe) //If there is Existing pipe matched the target pipeType
-                    {
-                        //Form1.ActiveForm.Activate();
-                        ElementId eleId = pipe.GetTypeId();
-                        Element ele = doc.GetElement(eleId);
-                        ICollection<ElementId> selectedIds = uidoc.Selection.GetElementIds();
-                        selectedIds.Add(ele.Id);
 
-                        trans.Start();
-                        uidoc.Selection.SetElementIds(selectedIds);
+//            //Try Catch Condition
+//            try
+//            {
+//                using (Transaction trans = new Transaction(doc, "Place Family"))
+//                {
+//                    if (null != pipe) //If there is Existing pipe matched the target pipeType
+//                    {
+//                        //Form1.ActiveForm.Activate();
+//                        ElementId eleId = pipe.GetTypeId();
+//                        Element ele = doc.GetElement(eleId);
+//                        ICollection<ElementId> selectedIds = uidoc.Selection.GetElementIds();
+//                        selectedIds.Add(ele.Id);
 
-                        Press.Keys("CS");
-                        trans.Commit();
-                    }
-                    else
-                    {
-                        //FilteredElementCollector collector1 = new FilteredElementCollector(doc);
-                        //PipeType dummyPipeType = collector1.OfClass(typeof(PipeType))
-                        //.WhereElementIsElementType()
-                        //.Cast<PipeType>()
-                        //.First(x => x.Name == "ABS - Solvent Welded_BMA");
-                        ////Create dummy Pipe 
+//                        trans.Start();
+//                        uidoc.Selection.SetElementIds(selectedIds);
 
-                        trans.Start();
-                        Pipe dmpp = Pipe.Create(doc, pipeSysTypeId, pipeType.Id, level.Id, new XYZ(0, 0, 0), new XYZ(100, 0, 0));
-                        Pipe dummyPipe = GetFirstPipeUsingType(doc, pipeType);
-                        ElementId eleId = dummyPipe.GetTypeId();
-                        Element ele = doc.GetElement(eleId);
-                        ICollection<ElementId> selectedIds = uidoc.Selection.GetElementIds();
-                        selectedIds.Add(dmpp.Id);
-                        trans.Commit();
+//                        Press.Keys("CS");
+//                        trans.Commit();
+//                    }
+//                    else
+//                    {
+//                        //FilteredElementCollector collector1 = new FilteredElementCollector(doc);
+//                        //PipeType dummyPipeType = collector1.OfClass(typeof(PipeType))
+//                        //.WhereElementIsElementType()
+//                        //.Cast<PipeType>()
+//                        //.First(x => x.Name == "ABS - Solvent Welded_BMA");
+//                        ////Create dummy Pipe 
 
-                        uidoc.Selection.SetElementIds(selectedIds);
-                        Press.Keys("DE");
-                        Press.Keys("PI");
-                    }
-                }
+//                        trans.Start();
+//                        Pipe dmpp = Pipe.Create(doc, pipeSysTypeId, pipeType.Id, level.Id, new XYZ(0, 0, 0), new XYZ(100, 0, 0));
+//                        Pipe dummyPipe = GetFirstPipeUsingType(doc, pipeType);
+//                        ElementId eleId = dummyPipe.GetTypeId();
+//                        Element ele = doc.GetElement(eleId);
+//                        ICollection<ElementId> selectedIds = uidoc.Selection.GetElementIds();
+//                        selectedIds.Add(dmpp.Id);
+//                        trans.Commit();
 
-                return Result.Succeeded;
-            }
-            catch (Exception e)
-            {
-                message = e.Message;
-                return Result.Failed;
-                //}
-            }
-        }
+//                        uidoc.Selection.SetElementIds(selectedIds);
+//                        Press.Keys("DE");
+//                        Press.Keys("PI");
+//                    }
+//                }
 
+//                return Result.Succeeded;
+//            }
+//            catch (Exception e)
+//            {
+//                message = e.Message;
+//                return Result.Failed;
+//                //}
+//            }
+//        }
 
-    }
-}
+
+//    }
+//}

@@ -1,31 +1,54 @@
 ﻿<?xml version="1.0" encoding="utf-8" standalone="no"?>
 <RevitAddIns>
-  
-  
+
+
   <AddIn Type="Command">
     <Name>LucidToolbar</Name>
     <Assembly>LucidToolbar.dll</Assembly>
     <AddInId>
-      00CD88A2-DFC8-47A7-B9DA-87B3E1E5D09B
+      3F9AA194-F801-4C80-AF26-7E9D9A87380B
     </AddInId>
-    <FullClassName>LucidToolbar.PlacePipeElement</FullClassName>
-    <Text>PlacePipeElement</Text>
-    <Description>Place Pipe element in the document</Description>
+    <FullClassName>LucidToolbar.DomesticHotWater</FullClassName>
+    <Text>DomesticHotWater</Text>
+    <Description>Draw domestic hot water pipe</Description>
     <VendorId>Max Sun</VendorId>
     <VendorDescription>max.sun@lucidconsulting.com.au</VendorDescription>
-    <VisibilityMode>NotVisibleWhenNoActiveDocument</VisibilityMode>
   </AddIn>
-  
-  
+
+  <AddIn Type="Command">
+    <Name>LucidToolbar</Name>
+    <Assembly>LucidToolbar.dll</Assembly>
+    <AddInId>
+      94A570A5-80D5-4813-9FD3-5171D2A33938
+    </AddInId>
+    <FullClassName>LucidToolbar.DomesticColdWater</FullClassName>
+    <Text>DomesticColdWater</Text>
+    <Description>Draw domestic Cold water pipe</Description>
+    <VendorId>Max Sun</VendorId>
+    <VendorDescription>max.sun@lucidconsulting.com.au</VendorDescription>
+  </AddIn>
+
+  <AddIn Type="Command">
+    <Name>LucidToolbar</Name>
+    <Assembly>LucidToolbar.dll</Assembly>
+    <AddInId>
+      D7F7184A-71F6-4811-9CAA-E5CDEF0E89AB
+    </AddInId>
+    <FullClassName>LucidToolbar.NaturalGasPipe</FullClassName>
+    <Text>NaturalGasPipe</Text>
+    <Description>Draw natural gas pipe</Description>
+    <VendorId>Max Sun</VendorId>
+    <VendorDescription>max.sun@lucidconsulting.com.au</VendorDescription>
+  </AddIn>
+
   <AddIn Type="Application">
     <Name>LucidToolbar</Name>
     <Assembly>LucidToolbar.dll</Assembly>
     <AddInId>
-      1ED0D2F4-16F8-4A72-97DA-8A50E5D514CC  
+      8CB363FA-E141-4FCE-AE51-D19D1C96C270 
     </AddInId>
     <FullClassName>LucidToolbar.ExternalApplication</FullClassName>
     <VendorId>Max Sun</VendorId>
     <VendorDescription>max.sun@lucidconsulting.com.au</VendorDescription>
   </AddIn>
-
 </RevitAddIns>
