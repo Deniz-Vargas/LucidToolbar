@@ -124,34 +124,23 @@ namespace LucidToolbar
             }
             //PipeType pipeType = GetFirstPipeTypeNamed(doc, pipeTypeName);
             //// Create piping system
-            //FilteredElementCollector sysCollector = new FilteredElementCollector(doc);
-            //sysCollector.OfClass(typeof(PipingSystemType)).Where(ps => ps.Name == "Hydraulic - Domestic Hot Water");
-            ////sysCollector.OfCategory(BuiltInCategory.OST_PipingSystem).Where(ps => ps.Name == "Domestic Hot Water");
-            //ElementId pipeSysTypeId = sysCollector.FirstElementId();
-
-
+            // get the Domestic hot water type
             var mepSystemTypes
                 = new FilteredElementCollector(doc)
                     //.WhereElementIsNotElementType()                
                     .OfClass(typeof(PipingSystemType))
-                    .OfCategory(BuiltInCategory.OST_PipingSystem)
-                    ///.OfType<PipingSystemType>()
-                    .Where(ps => ps.Name == "Hydraulic - Domestic Hot Water")
+                    .OfType<PipingSystemType>()
                     .ToList();
+
             var domesticHotWaterSystemType =
                 mepSystemTypes
-                    .FirstOrDefault();
-
-            //if (domesticHotWaterSystemType == null)
-            //{
-            //    message = "Could not found Domestic Hot Water System Type";
-            //    return Result.Failed;
-            //}
-
-
-            //Pipe pipe = GetFirstPipeUsingType(doc, pipeType);
-
-            // name of target pipe type that we want to use:
+                    //.FirstOrDefault(st => st.SystemClassification == MEPSystemClassification.DomesticHotWater);
+                    .Find(st => st.Name == "Hydraulic - Domestic Hot Water");
+            if (domesticHotWaterSystemType == null)
+            {
+                message = "Could not found Domestic Hot Water System Type";
+                return Result.Failed;
+            }
 
             try
             {
@@ -159,18 +148,17 @@ namespace LucidToolbar
                 {
                     trans.Start();
                     Pipe dmpp = Pipe.Create(doc, domesticHotWaterSystemType.Id, firstPipeType.Id, level.Id, new XYZ(0, 0, 0), new XYZ(1, 0, 0));
-                    Pipe dummyPipe = GetFirstPipeUsingType(doc, firstPipeType);
-                    ElementId eleId = dummyPipe.GetTypeId();
+                    //Pipe dummyPipe = GetFirstPipeUsingType(doc, firstPipeType);
+                    ElementId eleId = dmpp.GetTypeId();
                     Element ele = doc.GetElement(eleId);
                     ICollection<ElementId> selectedIds = uidoc.Selection.GetElementIds();
                     selectedIds.Add(dmpp.Id);
 
-
+                    uidoc.Selection.SetElementIds(selectedIds);
+                    Press.Keys("CS");
                     uidoc.Selection.SetElementIds(selectedIds);
                     Press.Keys("DE");
-                    Press.Keys("PI");
                     trans.Commit();
-
                 }
 
                 return Result.Succeeded;
