@@ -77,7 +77,7 @@ namespace LucidToolbar
 
             if (NaturalGasSystemType == null)
             {
-                message = "Could not found Domestic Hot Water System Type";
+                message = "Could not found Natural Gas System Type";
                 return Result.Failed;
             }
 
