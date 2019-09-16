@@ -14,7 +14,8 @@
     <VendorId>Max Sun</VendorId>
     <VendorDescription>max.sun@lucidconsulting.com.au</VendorDescription>
   </AddIn>
-
+ 
+  
   <AddIn Type="Command">
     <Name>LucidToolbar</Name>
     <Assembly>LucidToolbar.dll</Assembly>
@@ -40,7 +41,20 @@
     <VendorId>Max Sun</VendorId>
     <VendorDescription>max.sun@lucidconsulting.com.au</VendorDescription>
   </AddIn>
-
+  
+  <AddIn Type="Command">
+    <Name>LucidToolbar</Name>
+    <Assembly>LucidToolbar.dll</Assembly>
+    <AddInId>
+      A82A5E90-0A20-4BCA-AC7B-AB39359C218C
+    </AddInId>
+    <FullClassName>LucidToolbar.AvoidObstruction</FullClassName>
+    <Text>AvoidObstruction</Text>
+    <Description>Auto Re-route to avoid obstruction</Description>
+    <VendorId>Max Sun</VendorId>
+    <VendorDescription>max.sun@lucidconsulting.com.au</VendorDescription>
+  </AddIn>
+  
   <AddIn Type="Application">
     <Name>LucidToolbar</Name>
     <Assembly>LucidToolbar.dll</Assembly>

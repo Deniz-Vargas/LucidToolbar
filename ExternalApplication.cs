@@ -49,9 +49,15 @@ namespace LucidToolbar
                 new PushButtonData("NaturalGasPipe", "Natural Gas Pipe", path, "LucidToolbar.NaturalGasPipe");
             NaturalGasPipe.LargeImage = GetImage(Properties.Resources.NaturalGas.GetHbitmap());
 
+            PushButtonData AvoidObstruction =
+                new PushButtonData("AvoidObstruction", "Avoid Obstruction", path, "LucidToolbar.AvoidObstruction");
+            AvoidObstruction.LargeImage = GetImage(Properties.Resources.AvoidObstruction.GetHbitmap());
+
             RibbonItem ri1 = LucidHydPanelDebug.AddItem(DomesticColdWater);
             RibbonItem ri2 = LucidHydPanelDebug.AddItem(DomesticHotWater);
             RibbonItem ri3 = LucidHydPanelDebug.AddItem(NaturalGasPipe);
+            LucidHydPanelDebug.AddSeparator();
+            RibbonItem ri4 = LucidHydPanelDebug.AddItem(AvoidObstruction);
             ///Setup document
 
             return Result.Succeeded;
