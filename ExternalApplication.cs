@@ -30,10 +30,12 @@ namespace LucidToolbar
 
         public Result OnStartup(UIControlledApplication application)
         {
-            //create ribbon tab
-            application.CreateRibbonTab("Lucid Tools");
+            //create ribbon tabs
+            application.CreateRibbonTab("Lucid QA Tools");
+            RibbonPanel LucidQAPanel = application.CreateRibbonPanel("Lucid QA Tools", "Project Setup");
 
-            RibbonPanel LucidHydPanelDebug = application.CreateRibbonPanel("Lucid Tools", "Hydraulic Tools");
+            application.CreateRibbonTab("Lucid Hydraulic Tools");
+            RibbonPanel LucidHydPanel = application.CreateRibbonPanel("Lucid Hydraulic Tools", "Hydraulic Tools");
             string path = Assembly.GetExecutingAssembly().Location;
 
             //#region DockableWindow
@@ -53,11 +55,18 @@ namespace LucidToolbar
                 new PushButtonData("AvoidObstruction", "Avoid Obstruction", path, "LucidToolbar.AvoidObstruction");
             AvoidObstruction.LargeImage = GetImage(Properties.Resources.AvoidObstruction.GetHbitmap());
 
-            RibbonItem ri1 = LucidHydPanelDebug.AddItem(DomesticColdWater);
-            RibbonItem ri2 = LucidHydPanelDebug.AddItem(DomesticHotWater);
-            RibbonItem ri3 = LucidHydPanelDebug.AddItem(NaturalGasPipe);
-            LucidHydPanelDebug.AddSeparator();
-            RibbonItem ri4 = LucidHydPanelDebug.AddItem(AvoidObstruction);
+            PushButtonData ProjectInfo =
+                new PushButtonData("ProjectInfo", "Project Information", path, "LucidToolbar.ProjectInfo");
+            ProjectInfo.LargeImage = GetImage(Properties.Resources.ProjectInfo.GetHbitmap());
+
+            RibbonItem ri1 = LucidHydPanel.AddItem(DomesticColdWater);
+            RibbonItem ri2 = LucidHydPanel.AddItem(DomesticHotWater);
+            RibbonItem ri3 = LucidHydPanel.AddItem(NaturalGasPipe);
+            LucidHydPanel.AddSeparator();
+            RibbonItem ri4 = LucidHydPanel.AddItem(AvoidObstruction);
+
+            RibbonItem ri5 = LucidQAPanel.AddItem(ProjectInfo);
+
             ///Setup document
 
             return Result.Succeeded;

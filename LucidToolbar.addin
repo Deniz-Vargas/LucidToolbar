@@ -55,6 +55,19 @@
     <VendorDescription>max.sun@lucidconsulting.com.au</VendorDescription>
   </AddIn>
   
+  <AddIn Type="Command">
+    <Name>LucidToolbar</Name>
+    <Assembly>LucidToolbar.dll</Assembly>
+    <AddInId>
+      92C94461-F5D0-4FC2-95E2-EB3F56FB5A45
+    </AddInId>
+    <FullClassName>LucidToolbar.ProjectInfo</FullClassName>
+    <Text>Edit Project Information</Text>
+    <Description>Edit Project Information for Project Set up</Description>
+    <VendorId>Max Sun</VendorId>
+    <VendorDescription>max.sun@lucidconsulting.com.au</VendorDescription>
+  </AddIn>
+  
   <AddIn Type="Application">
     <Name>LucidToolbar</Name>
     <Assembly>LucidToolbar.dll</Assembly>

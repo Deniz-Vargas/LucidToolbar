@@ -55,6 +55,7 @@
     <Reference Include="System" />
     <Reference Include="System.Configuration" />
     <Reference Include="System.Core" />
+    <Reference Include="System.DirectoryServices" />
     <Reference Include="System.Drawing" />
     <Reference Include="System.Windows.Forms" />
     <Reference Include="System.Xaml" />
@@ -75,10 +76,17 @@
     <Compile Include="Commands\DomesticColdWater.cs" />
     <Compile Include="Commands\DomesticHotWater.cs" />
     <Compile Include="Commands\NaturalGasPipe.cs" />
+    <Compile Include="Commands\ProjectInfo.cs" />
     <Compile Include="Commands\Resolver.cs" />
     <Compile Include="Commands\Section.cs" />
     <Compile Include="ExternalApplication.cs" />
-    <Compile Include="Commands\PlacePipeElement.cs" />
+    <Compile Include="Commands\CommandTemplate.cs" />
+    <Compile Include="ProjectInfoForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="ProjectInfoForm.Designer.cs">
+      <DependentUpon>ProjectInfoForm.cs</DependentUpon>
+    </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Properties\Resources.Designer.cs">
       <AutoGen>True</AutoGen>
@@ -92,6 +100,9 @@
     </None>
   </ItemGroup>
   <ItemGroup>
+    <EmbeddedResource Include="ProjectInfoForm.resx">
+      <DependentUpon>ProjectInfoForm.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>
@@ -99,6 +110,7 @@
   </ItemGroup>
   <ItemGroup />
   <ItemGroup>
+    <Content Include="Resources\ProjectInfo.png" />
     <None Include="Resources\AvoidObstruction.png" />
     <Content Include="Resources\NaturalGas.PNG">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
@@ -112,8 +124,8 @@
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <PropertyGroup>
-    <PostBuildEvent>copy "C:\Users\Max.Sun\source\repos\LucidToolbar\bin\Debug" "C:\Users\Max.Sun\AppData\Roaming\Autodesk\Revit\Addins\2019"
-copy "C:\Users\Max.Sun\source\repos\LucidToolbar\bin\Debug" "S:\Bluesky\Project Files\RevitTools [Testing]"
+    <PostBuildEvent>copy "C:\Users\Max.Sun\Source\Repos\max-sun-hongyi\LucidToolbar\bin\Debug" "C:\Users\Max.Sun\AppData\Roaming\Autodesk\Revit\Addins\2019"
+copy "C:\Users\Max.Sun\Source\Repos\max-sun-hongyi\LucidToolbar\bin\Debug" "S:\Bluesky\Project Files\RevitTools [Testing]"
 
 </PostBuildEvent>
   </PropertyGroup>
