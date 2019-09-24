@@ -61,7 +61,7 @@
     <AddInId>
       92C94461-F5D0-4FC2-95E2-EB3F56FB5A45
     </AddInId>
-    <FullClassName>LucidToolbar.ProjectInfo</FullClassName>
+    <FullClassName>LucidToolbar.ProjectSetUp</FullClassName>
     <Text>Edit Project Information</Text>
     <Description>Edit Project Information for Project Set up</Description>
     <VendorId>Max Sun</VendorId>

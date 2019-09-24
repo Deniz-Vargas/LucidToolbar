@@ -16,14 +16,24 @@ using System.Runtime.InteropServices;
 using System.Windows.Controls;
 using Autodesk.Revit.UI.Events;
 using Class;
-
+using LucidToolbar.ProjectSetUp;
 
 namespace LucidToolbar
 {
     class ExternalApplication : IExternalApplication
     {
+        // class instance
+        internal static ExternalApplication thisApp = null;
+        // ModelessForm instance
+        private ModelessForm1 m_MyForm;
+
         public Result OnShutdown(UIControlledApplication application)
         {
+            if (m_MyForm != null && m_MyForm.Visible)
+            {
+                m_MyForm.Close();
+            }
+
             return Result.Succeeded;
 
         }
@@ -55,9 +65,9 @@ namespace LucidToolbar
                 new PushButtonData("AvoidObstruction", "Avoid Obstruction", path, "LucidToolbar.AvoidObstruction");
             AvoidObstruction.LargeImage = GetImage(Properties.Resources.AvoidObstruction.GetHbitmap());
 
-            PushButtonData ProjectInfo =
-                new PushButtonData("ProjectInfo", "Project Information", path, "LucidToolbar.ProjectInfo");
-            ProjectInfo.LargeImage = GetImage(Properties.Resources.ProjectInfo.GetHbitmap());
+            PushButtonData ProjectSetUp =
+                new PushButtonData("ProjectSetUp", "Project Set Up", path, "LucidToolbar.ProjectSetUp");
+            ProjectSetUp.LargeImage = GetImage(Properties.Resources.ProjectInfo.GetHbitmap());
 
             RibbonItem ri1 = LucidHydPanel.AddItem(DomesticColdWater);
             RibbonItem ri2 = LucidHydPanel.AddItem(DomesticHotWater);
@@ -65,9 +75,11 @@ namespace LucidToolbar
             LucidHydPanel.AddSeparator();
             RibbonItem ri4 = LucidHydPanel.AddItem(AvoidObstruction);
 
-            RibbonItem ri5 = LucidQAPanel.AddItem(ProjectInfo);
-
+            RibbonItem ri5 = LucidQAPanel.AddItem(ProjectSetUp);
+            LucidHydPanel.AddSeparator();
             ///Setup document
+            m_MyForm = null;   // no dialog needed yet; the command will bring it
+            thisApp = this;  // static access to this application instance
 
             return Result.Succeeded;
 
@@ -83,6 +95,45 @@ namespace LucidToolbar
 
             return bmSource;
         }
+        /// <summary>
+        ///   This method creates and shows a modeless dialog, unless it already exists.
+        /// </summary>
+        /// <remarks>
+        ///   The external command invokes this on the end-user's request
+        /// </remarks>
+        /// 
+        public void ShowForm(UIApplication uiapp)
+        {
+            // If we do not have a dialog yet, create and show it
+            if (m_MyForm == null || m_MyForm.IsDisposed)
+            {
+                // A new handler to handle request posting by the dialog
+                RequestHandler handler = new RequestHandler();
+
+                // External Event for the dialog to use (to post requests)
+                ExternalEvent exEvent = ExternalEvent.Create(handler);
+
+                // We give the objects to the new dialog;
+                // The dialog becomes the owner responsible fore disposing them, eventually.
+                //m_MyForm = new ModelessForm2(exEvent, handler);
+                m_MyForm = new ModelessForm1(exEvent);
+                m_MyForm.Show();
+            }
+        }
+
+
+        /// <summary>
+        ///   Waking up the dialog from its waiting state.
+        /// </summary>
+        /// 
+        public void WakeFormUp()
+        {
+            if (m_MyForm != null)
+            {
+                m_MyForm.WakeUp();
+            }
+        }
+
     }
 
 
