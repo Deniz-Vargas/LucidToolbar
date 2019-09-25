@@ -84,7 +84,7 @@
     <Compile Include="ProjectSetUp\ModelessForm2.Designer.cs">
       <DependentUpon>ModelessForm2.cs</DependentUpon>
     </Compile>
-    <Compile Include="ProjectSetUp\ProjectSetUp.cs" />
+    <Compile Include="ProjectSetUp\ProjectInfo.cs" />
     <Compile Include="AvoidObstruction\Resolver.cs" />
     <Compile Include="AvoidObstruction\Section.cs" />
     <Compile Include="ExternalApplication.cs" />

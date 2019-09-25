@@ -66,7 +66,7 @@ namespace LucidToolbar
             AvoidObstruction.LargeImage = GetImage(Properties.Resources.AvoidObstruction.GetHbitmap());
 
             PushButtonData ProjectSetUp =
-                new PushButtonData("ProjectSetUp", "Project Set Up", path, "LucidToolbar.ProjectSetUp");
+                new PushButtonData("ProjectSetUp", "Project Set Up", path, "LucidToolbar.ProjectInfo");
             ProjectSetUp.LargeImage = GetImage(Properties.Resources.ProjectInfo.GetHbitmap());
 
             RibbonItem ri1 = LucidHydPanel.AddItem(DomesticColdWater);
