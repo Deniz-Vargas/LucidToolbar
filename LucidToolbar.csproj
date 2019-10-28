@@ -52,6 +52,9 @@
       <HintPath>..\..\..\..\..\..\ProgramData\Autodesk\Revit\Macros\2019\RevitAPIUI.dll</HintPath>
       <Private>False</Private>
     </Reference>
+    <Reference Include="REX.ApplicationServices">
+      <HintPath>..\..\..\..\..\..\Program Files\Common Files\Autodesk Shared\Extensions 2019\Framework\Foundation\REX.ApplicationServices.dll</HintPath>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Configuration" />
     <Reference Include="System.Core" />
@@ -78,6 +81,8 @@
     <Compile Include="Commands\DomesticColdWater.cs" />
     <Compile Include="Commands\DomesticHotWater.cs" />
     <Compile Include="Commands\NaturalGasPipe.cs" />
+    <Compile Include="Commands\OpenMyLib.cs" />
+    <Compile Include="Commands\TestCommand.cs" />
     <Compile Include="ProjectSetUp\ModelessForm2.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -90,8 +95,8 @@
     <Compile Include="ExternalApplication.cs" />
     <Compile Include="Commands\CommandTemplate.cs" />
     <Compile Include="ProjectSetUp\ModelessForm1.cs">
-      <SubType>Form</SubType>
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+      <SubType>Form</SubType>
     </Compile>
     <Compile Include="ProjectSetUp\ModelessForm1.Designer.cs">
       <DependentUpon>ModelessForm1.cs</DependentUpon>

@@ -2,13 +2,6 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Diagnostics;
-using System.Windows.Forms.VisualStyles;
-using Autodesk.Revit.ApplicationServices;
-using Autodesk.Revit.Attributes;
-using Autodesk.Revit.DB;
 using Autodesk.Revit.DB.Plumbing;
 using Autodesk.Revit.UI.Selection;
 using System.Reflection;
@@ -66,8 +59,12 @@ namespace LucidToolbar
             AvoidObstruction.LargeImage = GetImage(Properties.Resources.AvoidObstruction.GetHbitmap());
 
             PushButtonData ProjectSetUp =
-                new PushButtonData("ProjectSetUp", "Project Set Up", path, "LucidToolbar.ProjectInfo");
+                new PushButtonData("ProjectSetUp", "Project Set Up", path, "LucidToolbar.ProjectSetUp");
             ProjectSetUp.LargeImage = GetImage(Properties.Resources.ProjectInfo.GetHbitmap());
+
+            PushButtonData TestCommand =
+              new PushButtonData("TestCommand", "Test out a new command", path, "LucidToolbar.TestCommand");
+            //ProjectSetUp.LargeImage = GetImage(Properties.Resources.ProjectInfo.GetHbitmap());
 
             RibbonItem ri1 = LucidHydPanel.AddItem(DomesticColdWater);
             RibbonItem ri2 = LucidHydPanel.AddItem(DomesticHotWater);
@@ -76,7 +73,9 @@ namespace LucidToolbar
             RibbonItem ri4 = LucidHydPanel.AddItem(AvoidObstruction);
 
             RibbonItem ri5 = LucidQAPanel.AddItem(ProjectSetUp);
+            
             LucidHydPanel.AddSeparator();
+            RibbonItem ri6 = LucidQAPanel.AddItem(TestCommand);
             ///Setup document
             m_MyForm = null;   // no dialog needed yet; the command will bring it
             thisApp = this;  // static access to this application instance
@@ -174,7 +173,7 @@ namespace LucidToolbar
         static void OneKey(IntPtr handle, char letter)
         {
             uint scanCode = MapVirtualKey(letter,
-                (uint) MVK_MAP_TYPE.VKEY_TO_SCANCODE);
+                (uint)MVK_MAP_TYPE.VKEY_TO_SCANCODE);
 
             uint keyDownCode = (uint)
                                WH_KEYBOARD_LPARAM.KEYDOWN
@@ -185,11 +184,11 @@ namespace LucidToolbar
                              | (scanCode << 16);
 
             PostMessage(handle,
-                (uint) KEYBOARD_MSG.WM_KEYDOWN,
+                (uint)KEYBOARD_MSG.WM_KEYDOWN,
                 letter, keyDownCode);
 
             PostMessage(handle,
-                (uint) KEYBOARD_MSG.WM_KEYUP,
+                (uint)KEYBOARD_MSG.WM_KEYUP,
                 letter, keyUpCode);
         }
 

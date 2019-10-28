@@ -166,7 +166,7 @@ namespace LucidToolbar.ProjectSetUp
         {
             MakeRequest(RequestId.FlipLeftRight);
         }
-
+            
 
         /// <summary>
         ///   Flipping a door between facing In and Out

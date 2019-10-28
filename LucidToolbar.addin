@@ -1,7 +1,32 @@
 ﻿<?xml version="1.0" encoding="utf-8" standalone="no"?>
 <RevitAddIns>
 
-
+  <AddIn Type="Command">
+    <Name>LucidToolbar</Name>
+    <Assembly>LucidToolbar.dll</Assembly>
+    <AddInId>
+      DE0460D8-435C-4E25-9D7E-D717C62C2BE8
+    </AddInId>
+    <FullClassName>LucidToolbar.OpenMyLib</FullClassName>
+    <Text>Open My Lib</Text>
+    <Description>OpenMyLibrary</Description>
+    <VendorId>Max Sun</VendorId>
+    <VendorDescription>max.sun@lucidconsulting.com.au</VendorDescription>
+  </AddIn>
+  
+  <AddIn Type="Command">
+    <Name>LucidToolbar</Name>
+    <Assembly>LucidToolbar.dll</Assembly>
+    <AddInId>
+      6907FB00-21D0-4B03-92DB-77978B10ED80
+    </AddInId>
+    <FullClassName>LucidToolbar.TestCommand</FullClassName>
+    <Text>TestCommand</Text>
+    <Description>Test out a new Command</Description>
+    <VendorId>Max Sun</VendorId>
+    <VendorDescription>max.sun@lucidconsulting.com.au</VendorDescription>
+  </AddIn>
+  
   <AddIn Type="Command">
     <Name>LucidToolbar</Name>
     <Assembly>LucidToolbar.dll</Assembly>

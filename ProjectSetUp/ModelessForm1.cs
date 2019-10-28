@@ -3,15 +3,17 @@ using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
 using System.Drawing;
+using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using Autodesk.Revit.DB;
 using Autodesk.Revit.UI;
 
 namespace LucidToolbar
 {
-    public partial class ModelessForm1 : Form
+    public partial class ModelessForm1 : System.Windows.Forms.Form
     {
         private RequestHandler m_Handler;
         private ExternalEvent m_ExEvent;
@@ -103,13 +105,54 @@ namespace LucidToolbar
         {
 
         }
+        private void Button4_Click(object sender, EventArgs e)
+        {
 
+        }
         private void Button3_Click(object sender, EventArgs e)
+        {
+            OpenFileDialog ofd = new OpenFileDialog();
+            //NOTE open file dialog then filter out only .rvt file
+            ofd.Title = "Select Revit Project Files";
+            ofd.Filter = "RVT files|*.rvt";
+            ofd.FilterIndex = 1;
+            ofd.InitialDirectory = @"C:\";
+            ofd.Multiselect = true;
+            if (ofd.ShowDialog() == DialogResult.OK)
+
+            {
+                string mpath = "";
+                string mpathOnlyFilename = "";
+                FolderBrowserDialog folderBrowserDialog1 = new FolderBrowserDialog();
+                folderBrowserDialog1.Description = "Select Folder Where Revit Projects to be Saved in Local";
+                folderBrowserDialog1.RootFolder = Environment.SpecialFolder.MyComputer;
+                if (folderBrowserDialog1.ShowDialog() == DialogResult.OK)
+                {
+                    mpath = folderBrowserDialog1.SelectedPath;
+                    foreach (String projectPath in ofd.FileNames)
+                    {
+                        FileInfo filePath = new FileInfo(projectPath);
+                        ModelPath mp = ModelPathUtils.ConvertUserVisiblePathToModelPath(filePath.FullName);
+                        OpenOptions opt = new OpenOptions();
+                        opt.DetachFromCentralOption = DetachFromCentralOption.DetachAndDiscardWorksets;
+                        mpathOnlyFilename = filePath.Name;
+                        //Document openedDoc = Autodesk.Revit.ApplicationServices.Application.OpenDocumentFile(mp, opt);
+                        SaveAsOptions options = new SaveAsOptions();
+                        options.OverwriteExistingFile = true;
+                        ModelPath modelPathout = ModelPathUtils.ConvertUserVisiblePathToModelPath(mpath + "\\" + mpathOnlyFilename);
+                        //openedDoc.SaveAs(modelPathout, options);
+                        //openedDoc.Close(false);
+                    }
+                }
+            }
+        }
+
+        private void TextBox2_TextChanged(object sender, EventArgs e)
         {
 
         }
 
-        private void TextBox2_TextChanged(object sender, EventArgs e)
+        private void TextBox1_TextChanged(object sender, EventArgs e)
         {
 
         }

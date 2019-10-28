@@ -35,7 +35,7 @@ namespace LucidToolbar
     {
         // A trivial delegate, but handy
         private delegate void DoorOperation(FamilyInstance e);
-
+         
         // The value of the latest request made by the modeless form 
         private Request m_request = new Request();
 
@@ -52,7 +52,7 @@ namespace LucidToolbar
         /// </summary>
         public String GetName()
         {
-            return "R2014 External Event Sample";
+            return "R2019 External Event Sample";
         }
 
 
