@@ -13,131 +13,154 @@ using Autodesk.Revit.Attributes;
 
 namespace LucidToolbar
 {
-    [Transaction(TransactionMode.Manual)]
+    /// <summary>
+    /// Implements the Revit add-in interface IExternalCommand
+    /// </summary>
+    [Autodesk.Revit.Attributes.Transaction(Autodesk.Revit.Attributes.TransactionMode.Manual)]
+    [Autodesk.Revit.Attributes.Regeneration(Autodesk.Revit.Attributes.RegenerationOption.Manual)]
+    [Autodesk.Revit.Attributes.Journaling(Autodesk.Revit.Attributes.JournalingMode.NoCommandData)]
     class TestCommand : IExternalCommand
     {
+         /// <summary>
+         /// Implement this method as an external command for Revit.
+         /// </summary>
+         /// <param name="commandData">An object that is passed to the external application 
+         /// which contains data related to the command, 
+         /// such as the application object and active view.</param>
+         /// <param name="message">A message that can be set by the external application 
+         /// which will be displayed if a failure or cancellation is returned by 
+         /// the external command.</param>
+         /// <param name="elements">A set of elements to which the external application 
+         /// can add elements that are to be highlighted in case of failure or cancellation.</param>
+         /// <returns>Return the status of the external command. 
+         /// A result of Succeeded means that the API external method functioned as expected. 
+         /// Cancelled can be used to signify that the user cancelled the external operation 
+         /// at some point. Failure should be returned if the application is unable to proceed with 
+         /// the operation.</returns>
+        public static string NS_PBP { get; internal set; }
+        public static string EW_PBP { get; internal set; }
+        public static string Elev_PBP { get; internal set; }
+        public static string Ang_PBP { get; internal set; }
+
+        public static string NS_SP { get; internal set; }
+        public static string EW_SP { get; internal set; }
+        public static string Elev_SP { get; internal set; }
+        public static string Ang_SP { get; internal set; }
+
+        public IList<Workset> worksets = null;
+
         public Result Execute(ExternalCommandData commandData, ref string message, ElementSet elements)
         {
-            //1: Set Survey point values
-            UIApplication uiapp = commandData.Application;
-            UIDocument uidoc = uiapp.ActiveUIDocument;
-            Application app = uiapp.Application;
-            Document doc = uidoc.Document;
-            //Create an elementcatagoryfilter to filter all built in catogory with project basepoint
-            ElementCategoryFilter siteCategoryfilter = new ElementCategoryFilter(BuiltInCategory.OST_ProjectBasePoint);
-
-            FilteredElementCollector collector = new FilteredElementCollector(doc);
-            //Create a list to hold all elements relating to site elements           
-            IList<Element> siteElements = collector.WherePasses(siteCategoryfilter).ToElements();
-            //Filtering through all elements relating to site elements 
-            foreach (Element ele in siteElements)
+            try
             {
-                Parameter paramX = ele.ParametersMap.get_Item("E/W");
-                String x1 = ele.get_Parameter(BuiltInParameter.BASEPOINT_EASTWEST_PARAM).AsValueString();
-                String X = paramX.AsValueString();
+                ExternalApplication.thisApp.ShowForm(commandData.Application);
 
-                Parameter paramY = ele.ParametersMap.get_Item("N/S");
-                String y1 = ele.get_Parameter(BuiltInParameter.BASEPOINT_NORTHSOUTH_PARAM).AsValueString();
-                String Y = paramY.AsValueString();
+                //Create a transaction
+                //Transaction documentTransaction = new Transaction(commandData.Application.ActiveUIDocument.Document, "Document");
+                //documentTransaction.Start();
 
-                Parameter paramElev = ele.ParametersMap.get_Item("Elev");
-                String Elev = paramElev.AsValueString();
-
-                //Parameter paramWorkset = ele.ParametersMap.get_Item("");
-                //XYZ projectBasePoint = new XYZ(X, Y, Elev);
-
-                TaskDialog.Show("Revit", string.Format("E/W is {0}: W/S is {1}: Elevation is {2}",X,Y,Elev));
+                // Create a new instance of class RoomsData
+                //ProjectInfo data = new ProjectInfo(commandData);
+                return Result.Succeeded;
             }
-            
-
-            //ProjectLocation projectLocation = uidoc.Document.ActiveProjectLocation;
-            //var origin = XYZ.Zero;
-
-            //ProjectPosition projectPosition = projectLocation.GetProjectPosition(origin);
-
-            //projectPosition.NorthSouth;
-            //projectPosition.EastWest = < double value >;
-            //projectPosition.Elevation = < double value >; ;
-            //projectLocation.SetProjectPosition(origin, projectPosition);
-
-            ////2: Move survey point wrt Project base coordinate
-            //var locations = collector.OfClass(typeof(BasePoint)).ToElements();
-
-            //foreach (var locationPoint in locations)
-            //{
-            //    BasePoint basePoint = locationPoint as BasePoint;
-            //    if (basePoint.IsShared)
-            //    {
-            //        basePoint.Pinned = false;
-            //        basePoint.Location.Move(new XYZ(0, 1, 0));
-            //    }
-            //}
-            //HACK: This bit worked
-            //StringBuilder sb = new StringBuilder();
-
-            //IEnumerable<BasePoint> points = new FilteredElementCollector(doc)
-            //    .OfClass(typeof(BasePoint))
-            //    .Cast<BasePoint>();
-            //foreach (BasePoint bp in points)
-            //{
-            //    string name = bp.IsShared ? "surveypoint" : "project basepoint";
-            //    BoundingBoxXYZ bb = bp.get_BoundingBox(null);
-            //    XYZ pos = bb.Min;
-            //    sb.AppendLine(string.Format("{0} :  {1}", name, pos));
-            //}
-            //TaskDialog.Show("debug", sb.ToString());
-            //HACK: THIS bit worked 
-
-            //FilteredElementCollector locations = new FilteredElementCollector(doc).OfClass(typeof(BasePoint));
-
-
-
-            //StringBuilder sb = new StringBuilder();
-            //IEnumerable<BasePoint> locations = new FilteredElementCollector(doc)
-            //.OfClass(typeof(BasePoint))
-            //.Cast<BasePoint>();
-            //foreach (BasePoint bp in locations)
-            //{
-            //    string name = bp.IsShared ? "surveypoint" : "project basepoint";
-            //    ParameterSet ps =  ;
-            //    XYZ pos = ps;
-            //    sb.AppendLine(string.Format("{0} : {1}", name, pos));
-            //}
-            //Element element = 
-
-            //Parameter bp = GetEW(element);
-
-
-            //string name = locations.IsShared ? "surveypoint" : "project basepoint";
-            //BoundingBoxXYZ bb = bp.get_BoundingBox(null);
-            //XYZ pos = bb.Min;
-            //sb.AppendLine(string.Format("{0} :  {1}", name, pos));
-
-            //.OfType<BasePoint>()
-            //.ToList()
-            //.Where(locations => locations.Name == "E/W");
-
-            //TaskDialog.Show("debug", bp.ToString());
-            //foreach (var locationPoint in locations)
-            //{
-            //    BasePoint basePoint = locationPoint as BasePoint;
-            //    if (basePoint.IsShared == true)
-            //    {
-            //        //this is the survey point
-
-            //        Location svLoc = basePoint.Location;
-            //        Double bpew = basePoint.get_Parameter(BuiltInParameter.BASEPOINT_EASTWEST_PARAM).AsValueString();
-            //        Double bpns = basePoint.get_Parameter(BuiltInParameter.BASEPOINT_NORTHSOUTH_PARAM).AsValueString();
-            //        Double bpel = basePoint.get_Parameter(BuiltInParameter.BASEPOINT_ELEVATION_PARAM).AsValueString();
-            //        StringBuilder sb = new StringBuilder();
-            //        sb.AppendLine(string.Format("Basepoint Eastwest is : {0}, Basepoint NorthSouth is : {1}", bpew, bpns));
-            //        TaskDialog.Show("debug", sb.ToString());
-            //    }
-
-            //}
-
-            return Result.Succeeded;
+            catch (Exception ex)
+            {
+                // If there are something wrong, give error information and return failed
+                message = ex.Message;
+                return Result.Failed;
+            }
         }
-        
+
+        private static void ChangeWorkset(string name, Document doc)
+        {
+            using (Transaction t = new Transaction(doc))
+            {   
+                //Workset workset = this.worksetComboBox.SelectedItem as Workset
+
+                t.Start("Change Workset");
+
+                //WorksetTable worksetTable = doc.GetWorksetTable();
+                //WorksetId worksetId = worksetTable.GetActiveWorksetId();
+                //Workset workset = worksetTable.GetWorkset(worksetId);
+                //TaskDialog.Show(workset.Name.ToString(), workset.Id.ToString());
+                //Workset.Create(doc, name);
+                t.Commit();
+            }
+        }
+        public Workset CreateWorkset(Document document)
+        {
+            Workset newWorkset = null;
+            // Worksets can only be created in a document with worksharing enabled
+            if (document.IsWorkshared)
+            {
+                string worksetName = "New Workset";
+                // Workset name must not be in use by another workset
+                if (WorksetTable.IsWorksetNameUnique(document, worksetName))
+                {
+                    using (Transaction worksetTransaction = new Transaction(document, "Set preview view id"))
+                    {
+                        worksetTransaction.Start();
+                        newWorkset = Workset.Create(document, worksetName);
+                        worksetTransaction.Commit();
+                    }
+                }
+            }
+
+            return newWorkset;
+        }
+        public void GetWorksetsInfo(Document doc)
+        {
+            String message = String.Empty;
+            // Enumerating worksets in a document and getting basic information for each
+            FilteredWorksetCollector collector = new FilteredWorksetCollector(doc);
+
+            // find all user worksets
+            collector.OfKind(WorksetKind.UserWorkset);
+            worksets = collector.ToWorksets();
+
+            // get information for each workset
+            int count = 10; // show info for 3 worksets only
+            foreach (Workset workset in worksets)
+            {
+                message += "Workset : " + workset.Name.ToString();
+                message += "\nUnique Id : " + workset.UniqueId;
+                //message += "\nOwner : " + workset.Owner;
+                //message += "\nKind : " + workset.Kind;
+                //message += "\nIs default : " + workset.IsDefaultWorkset;
+                //message += "\nIs editable : " + workset.IsEditable;
+                //message += "\nIs open : " + workset.IsOpen;
+                //message += "\nIs visible by default : " + workset.IsVisibleByDefault;
+
+                TaskDialog.Show("GetWorksetsInfo", message);
+
+                if (0 == --count)
+                    break;
+            }
+        }
+        public Workset GetActiveWorkset(Document doc)
+        {
+            // Get the workset table from the document
+            WorksetTable worksetTable = doc.GetWorksetTable();
+            // Get the Id of the active workset
+            WorksetId activeId = worksetTable.GetActiveWorksetId();
+            // Find the workset with that Id
+            Workset workset = worksetTable.GetWorkset(activeId);
+            return workset;
+        }
+
+        public  class FakeWorksets
+        {
+            public string Name { get; set; }
+            public IList<FakeWorksets> worksets { get; set; }
+            public FakeWorksets(string _name, List<FakeWorksets> FakeWorksets)
+            {
+                FakeWorksets = new List<FakeWorksets>();
+                Name = _name;
+            }
+
+            public FakeWorksets(string v)
+            {
+            }
+        }
     }
 }

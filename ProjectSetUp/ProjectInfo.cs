@@ -1,6 +1,7 @@
 ﻿using Autodesk.Revit.DB;
 using Autodesk.Revit.UI;
 using Autodesk.Revit.UI.Events;
+using System.Collections.ObjectModel;
 using System;
 using Autodesk.Revit.Attributes;
 using System.Collections.Generic;
@@ -12,82 +13,99 @@ using Application = Autodesk.Revit.ApplicationServices.Application;
 
 namespace LucidToolbar
 {
-
-    [Autodesk.Revit.Attributes.Transaction(Autodesk.Revit.Attributes.TransactionMode.Manual)]
-    [Autodesk.Revit.Attributes.Regeneration(Autodesk.Revit.Attributes.RegenerationOption.Manual)]
-    class ProjectInfo : IExternalCommand
+    public class ProjectInfo 
     {
+        // Store the reference of the application in revit
+        UIApplication m_revit;
 
-        #region IExternalCommand Members
+        //Create a list to hold all elements relating to site elements           
+        IList<Element> m_siteElements = new List<Element>();
+        IList<Element> m_surveyElements = new List<Element>();
+
+        //Create an elementcatagoryfilter to filter all built in catogory with project basepoint
+        
+        
+
+        
+        
+
 
         /// <summary>
-        /// Implement this method as an external command for Revit.
+        /// This class get all the project information such as survey points, project base points and linked worksets 
         /// </summary>
-        /// <param name="commandData">An object that is passed to the external application 
-        /// which contains data related to the command, 
-        /// such as the application object and active view.</param>
-        /// <param name="message">A message that can be set by the external application 
-        /// which will be displayed if a failure or cancellation is returned by 
-        /// the external command.</param>
-        /// <param name="elements">A set of elements to which the external application 
-        /// can add elements that are to be highlighted in case of failure or cancellation.</param>
-        /// <returns>Return the status of the external command. 
-        /// A result of Succeeded means that the API external method functioned as expected. 
-        /// Cancelled can be used to signify that the user cancelled the external operation 
-        /// at some point. Failure should be returned if the application is unable to proceed with 
-        /// the operation.</returns>
-        public virtual Result Execute(ExternalCommandData commandData, ref string message, Autodesk.Revit.DB.ElementSet elements)
+        /// <param name="commandData"></param>
+        public ProjectInfo(ExternalCommandData commandData)
         {
-
-            Transaction transaction = new Transaction(commandData.Application.ActiveUIDocument.Document, "Edit Project Information");
-            UIApplication uiapp = commandData.Application;
-            UIDocument uidoc = uiapp.ActiveUIDocument;
-            Application app = uiapp.Application;
-            Document doc = uidoc.Document;
-            RevitCommandId id = RevitCommandId.LookupPostableCommandId(PostableCommand.ProjectInformation);
-
-            //try
-            //{
-            //    using (Transaction trans = new Transaction(doc, "Open Form"))
-            //    {
-            //        trans.Start();
-            //        MyRevitCommands.UserControl1 userControl = new MyRevitCommands.UserControl1();
-            //        Window win = new Window();
-            //        win.Content = userControl;
-            //        win.Show();
-            //        //win.Content = form;
-            //        win.Show();
-            //        //TaskDialog.Show("ModelessForm","You have opened up a ModelessForm");
-
-
-
-            //        trans.Commit();
-            //    }
-
-
-            //    return Result.Succeeded;
-            //}
-            //catch (Exception e)
-            //{
-            //    message = e.Message;
-            //    return Result.Failed;
-            //}
-
-            try
-            {
-                ExternalApplication.thisApp.ShowForm(commandData.Application);
-
-                return Result.Succeeded;
-            }
-            catch (Exception ex)
-            {
-                message = ex.Message;
-                return Result.Failed;
-            }
-
+            m_revit = commandData.Application;
+            GetProjectBasepoints();
+            GetSurvryPoints();
+            FillInformation();
         }
 
-        #endregion
+        private void FillInformation()
+        {
+            throw new NotImplementedException();
+        }
 
+        /// <summary>
+        /// Get all the survry points in the current document
+        /// </summary>
+        private void GetSurvryPoints()
+        {
+            FilteredElementCollector surveypointCollector = new FilteredElementCollector(m_revit.ActiveUIDocument.Document);
+            ElementCategoryFilter SurveyCategoryfilter = new ElementCategoryFilter(BuiltInCategory.OST_SharedBasePoint);
+            m_surveyElements = surveypointCollector.WherePasses(SurveyCategoryfilter).ToList<Element>();
+            //foreach (Element ele in m_surveyElements)
+            //{
+            //    Parameter paramX = ele.ParametersMap.get_Item("E/W");
+            //    String x1 = ele.get_Parameter(BuiltInParameter.BASEPOINT_EASTWEST_PARAM).AsValueString();
+            //    String X = paramX.AsValueString();
+            //    NS_SP = paramX.AsValueString();
+
+            //    Parameter paramY = ele.ParametersMap.get_Item("N/S");
+            //    String y1 = ele.get_Parameter(BuiltInParameter.BASEPOINT_NORTHSOUTH_PARAM).AsValueString();
+            //    String Y = paramY.AsValueString();
+            //    EW_SP = paramY.AsValueString();
+
+            //    Parameter Elevation = ele.ParametersMap.get_Item("Elev");
+            //    String Ele = Elevation.AsValueString();
+            //    Elev_SP = Elevation.AsValueString();
+
+            //    //Parameter Angle = ele.ParametersMap.get_Item("Angle to True North");
+            //    //String Ang = Angle.AsValueString();
+            //    //Ang_SP = Angle.AsValueString();
+
+            //    //TaskDialog.Show("Revit Model Survey Point", string.Format("E/W is {0}: W/S is {1}: Elevation is {2}", X, Y, Ele));
+            //}
+        }
+        /// <summary>
+        /// Get all the Project base points in the current document
+        /// </summary>
+        private void GetProjectBasepoints()
+        {
+            FilteredElementCollector basepointCollector = new FilteredElementCollector(m_revit.ActiveUIDocument.Document);
+            ElementCategoryFilter siteCategoryfilter = new ElementCategoryFilter(BuiltInCategory.OST_ProjectBasePoint);
+            m_siteElements = basepointCollector.WherePasses(siteCategoryfilter).ToList<Element>();
+            //foreach (Element ele in m_siteElements)
+            //{
+            //    Parameter paramX = ele.ParametersMap.get_Item("E/W");
+            //    String x1 = ele.get_Parameter(BuiltInParameter.BASEPOINT_EASTWEST_PARAM).AsValueString();
+            //    String X = paramX.AsValueString();
+            //    NS_PBP = paramX.AsValueString();
+
+            //    Parameter paramY = ele.ParametersMap.get_Item("N/S");
+            //    String y1 = ele.get_Parameter(BuiltInParameter.BASEPOINT_NORTHSOUTH_PARAM).AsValueString();
+            //    String Y = paramY.AsValueString();
+            //    EW_PBP = paramY.AsValueString();
+
+            //    Parameter Elevation = ele.ParametersMap.get_Item("Elev");
+            //    Elev_PBP = Elevation.AsValueString();
+
+            //    Parameter Angle = ele.ParametersMap.get_Item("Angle to True North");
+            //    String Ang = Angle.AsValueString();
+            //    Ang_PBP = Angle.AsValueString();
+            //    //TaskDialog.Show("Revit Model Project Basepoint", string.Format("E/W is {0}: W/S is {1}: Angle to true North is {2}",X,Y,Ang));
+            //}
+        }
     }
 }

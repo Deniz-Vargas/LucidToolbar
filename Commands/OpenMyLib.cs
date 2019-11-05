@@ -36,13 +36,34 @@ namespace LucidToolbar
 
         public Result Execute(ExternalCommandData commandData, ref string message, ElementSet elements)
         {
+            //enclose this in a try catch loop
             //opens a document
             commandData.Application.Application.OpenDocumentFile(Path);
 
             //opens a document in the editor
             //commandData.Application.OpenAndActivateDocument(Path);
 
-            return Result.Succeeded;
+            Transaction transaction = new Transaction(commandData.Application.ActiveUIDocument.Document, "Command");
+            try
+            {
+                transaction.Start();
+                //Do something here
+                TaskDialog.Show("Congrats", "You Have Successfully opened a command");
+                //commandData.Application.Application.OpenDocumentFile(Path);
+
+            }
+            catch (System.Exception e)
+            {
+                transaction.RollBack();
+                message += e.ToString();
+                return Autodesk.Revit.UI.Result.Failed;
+            }
+            finally
+            {
+                transaction.Commit();
+            }
+            return Autodesk.Revit.UI.Result.Succeeded;
+           
         }
     }
 

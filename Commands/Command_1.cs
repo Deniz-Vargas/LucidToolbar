@@ -12,7 +12,7 @@ namespace LucidToolbar.Commands
     [Autodesk.Revit.Attributes.Transaction(Autodesk.Revit.Attributes.TransactionMode.Manual)]
     [Autodesk.Revit.Attributes.Regeneration(Autodesk.Revit.Attributes.RegenerationOption.Manual)]
     [Autodesk.Revit.Attributes.Journaling(Autodesk.Revit.Attributes.JournalingMode.NoCommandData)]
-    class CommandTemplate : IExternalCommand
+    class Command_1
     {
 
         #region IExternalCommand Members
@@ -41,8 +41,6 @@ namespace LucidToolbar.Commands
             {
                 transaction.Start();
                 //Do something here
-                TaskDialog.Show("Congrats","You Have Successfully opened a command");
-
 
             }
             catch (System.Exception e)

@@ -115,7 +115,7 @@ namespace LucidToolbar
                 // We give the objects to the new dialog;
                 // The dialog becomes the owner responsible fore disposing them, eventually.
                 //m_MyForm = new ModelessForm2(exEvent, handler);
-                m_MyForm = new ModelessForm1(exEvent);
+                m_MyForm = new ModelessForm1(exEvent,handler);
                 m_MyForm.Show();
             }
         }

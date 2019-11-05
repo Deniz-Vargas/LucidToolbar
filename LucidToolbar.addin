@@ -7,9 +7,9 @@
     <AddInId>
       DE0460D8-435C-4E25-9D7E-D717C62C2BE8
     </AddInId>
-    <FullClassName>LucidToolbar.OpenMyLib</FullClassName>
-    <Text>Open My Lib</Text>
-    <Description>OpenMyLibrary</Description>
+    <FullClassName>LucidToolbar.CommandTemplate</FullClassName>
+    <Text>CommandTemplate</Text>
+    <Description>NewCommand</Description>
     <VendorId>Max Sun</VendorId>
     <VendorDescription>max.sun@lucidconsulting.com.au</VendorDescription>
   </AddIn>

@@ -66,70 +66,14 @@ namespace LucidToolbar
         ///   the event's handler (i.e. this object)
         /// </remarks>
         /// 
-        public void Execute(UIApplication uiapp)
+        public static Document Execute(UIApplication uiapp, ModelPath modelPath)
         {
-            try
-            {
-                switch (Request.Take())
-                {
-                    case RequestId.None:
-                        {
-                            return;  // no request at this time -> we can leave immediately
-                        }
-                    case RequestId.Delete:
-                        {
-                            ModifySelectedDoors(uiapp, "Delete doors", e => e.Document.Delete(e.Id));
-                            break;
-                        }
-                    case RequestId.FlipLeftRight:
-                        {
-                            ModifySelectedDoors(uiapp, "Flip door Hand", e => e.flipHand());
-                            break;
-                        }
-                    case RequestId.FlipInOut:
-                        {
-                            ModifySelectedDoors(uiapp, "Flip door Facing", e => e.flipFacing());
-                            break;
-                        }
-                    case RequestId.MakeLeft:
-                        {
-                            ModifySelectedDoors(uiapp, "Make door Left", MakeLeft);
-                            break;
-                        }
-                    case RequestId.MakeRight:
-                        {
-                            ModifySelectedDoors(uiapp, "Make door Right", MakeRight);
-                            break;
-                        }
-                    case RequestId.TurnOut:
-                        {
-                            ModifySelectedDoors(uiapp, "Place door Out", TurnOut);
-                            break;
-                        }
-                    case RequestId.TurnIn:
-                        {
-                            ModifySelectedDoors(uiapp, "Place door In", TurnIn);
-                            break;
-                        }
-                    case RequestId.Rotate:
-                        {
-                            ModifySelectedDoors(uiapp, "Rotate door", FlipHandAndFace);
-                            break;
-                        }
-                    default:
-                        {
-                            // some kind of a warning here should
-                            // notify us about an unexpected request 
-                            break;
-                        }
-                }
-            }
-            finally
-            {
-                ExternalApplication.thisApp.WakeFormUp();
-            }
-
-            return;
+    
+            OpenOptions options1 = new OpenOptions();
+            options1.DetachFromCentralOption = DetachFromCentralOption.DetachAndPreserveWorksets;
+            Document openedDoc = uiapp.ActiveUIDocument.Application.Application.OpenDocumentFile(modelPath, options1);
+            return openedDoc;           
+ 
         }
 
 
@@ -227,6 +171,10 @@ namespace LucidToolbar
             if (e.FacingFlipped) e.flipFacing();
         }
 
+        public void Execute(UIApplication app)
+        {
+            throw new NotImplementedException();
+        }
     }  // class
 
 }  // namespace

@@ -10,6 +10,7 @@ using System.Threading.Tasks;
 using System.Windows.Forms;
 using Autodesk.Revit.DB;
 using Autodesk.Revit.UI;
+using static LucidToolbar.TestCommand;
 
 namespace LucidToolbar
 {
@@ -17,11 +18,20 @@ namespace LucidToolbar
     {
         private RequestHandler m_Handler;
         private ExternalEvent m_ExEvent;
-        public ModelessForm1(Autodesk.Revit.UI.ExternalEvent exEvent)
+        public ModelessForm1(ExternalEvent exEvent, RequestHandler handler)
         {
             InitializeComponent();
-            //m_Handler = handler;
+            m_Handler = handler;
             m_ExEvent = exEvent;
+            lblNS_PBP.Text= TestCommand.NS_PBP;
+            txtEW_PBP.Text = TestCommand.EW_PBP;
+            txtElev_PBP.Text = TestCommand.Elev_PBP;
+            txtAng_PBP.Text = TestCommand.Ang_PBP;
+
+            txtNS_SP.Text = TestCommand.NS_SP;
+            txtEW_SP.Text = TestCommand.EW_SP;
+            txtElev_SP.Text = TestCommand.Elev_SP;
+            txtAng_SP.Text = TestCommand.Ang_SP;
         }
         /// <summary>
         /// Form closed event handler
@@ -88,7 +98,15 @@ namespace LucidToolbar
         }
         private void ProjectInfoForm_Load(object sender, EventArgs e)
         {
-
+            List<FakeWorksets> worksets = new List<FakeWorksets>{ new FakeWorksets("Workset1"),
+                new FakeWorksets("Workset2"),
+                new FakeWorksets("Workset3")
+            };
+            this.worksetComboBox.DataSource = worksets;
+            this.worksetComboBox.DisplayMember = "Name";
+            this.worksetComboBox.DropDownStyle = ComboBoxStyle.DropDownList;
+            //this.worksetComboBox.Sorted = true;
+            //this.worksetComboBox.DropDown += new EventHandler(worksetComboBox_DropDown);
         }
 
         private void GroupBox1_Enter(object sender, EventArgs e)
@@ -109,43 +127,7 @@ namespace LucidToolbar
         {
 
         }
-        private void Button3_Click(object sender, EventArgs e)
-        {
-            OpenFileDialog ofd = new OpenFileDialog();
-            //NOTE open file dialog then filter out only .rvt file
-            ofd.Title = "Select Revit Project Files";
-            ofd.Filter = "RVT files|*.rvt";
-            ofd.FilterIndex = 1;
-            ofd.InitialDirectory = @"C:\";
-            ofd.Multiselect = true;
-            if (ofd.ShowDialog() == DialogResult.OK)
 
-            {
-                string mpath = "";
-                string mpathOnlyFilename = "";
-                FolderBrowserDialog folderBrowserDialog1 = new FolderBrowserDialog();
-                folderBrowserDialog1.Description = "Select Folder Where Revit Projects to be Saved in Local";
-                folderBrowserDialog1.RootFolder = Environment.SpecialFolder.MyComputer;
-                if (folderBrowserDialog1.ShowDialog() == DialogResult.OK)
-                {
-                    mpath = folderBrowserDialog1.SelectedPath;
-                    foreach (String projectPath in ofd.FileNames)
-                    {
-                        FileInfo filePath = new FileInfo(projectPath);
-                        ModelPath mp = ModelPathUtils.ConvertUserVisiblePathToModelPath(filePath.FullName);
-                        OpenOptions opt = new OpenOptions();
-                        opt.DetachFromCentralOption = DetachFromCentralOption.DetachAndDiscardWorksets;
-                        mpathOnlyFilename = filePath.Name;
-                        //Document openedDoc = Autodesk.Revit.ApplicationServices.Application.OpenDocumentFile(mp, opt);
-                        SaveAsOptions options = new SaveAsOptions();
-                        options.OverwriteExistingFile = true;
-                        ModelPath modelPathout = ModelPathUtils.ConvertUserVisiblePathToModelPath(mpath + "\\" + mpathOnlyFilename);
-                        //openedDoc.SaveAs(modelPathout, options);
-                        //openedDoc.Close(false);
-                    }
-                }
-            }
-        }
 
         private void TextBox2_TextChanged(object sender, EventArgs e)
         {
@@ -156,5 +138,84 @@ namespace LucidToolbar
         {
 
         }
+
+        private void label6_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void button1_Click(object sender, EventArgs e)
+        {
+           
+        }
+
+        private void btnSelSourceFile_Click(object sender, EventArgs e)
+        {
+            if (openFileDialog1.ShowDialog()==DialogResult.OK)//Check whether some files are selected 
+            {
+                for (int i = 0; i < openFileDialog1.FileNames.Length; i++)
+                    textBox1.Text = openFileDialog1.FileNames[i].ToString();
+                //FilePath fp = new FilePath(textBox1.Text);
+                //for (int i =0;i<openFileDialog1.FileName.Length;i++) //loop to iterate through the array of file names
+            }
+
+        }
+
+        private void openFileDialog1_FileOk(object sender, CancelEventArgs e)
+        {
+
+        }
+
+        private void listView1_SelectedIndexChanged(object sender, EventArgs e)
+        {
+
+        }
+
+        private void checkedListBox1_SelectedIndexChanged(object sender, EventArgs e)
+        {
+
+        }
+
+        private void folderBrowserDialog1_HelpRequest(object sender, EventArgs e)
+        {
+
+        }
+
+        private void btnSelTargetPath_Click(object sender, EventArgs e)
+        {
+            
+        }
+
+        private void label12_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void WorksetComboBox_SelectedIndexChanged(object sender, EventArgs e)
+        {
+
+        }
+
+        private void worksetComboBox_DropDown(object sender, EventArgs e)
+        {
+            AdjustWidthComboBox_DropDown(sender, e);
+        }
+
+        private void AdjustWidthComboBox_DropDown(object sender, EventArgs e)
+        {
+            //throw new NotImplementedException();
+        }
+
+        private void button3_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void btnOpen_Click(object sender, EventArgs e)
+        {
+            FilePath fp = new FilePath(textBox1.Text);
+            TaskDialog.Show("About to open file: ", textBox1.Text);
+        }
+
     }
 }
