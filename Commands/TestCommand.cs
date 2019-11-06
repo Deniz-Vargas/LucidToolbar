@@ -47,6 +47,7 @@ namespace LucidToolbar
         public static string Elev_SP { get; internal set; }
         public static string Ang_SP { get; internal set; }
 
+        public static string filePath { get; internal set; }
         public IList<Workset> worksets = null;
 
         public Result Execute(ExternalCommandData commandData, ref string message, ElementSet elements)

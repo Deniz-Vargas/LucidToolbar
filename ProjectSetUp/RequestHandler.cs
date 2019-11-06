@@ -21,9 +21,20 @@
 //
 using System;
 using System.Collections.Generic;
+using System.Text;
+using System.Windows.Forms;
+using System.IO;
 
+using Autodesk;
+using Autodesk.Revit;
 using Autodesk.Revit.DB;
 using Autodesk.Revit.UI;
+
+using Autodesk.Revit.ApplicationServices;
+using Autodesk.Revit.Attributes;
+
+using Autodesk.Revit.UI.Selection;
+using Autodesk.Revit.Creation;
 
 namespace LucidToolbar
 {
@@ -66,15 +77,81 @@ namespace LucidToolbar
         ///   the event's handler (i.e. this object)
         /// </remarks>
         /// 
-        public static Document Execute(UIApplication uiapp, ModelPath modelPath)
+        public void Execute(UIApplication uiapp)
         {
-    
-            OpenOptions options1 = new OpenOptions();
-            options1.DetachFromCentralOption = DetachFromCentralOption.DetachAndPreserveWorksets;
-            Document openedDoc = uiapp.ActiveUIDocument.Application.Application.OpenDocumentFile(modelPath, options1);
-            return openedDoc;           
- 
+            try
+            {
+                switch (Request.Take())
+                {
+                    case RequestId.None:
+                        {
+                            return;  // no request at this time -> we can leave immediately
+                        }
+                        ///use this one to test out opening up a document
+                    case RequestId.Delete:
+                        {
+                            //ModifySelectedDoors(uiapp, "Delete doors", e => e.Document.Delete(e.Id));
+                            LinkFile(uiapp);
+                            break;
+                        }
+                    case RequestId.FlipLeftRight:
+                        {
+                            ModifySelectedDoors(uiapp, "Flip door Hand", e => e.flipHand());
+                            break;
+                        }
+                    case RequestId.FlipInOut:
+                        {
+                            ModifySelectedDoors(uiapp, "Flip door Facing", e => e.flipFacing());
+                            break;
+                        }
+                    case RequestId.MakeLeft:
+                        {
+                            ModifySelectedDoors(uiapp, "Make door Left", MakeLeft);
+                            break;
+                        }
+                    case RequestId.MakeRight:
+                        {
+                            ModifySelectedDoors(uiapp, "Make door Right", MakeRight);
+                            break;
+                        }
+                    case RequestId.TurnOut:
+                        {
+                            ModifySelectedDoors(uiapp, "Place door Out", TurnOut);
+                            break;
+                        }
+                    case RequestId.TurnIn:
+                        {
+                            ModifySelectedDoors(uiapp, "Place door In", TurnIn);
+                            break;
+                        }
+                    case RequestId.Rotate:
+                        {
+                            ModifySelectedDoors(uiapp, "Rotate door", FlipHandAndFace);
+                            break;
+                        }
+                    default:
+                        {
+                            // some kind of a warning here should
+                            // notify us about an unexpected request 
+                            break;
+                        }
+                }
+            }
+            finally
+            {
+                ExternalApplication.thisApp.WakeFormUp();
+            }
+
+            return;
         }
+        //{
+
+        //    OpenOptions options1 = new OpenOptions();
+        //    options1.DetachFromCentralOption = DetachFromCentralOption.DetachAndPreserveWorksets;
+        //    Document openedDoc = uiapp.ActiveUIDocument.Application.Application.OpenDocumentFile(modelPath, options1);
+        //    return openedDoc;           
+
+        //}
 
 
         /// <summary>
@@ -128,7 +205,30 @@ namespace LucidToolbar
                 }
             }
         }
-
+        private void LinkFile(UIApplication uiapp)
+        {
+            using (Transaction trans = new Transaction(uiapp.ActiveUIDocument.Document))
+            try  
+            {
+                trans.Start("Link file");
+                ModelPath mp = ModelPathUtils.ConvertUserVisiblePathToModelPath(TestCommand.filePath);
+                RevitLinkOptions option = new RevitLinkOptions(false);
+                //Create new revit link storing absolute path to a file
+                LinkLoadResult result = RevitLinkType.Create(uiapp.ActiveUIDocument.Document, mp, option);
+                    
+            }
+            
+            catch (System.Exception e)
+            {
+                trans.RollBack();
+               
+            }
+            finally
+            {
+                trans.Commit();
+            }
+           
+        }
 
         //////////////////////////////////////////////////////////////////////////
         //
@@ -171,10 +271,6 @@ namespace LucidToolbar
             if (e.FacingFlipped) e.flipFacing();
         }
 
-        public void Execute(UIApplication app)
-        {
-            throw new NotImplementedException();
-        }
     }  // class
 
 }  // namespace

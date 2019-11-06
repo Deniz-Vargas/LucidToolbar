@@ -10,6 +10,10 @@ using System.Threading.Tasks;
 using System.Windows.Forms;
 using Autodesk.Revit.DB;
 using Autodesk.Revit.UI;
+using Autodesk.Revit.UI.Selection;
+using Autodesk.Revit.Creation;
+using Autodesk.Revit.ApplicationServices;
+
 using static LucidToolbar.TestCommand;
 
 namespace LucidToolbar
@@ -18,6 +22,7 @@ namespace LucidToolbar
     {
         private RequestHandler m_Handler;
         private ExternalEvent m_ExEvent;
+       
         public ModelessForm1(ExternalEvent exEvent, RequestHandler handler)
         {
             InitializeComponent();
@@ -211,11 +216,14 @@ namespace LucidToolbar
 
         }
 
-        private void btnOpen_Click(object sender, EventArgs e)
+        public void btnOpen_Click(object sender, EventArgs e)
         {
-            FilePath fp = new FilePath(textBox1.Text);
+            string testFile = textBox1.Text.ToString();
+            filePath = textBox1.Text.ToString();
             TaskDialog.Show("About to open file: ", textBox1.Text);
+            MakeRequest(RequestId.Delete);
         }
+
 
     }
 }

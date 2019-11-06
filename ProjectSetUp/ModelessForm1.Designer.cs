@@ -39,7 +39,6 @@
             this.button2 = new System.Windows.Forms.Button();
             this.openFileDialog1 = new System.Windows.Forms.OpenFileDialog();
             this.groupBox3 = new System.Windows.Forms.GroupBox();
-            this.lblNS_PBP = new System.Windows.Forms.Label();
             this.label9 = new System.Windows.Forms.Label();
             this.label3 = new System.Windows.Forms.Label();
             this.textBox12 = new System.Windows.Forms.TextBox();
@@ -65,6 +64,7 @@
             this.txtNS_SP = new System.Windows.Forms.TextBox();
             this.folderBrowserDialog1 = new System.Windows.Forms.FolderBrowserDialog();
             this.btnOpen = new System.Windows.Forms.Button();
+            this.lblNS_PBP = new System.Windows.Forms.TextBox();
             this.groupBox1.SuspendLayout();
             this.groupBox2.SuspendLayout();
             this.groupBox3.SuspendLayout();
@@ -168,7 +168,6 @@
             // 
             // groupBox3
             // 
-            this.groupBox3.Controls.Add(this.lblNS_PBP);
             this.groupBox3.Controls.Add(this.label9);
             this.groupBox3.Controls.Add(this.label3);
             this.groupBox3.Controls.Add(this.textBox12);
@@ -188,6 +187,7 @@
             this.groupBox3.Controls.Add(this.textBox13);
             this.groupBox3.Controls.Add(this.textBox7);
             this.groupBox3.Controls.Add(this.txtEW_SP);
+            this.groupBox3.Controls.Add(this.lblNS_PBP);
             this.groupBox3.Controls.Add(this.txtEW_PBP);
             this.groupBox3.Controls.Add(this.textBox6);
             this.groupBox3.Controls.Add(this.label8);
@@ -199,16 +199,6 @@
             this.groupBox3.TabStop = false;
             this.groupBox3.Text = "Step 2: ";
             this.groupBox3.Enter += new System.EventHandler(this.GroupBox1_Enter);
-            // 
-            // lblNS_PBP
-            // 
-            this.lblNS_PBP.AutoSize = true;
-            this.lblNS_PBP.Location = new System.Drawing.Point(118, 43);
-            this.lblNS_PBP.Name = "lblNS_PBP";
-            this.lblNS_PBP.Size = new System.Drawing.Size(54, 17);
-            this.lblNS_PBP.TabIndex = 3;
-            this.lblNS_PBP.Text = "label12";
-            this.lblNS_PBP.Click += new System.EventHandler(this.label12_Click);
             // 
             // label9
             // 
@@ -439,6 +429,15 @@
             this.btnOpen.UseVisualStyleBackColor = true;
             this.btnOpen.Click += new System.EventHandler(this.btnOpen_Click);
             // 
+            // lblNS_PBP
+            // 
+            this.lblNS_PBP.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.lblNS_PBP.Location = new System.Drawing.Point(121, 38);
+            this.lblNS_PBP.Name = "lblNS_PBP";
+            this.lblNS_PBP.Size = new System.Drawing.Size(118, 24);
+            this.lblNS_PBP.TabIndex = 2;
+            this.lblNS_PBP.TextChanged += new System.EventHandler(this.TextBox2_TextChanged);
+            // 
             // ModelessForm1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
@@ -488,7 +487,6 @@
         private System.Windows.Forms.Label label10;
         private System.Windows.Forms.TextBox txtEW_SP;
         private System.Windows.Forms.TextBox txtNS_SP;
-        private System.Windows.Forms.Label lblNS_PBP;
         private System.Windows.Forms.TextBox textBox12;
         private System.Windows.Forms.TextBox textBox11;
         private System.Windows.Forms.TextBox textBox10;
@@ -502,5 +500,6 @@
         private System.Windows.Forms.FolderBrowserDialog folderBrowserDialog1;
         private System.Windows.Forms.ComboBox worksetComboBox;
         private System.Windows.Forms.Button btnOpen;
+        private System.Windows.Forms.TextBox lblNS_PBP;
     }
 }
