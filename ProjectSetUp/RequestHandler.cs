@@ -35,6 +35,7 @@ using Autodesk.Revit.Attributes;
 
 using Autodesk.Revit.UI.Selection;
 using Autodesk.Revit.Creation;
+using System.Linq;
 
 namespace LucidToolbar
 {
@@ -49,7 +50,7 @@ namespace LucidToolbar
          
         // The value of the latest request made by the modeless form 
         private Request m_request = new Request();
-
+        public List<Workset> worksets = new List<Workset>();
         /// <summary>
         /// A public property to access the current request value
         /// </summary>
@@ -94,14 +95,14 @@ namespace LucidToolbar
                             LinkFile(uiapp);
                             break;
                         }
-                    case RequestId.FlipLeftRight:
+                    case RequestId.GetActiveWorkset:
                         {
-                            ModifySelectedDoors(uiapp, "Flip door Hand", e => e.flipHand());
+                            GetWorkset(uiapp);//Get the current active workset and displays it;s name
                             break;
                         }
-                    case RequestId.FlipInOut:
+                    case RequestId.WorksetsInfo:
                         {
-                            ModifySelectedDoors(uiapp, "Flip door Facing", e => e.flipFacing());
+                            GetWorksetsInfo(uiapp);
                             break;
                         }
                     case RequestId.MakeLeft:
@@ -212,15 +213,17 @@ namespace LucidToolbar
             {
                 trans.Start("Link file");
                 ModelPath mp = ModelPathUtils.ConvertUserVisiblePathToModelPath(TestCommand.filePath);
-                RevitLinkOptions option = new RevitLinkOptions(false);
+                WorksetConfiguration worksetconfig = new WorksetConfiguration();
+                RevitLinkOptions option = new RevitLinkOptions(false,worksetconfig);
                 //Create new revit link storing absolute path to a file
                 LinkLoadResult result = RevitLinkType.Create(uiapp.ActiveUIDocument.Document, mp, option);
-                    
+                
             }
             
             catch (System.Exception e)
             {
                 trans.RollBack();
+                TaskDialog.Show("Unhandled Error", e.ToString());
                
             }
             finally
@@ -229,11 +232,121 @@ namespace LucidToolbar
             }
            
         }
+        /// <summary>
+        /// This function gets the current active workset
+        /// </summary>
+        /// <param name="uiapp"></param>
+        private void GetWorkset(UIApplication uiapp)
+        {
 
-        //////////////////////////////////////////////////////////////////////////
-        //
-        // Helpers - simple delegates operating upon an instance of a door
+            using (Transaction trans = new Transaction(uiapp.ActiveUIDocument.Document))
+            try
+            {
+                trans.Start("Link file");
+                //Get the workset table from the document
+                WorksetTable worksetTable = uiapp.ActiveUIDocument.Document.GetWorksetTable();
+                //Get thee Id of the active workset
+                WorksetId activeId = worksetTable.GetActiveWorksetId();
+                // Find the workset with the Id
+                Workset workset = worksetTable.GetWorkset(activeId);
+                TaskDialog.Show("The current active workset is: ", workset.Name.ToString());
+            }
 
+            catch (System.Exception e)
+            {
+                trans.RollBack();
+                TaskDialog.Show("Unhandled Error", e.ToString());
+
+            }
+            finally
+            {
+                trans.Commit();
+            }
+            
+        }
+
+        private void SetWorkset(UIApplication uiapp)
+        {
+
+            using (Transaction trans = new Transaction(uiapp.ActiveUIDocument.Document))
+                try
+                {
+                    trans.Start("Link file");
+                    //Get the workset table from the document
+                    WorksetTable worksetTable = uiapp.ActiveUIDocument.Document.GetWorksetTable();
+                    //Get thee Id of the active workset
+                    WorksetId worksetId = worksetTable.GetActiveWorksetId();
+                    // Find the workset with the Id
+                    Workset workset = worksetTable.GetWorkset(worksetId);
+                    TaskDialog.Show("The current active workset is: ", workset.Name.ToString());
+                    worksetTable.SetActiveWorksetId(worksetId);
+                }
+
+                catch (System.Exception e)
+                {
+                    trans.RollBack();
+                    TaskDialog.Show("Unhandled Error", e.ToString());
+
+                }
+                finally
+                {
+                    trans.Commit();
+                }
+
+        }
+
+        public void GetWorksetsInfo(UIApplication uiapp)
+        {
+            String message = String.Empty;
+            using (Transaction trans = new Transaction(uiapp.ActiveUIDocument.Document))
+                try
+                {   
+                    // Enumerating worksets in a document and getting basic information for each
+                    FilteredWorksetCollector collector = new FilteredWorksetCollector(uiapp.ActiveUIDocument.Document);
+                    // find all user worksets
+                    collector.OfKind(WorksetKind.UserWorkset);
+                    //worksets = collector.ToList();
+                    int count = 3; // show info for 3 worksets only
+                    foreach (Workset workset in worksets)
+                    {
+                        message += "Workset : " + workset.Name.ToString();
+                        message += "\nUnique Id : " + workset.UniqueId;
+                        //message += "\nOwner : " + workset.Owner;
+                        //    //message += "\nKind : " + workset.Kind;
+                        //    //message += "\nIs default : " + workset.IsDefaultWorkset;
+                        //    //message += "\nIs editable : " + workset.IsEditable;
+                        //    //message += "\nIs open : " + workset.IsOpen;
+                        //    //message += "\nIs visible by default : " + workset.IsVisibleByDefault;
+
+                        //    TaskDialog.Show("GetWorksetsInfo", message);
+
+                        if (0 == --count)
+                            break;
+                        //}
+
+                    }
+                }
+
+                catch(System.Exception e)
+                {
+                    trans.RollBack();
+                    TaskDialog.Show("Unhandled Error", e.ToString());
+
+                }
+                finally
+                {
+                    trans.Commit();
+                }
+
+
+
+
+
+
+            //get information for each workset
+
+            
+        }
         private void FlipHandAndFace(FamilyInstance e)
         {
             e.flipFacing(); e.flipHand();

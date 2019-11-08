@@ -86,12 +86,6 @@
     <Compile Include="Commands\NaturalGasPipe.cs" />
     <Compile Include="Commands\OpenMyLib.cs" />
     <Compile Include="Commands\TestCommand.cs" />
-    <Compile Include="ProjectSetUp\ModelessForm2.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="ProjectSetUp\ModelessForm2.Designer.cs">
-      <DependentUpon>ModelessForm2.cs</DependentUpon>
-    </Compile>
     <Compile Include="ProjectSetUp\ProjectInfo.cs" />
     <Compile Include="AvoidObstruction\Resolver.cs" />
     <Compile Include="AvoidObstruction\Section.cs" />
@@ -105,6 +99,9 @@
       <DependentUpon>ModelessForm1.cs</DependentUpon>
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Compile>
+    <Compile Include="ProjectSetUp\ProjectInfoWrapper\ProjectInfoWrapper.cs" />
+    <Compile Include="ProjectSetUp\ProjectInfoWrapper\WrapperCustomDescriptor.cs" />
+    <Compile Include="ProjectSetUp\ProjectInfoWrapper\Wrappers.cs" />
     <Compile Include="ProjectSetUp\Request.cs" />
     <Compile Include="ProjectSetUp\RequestHandler.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

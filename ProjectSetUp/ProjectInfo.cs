@@ -22,13 +22,11 @@ namespace LucidToolbar
         IList<Element> m_siteElements = new List<Element>();
         IList<Element> m_surveyElements = new List<Element>();
 
+        //Store all worksets which are in this model to a list
+        List<String> m_worksets = new List<String>();
+        public List<Workset> worksets = new List<Workset>();
+
         //Create an elementcatagoryfilter to filter all built in catogory with project basepoint
-        
-        
-
-        
-        
-
 
         /// <summary>
         /// This class get all the project information such as survey points, project base points and linked worksets 
@@ -37,11 +35,18 @@ namespace LucidToolbar
         public ProjectInfo(ExternalCommandData commandData)
         {
             m_revit = commandData.Application;
-            GetProjectBasepoints();
-            GetSurvryPoints();
-            FillInformation();
+            //GetProjectBasepoints();
+            //GetSurvryPoints();
+            //FillInformation();
+            //GetWorksets();
         }
-
+        public ReadOnlyCollection<String> Worksets
+        {
+            get
+            {
+                return new ReadOnlyCollection<String>(m_worksets);
+            }
+        }
         private void FillInformation()
         {
             throw new NotImplementedException();
@@ -106,6 +111,85 @@ namespace LucidToolbar
             //    Ang_PBP = Angle.AsValueString();
             //    //TaskDialog.Show("Revit Model Project Basepoint", string.Format("E/W is {0}: W/S is {1}: Angle to true North is {2}",X,Y,Ang));
             //}
+        }
+
+        private void GetWorksets()
+        {
+            Document document = m_revit.ActiveUIDocument.Document;
+            // Enumerating worksets in a document and getting basic information for each
+            FilteredWorksetCollector collector = new FilteredWorksetCollector(document);
+            // find all user worksets
+            collector.OfKind(WorksetKind.UserWorkset);
+            worksets = collector.ToList();
+            
+            foreach (Workset workset in worksets)
+            {
+                m_worksets.Add(workset.Name);
+            }
+        }
+
+        private static void ChangeWorkset(string name, Document doc)
+        {
+            using (Transaction t = new Transaction(doc))
+            {
+                //Workset workset = this.worksetComboBox.SelectedItem as Workset
+
+                t.Start("Change Workset");
+
+                //WorksetTable worksetTable = doc.GetWorksetTable();
+                //WorksetId worksetId = worksetTable.GetActiveWorksetId();
+                //Workset workset = worksetTable.GetWorkset(worksetId);
+                //TaskDialog.Show(workset.Name.ToString(), workset.Id.ToString());
+                //Workset.Create(doc, name);
+                t.Commit();
+            }
+        }
+        public Workset CreateWorkset(Document document)
+        {
+            Workset newWorkset = null;
+            // Worksets can only be created in a document with worksharing enabled
+            if (document.IsWorkshared)
+            {
+                string worksetName = "New Workset";
+                // Workset name must not be in use by another workset
+                if (WorksetTable.IsWorksetNameUnique(document, worksetName))
+                {
+                    using (Transaction worksetTransaction = new Transaction(document, "Set preview view id"))
+                    {
+                        worksetTransaction.Start();
+                        newWorkset = Workset.Create(document, worksetName);
+                        worksetTransaction.Commit();
+                    }
+                }
+            }
+
+            return newWorkset;
+        }
+
+        public Workset GetActiveWorkset(Document doc)
+        {
+            // Get the workset table from the document
+            WorksetTable worksetTable = doc.GetWorksetTable();
+            // Get the Id of the active workset
+            WorksetId activeId = worksetTable.GetActiveWorksetId();
+            // Find the workset with that Id
+            Workset workset = worksetTable.GetWorkset(activeId);
+            return workset;
+        }
+
+        public class FakeWorksets
+        {
+            public string Name { get; set; }
+            public IList<FakeWorksets> worksets { get; set; }
+            public FakeWorksets(string _name, List<FakeWorksets> FakeWorksets)
+            {
+                FakeWorksets = new List<FakeWorksets>();
+                Name = _name;
+            }
+
+            public FakeWorksets(string v)
+            {
+            }
         }
     }
 }

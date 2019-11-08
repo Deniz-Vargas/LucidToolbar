@@ -6,6 +6,7 @@
         /// Required designer variable.
         /// </summary>
         private System.ComponentModel.IContainer components = null;
+        private ProjectInfo m_projectInfo;
 
         /// <summary>
         /// Clean up any resources being used.
@@ -16,6 +17,7 @@
             if (disposing && (components != null))
             {
                 components.Dispose();
+
             }
             base.Dispose(disposing);
         }
@@ -28,16 +30,18 @@
         /// </summary>
         private void InitializeComponent()
         {
-            this.groupBox1 = new System.Windows.Forms.GroupBox();
-            this.progressBar1 = new System.Windows.Forms.ProgressBar();
-            this.btnSelSourceFile = new System.Windows.Forms.Button();
-            this.textBox1 = new System.Windows.Forms.TextBox();
-            this.groupBox2 = new System.Windows.Forms.GroupBox();
+            this.btnGetWorkset = new System.Windows.Forms.Button();
+            this.checkedListBox1 = new System.Windows.Forms.CheckedListBox();
             this.worksetComboBox = new System.Windows.Forms.ComboBox();
+            this.progressBar1 = new System.Windows.Forms.ProgressBar();
             this.label2 = new System.Windows.Forms.Label();
-            this.button1 = new System.Windows.Forms.Button();
-            this.button2 = new System.Windows.Forms.Button();
+            this.btnOpen = new System.Windows.Forms.Button();
+            this.btnSelSourceFile = new System.Windows.Forms.Button();
+            this.txbFolderPath = new System.Windows.Forms.TextBox();
+            this.btnCancel = new System.Windows.Forms.Button();
+            this.btnOK = new System.Windows.Forms.Button();
             this.openFileDialog1 = new System.Windows.Forms.OpenFileDialog();
+            this.folderBrowserDialog1 = new System.Windows.Forms.FolderBrowserDialog();
             this.groupBox3 = new System.Windows.Forms.GroupBox();
             this.label9 = new System.Windows.Forms.Label();
             this.label3 = new System.Windows.Forms.Label();
@@ -58,113 +62,132 @@
             this.textBox13 = new System.Windows.Forms.TextBox();
             this.textBox7 = new System.Windows.Forms.TextBox();
             this.txtEW_SP = new System.Windows.Forms.TextBox();
+            this.lblNS_PBP = new System.Windows.Forms.TextBox();
             this.txtEW_PBP = new System.Windows.Forms.TextBox();
             this.textBox6 = new System.Windows.Forms.TextBox();
             this.label8 = new System.Windows.Forms.Label();
             this.txtNS_SP = new System.Windows.Forms.TextBox();
-            this.folderBrowserDialog1 = new System.Windows.Forms.FolderBrowserDialog();
-            this.btnOpen = new System.Windows.Forms.Button();
-            this.lblNS_PBP = new System.Windows.Forms.TextBox();
-            this.groupBox1.SuspendLayout();
-            this.groupBox2.SuspendLayout();
+            this.tab = new System.Windows.Forms.TabControl();
+            this.tabPage3 = new System.Windows.Forms.TabPage();
+            this.tabPage1 = new System.Windows.Forms.TabPage();
+            this.tabPage2 = new System.Windows.Forms.TabPage();
+            this.btnUpdate = new System.Windows.Forms.Button();
+            this.propertyGrid1 = new System.Windows.Forms.PropertyGrid();
             this.groupBox3.SuspendLayout();
+            this.tab.SuspendLayout();
+            this.tabPage3.SuspendLayout();
+            this.tabPage1.SuspendLayout();
+            this.tabPage2.SuspendLayout();
             this.SuspendLayout();
             // 
-            // groupBox1
+            // btnGetWorkset
             // 
-            this.groupBox1.Controls.Add(this.btnOpen);
-            this.groupBox1.Controls.Add(this.btnSelSourceFile);
-            this.groupBox1.Controls.Add(this.textBox1);
-            this.groupBox1.Location = new System.Drawing.Point(33, 16);
-            this.groupBox1.Name = "groupBox1";
-            this.groupBox1.Size = new System.Drawing.Size(1001, 75);
-            this.groupBox1.TabIndex = 2;
-            this.groupBox1.TabStop = false;
-            this.groupBox1.Text = "Step 1: Select Revit template:";
-            this.groupBox1.Enter += new System.EventHandler(this.GroupBox1_Enter);
+            this.btnGetWorkset.Location = new System.Drawing.Point(831, 141);
+            this.btnGetWorkset.Name = "btnGetWorkset";
+            this.btnGetWorkset.Size = new System.Drawing.Size(155, 23);
+            this.btnGetWorkset.TabIndex = 10;
+            this.btnGetWorkset.Text = "Get Current Workset";
+            this.btnGetWorkset.UseVisualStyleBackColor = true;
+            this.btnGetWorkset.Click += new System.EventHandler(this.btnGetWorkset_Click);
             // 
-            // progressBar1
+            // checkedListBox1
             // 
-            this.progressBar1.Location = new System.Drawing.Point(6, 155);
-            this.progressBar1.Name = "progressBar1";
-            this.progressBar1.Size = new System.Drawing.Size(812, 12);
-            this.progressBar1.TabIndex = 9;
-            // 
-            // btnSelSourceFile
-            // 
-            this.btnSelSourceFile.Location = new System.Drawing.Point(834, 21);
-            this.btnSelSourceFile.Name = "btnSelSourceFile";
-            this.btnSelSourceFile.Size = new System.Drawing.Size(148, 23);
-            this.btnSelSourceFile.TabIndex = 6;
-            this.btnSelSourceFile.Text = "Select File";
-            this.btnSelSourceFile.UseVisualStyleBackColor = true;
-            this.btnSelSourceFile.Click += new System.EventHandler(this.btnSelSourceFile_Click);
-            // 
-            // textBox1
-            // 
-            this.textBox1.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.textBox1.Location = new System.Drawing.Point(17, 21);
-            this.textBox1.Name = "textBox1";
-            this.textBox1.Size = new System.Drawing.Size(811, 24);
-            this.textBox1.TabIndex = 2;
-            this.textBox1.TextChanged += new System.EventHandler(this.TextBox1_TextChanged);
-            // 
-            // groupBox2
-            // 
-            this.groupBox2.Controls.Add(this.progressBar1);
-            this.groupBox2.Controls.Add(this.worksetComboBox);
-            this.groupBox2.Controls.Add(this.label2);
-            this.groupBox2.Location = new System.Drawing.Point(33, 346);
-            this.groupBox2.Name = "groupBox2";
-            this.groupBox2.Size = new System.Drawing.Size(1001, 173);
-            this.groupBox2.TabIndex = 2;
-            this.groupBox2.TabStop = false;
-            this.groupBox2.Text = "Step 3: ";
-            this.groupBox2.Enter += new System.EventHandler(this.GroupBox1_Enter);
+            this.checkedListBox1.FormattingEnabled = true;
+            this.checkedListBox1.HorizontalScrollbar = true;
+            this.checkedListBox1.Location = new System.Drawing.Point(22, 51);
+            this.checkedListBox1.Name = "checkedListBox1";
+            this.checkedListBox1.Size = new System.Drawing.Size(629, 412);
+            this.checkedListBox1.TabIndex = 9;
+            this.checkedListBox1.SelectedIndexChanged += new System.EventHandler(this.checkedListBox1_SelectedIndexChanged_2);
             // 
             // worksetComboBox
             // 
             this.worksetComboBox.FormattingEnabled = true;
-            this.worksetComboBox.Location = new System.Drawing.Point(121, 39);
+            this.worksetComboBox.Location = new System.Drawing.Point(742, 102);
             this.worksetComboBox.Name = "worksetComboBox";
             this.worksetComboBox.Size = new System.Drawing.Size(256, 24);
             this.worksetComboBox.TabIndex = 4;
             this.worksetComboBox.DropDown += new System.EventHandler(this.worksetComboBox_DropDown);
             this.worksetComboBox.SelectedIndexChanged += new System.EventHandler(this.WorksetComboBox_SelectedIndexChanged);
             // 
+            // progressBar1
+            // 
+            this.progressBar1.Location = new System.Drawing.Point(22, 469);
+            this.progressBar1.Minimum = 1;
+            this.progressBar1.Name = "progressBar1";
+            this.progressBar1.Size = new System.Drawing.Size(629, 22);
+            this.progressBar1.Step = 1;
+            this.progressBar1.TabIndex = 9;
+            this.progressBar1.Value = 1;
+            // 
             // label2
             // 
             this.label2.AutoSize = true;
-            this.label2.Location = new System.Drawing.Point(14, 42);
+            this.label2.Location = new System.Drawing.Point(739, 74);
             this.label2.Name = "label2";
             this.label2.Size = new System.Drawing.Size(64, 17);
             this.label2.TabIndex = 1;
             this.label2.Text = "Workset ";
             this.label2.Click += new System.EventHandler(this.Label1_Click);
             // 
-            // button1
+            // btnOpen
             // 
-            this.button1.Location = new System.Drawing.Point(779, 536);
-            this.button1.Name = "button1";
-            this.button1.Size = new System.Drawing.Size(255, 36);
-            this.button1.TabIndex = 3;
-            this.button1.Text = "OK";
-            this.button1.UseVisualStyleBackColor = true;
-            this.button1.Click += new System.EventHandler(this.button1_Click);
+            this.btnOpen.Enabled = false;
+            this.btnOpen.Location = new System.Drawing.Point(850, 63);
+            this.btnOpen.Name = "btnOpen";
+            this.btnOpen.Size = new System.Drawing.Size(148, 28);
+            this.btnOpen.TabIndex = 7;
+            this.btnOpen.Text = "Link in checked files";
+            this.btnOpen.UseVisualStyleBackColor = true;
+            this.btnOpen.Click += new System.EventHandler(this.btnOpen_Click);
             // 
-            // button2
+            // btnSelSourceFile
             // 
-            this.button2.Location = new System.Drawing.Point(33, 536);
-            this.button2.Name = "button2";
-            this.button2.Size = new System.Drawing.Size(190, 36);
-            this.button2.TabIndex = 3;
-            this.button2.Text = "Cancel";
-            this.button2.UseVisualStyleBackColor = true;
+            this.btnSelSourceFile.Location = new System.Drawing.Point(558, 17);
+            this.btnSelSourceFile.Name = "btnSelSourceFile";
+            this.btnSelSourceFile.Size = new System.Drawing.Size(93, 24);
+            this.btnSelSourceFile.TabIndex = 6;
+            this.btnSelSourceFile.Text = "Select Files";
+            this.btnSelSourceFile.UseVisualStyleBackColor = true;
+            this.btnSelSourceFile.Click += new System.EventHandler(this.btnSelSourceFile_Click);
+            // 
+            // txbFolderPath
+            // 
+            this.txbFolderPath.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.txbFolderPath.Location = new System.Drawing.Point(22, 17);
+            this.txbFolderPath.Name = "txbFolderPath";
+            this.txbFolderPath.Size = new System.Drawing.Size(530, 24);
+            this.txbFolderPath.TabIndex = 2;
+            this.txbFolderPath.TextChanged += new System.EventHandler(this.TextBox2_TextChanged);
+            // 
+            // btnCancel
+            // 
+            this.btnCancel.Location = new System.Drawing.Point(957, 536);
+            this.btnCancel.Name = "btnCancel";
+            this.btnCancel.Size = new System.Drawing.Size(97, 36);
+            this.btnCancel.TabIndex = 3;
+            this.btnCancel.Text = "Cancel";
+            this.btnCancel.UseVisualStyleBackColor = true;
+            this.btnCancel.Click += new System.EventHandler(this.button1_Click);
+            // 
+            // btnOK
+            // 
+            this.btnOK.Location = new System.Drawing.Point(836, 536);
+            this.btnOK.Name = "btnOK";
+            this.btnOK.Size = new System.Drawing.Size(115, 36);
+            this.btnOK.TabIndex = 3;
+            this.btnOK.Text = "OK";
+            this.btnOK.UseVisualStyleBackColor = true;
             // 
             // openFileDialog1
             // 
             this.openFileDialog1.Filter = "Revit files (*.rvt)|*.rvt|All files (*.*)|*.*";
+            this.openFileDialog1.Multiselect = true;
             this.openFileDialog1.FileOk += new System.ComponentModel.CancelEventHandler(this.openFileDialog1_FileOk);
+            // 
+            // folderBrowserDialog1
+            // 
+            this.folderBrowserDialog1.HelpRequest += new System.EventHandler(this.folderBrowserDialog1_HelpRequest);
             // 
             // groupBox3
             // 
@@ -192,9 +215,9 @@
             this.groupBox3.Controls.Add(this.textBox6);
             this.groupBox3.Controls.Add(this.label8);
             this.groupBox3.Controls.Add(this.txtNS_SP);
-            this.groupBox3.Location = new System.Drawing.Point(33, 95);
+            this.groupBox3.Location = new System.Drawing.Point(15, 13);
             this.groupBox3.Name = "groupBox3";
-            this.groupBox3.Size = new System.Drawing.Size(1001, 250);
+            this.groupBox3.Size = new System.Drawing.Size(671, 166);
             this.groupBox3.TabIndex = 2;
             this.groupBox3.TabStop = false;
             this.groupBox3.Text = "Step 2: ";
@@ -223,7 +246,7 @@
             // textBox12
             // 
             this.textBox12.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.textBox12.Location = new System.Drawing.Point(717, 128);
+            this.textBox12.Location = new System.Drawing.Point(537, 128);
             this.textBox12.Name = "textBox12";
             this.textBox12.Size = new System.Drawing.Size(118, 24);
             this.textBox12.TabIndex = 2;
@@ -241,7 +264,7 @@
             // textBox11
             // 
             this.textBox11.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.textBox11.Location = new System.Drawing.Point(579, 128);
+            this.textBox11.Location = new System.Drawing.Point(399, 128);
             this.textBox11.Name = "textBox11";
             this.textBox11.Size = new System.Drawing.Size(118, 24);
             this.textBox11.TabIndex = 2;
@@ -259,7 +282,7 @@
             // textBox10
             // 
             this.textBox10.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.textBox10.Location = new System.Drawing.Point(717, 98);
+            this.textBox10.Location = new System.Drawing.Point(537, 98);
             this.textBox10.Name = "textBox10";
             this.textBox10.Size = new System.Drawing.Size(118, 24);
             this.textBox10.TabIndex = 2;
@@ -277,7 +300,7 @@
             // textBox9
             // 
             this.textBox9.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.textBox9.Location = new System.Drawing.Point(579, 98);
+            this.textBox9.Location = new System.Drawing.Point(399, 98);
             this.textBox9.Name = "textBox9";
             this.textBox9.Size = new System.Drawing.Size(118, 24);
             this.textBox9.TabIndex = 2;
@@ -295,7 +318,7 @@
             // label13
             // 
             this.label13.AutoSize = true;
-            this.label13.Location = new System.Drawing.Point(726, 18);
+            this.label13.Location = new System.Drawing.Point(546, 18);
             this.label13.Name = "label13";
             this.label13.Size = new System.Drawing.Size(88, 17);
             this.label13.TabIndex = 1;
@@ -305,7 +328,7 @@
             // label12
             // 
             this.label12.AutoSize = true;
-            this.label12.Location = new System.Drawing.Point(573, 18);
+            this.label12.Location = new System.Drawing.Point(393, 18);
             this.label12.Name = "label12";
             this.label12.Size = new System.Drawing.Size(124, 17);
             this.label12.TabIndex = 1;
@@ -335,7 +358,7 @@
             // textBox8
             // 
             this.textBox8.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.textBox8.Location = new System.Drawing.Point(717, 68);
+            this.textBox8.Location = new System.Drawing.Point(537, 68);
             this.textBox8.Name = "textBox8";
             this.textBox8.Size = new System.Drawing.Size(118, 24);
             this.textBox8.TabIndex = 2;
@@ -354,7 +377,7 @@
             // textBox13
             // 
             this.textBox13.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.textBox13.Location = new System.Drawing.Point(579, 38);
+            this.textBox13.Location = new System.Drawing.Point(399, 38);
             this.textBox13.Name = "textBox13";
             this.textBox13.Size = new System.Drawing.Size(118, 24);
             this.textBox13.TabIndex = 2;
@@ -363,7 +386,7 @@
             // textBox7
             // 
             this.textBox7.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.textBox7.Location = new System.Drawing.Point(579, 68);
+            this.textBox7.Location = new System.Drawing.Point(399, 68);
             this.textBox7.Name = "textBox7";
             this.textBox7.Size = new System.Drawing.Size(118, 24);
             this.textBox7.TabIndex = 2;
@@ -378,6 +401,15 @@
             this.txtEW_SP.TabIndex = 2;
             this.txtEW_SP.TextChanged += new System.EventHandler(this.TextBox2_TextChanged);
             // 
+            // lblNS_PBP
+            // 
+            this.lblNS_PBP.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.lblNS_PBP.Location = new System.Drawing.Point(121, 38);
+            this.lblNS_PBP.Name = "lblNS_PBP";
+            this.lblNS_PBP.Size = new System.Drawing.Size(118, 24);
+            this.lblNS_PBP.TabIndex = 2;
+            this.lblNS_PBP.TextChanged += new System.EventHandler(this.TextBox2_TextChanged);
+            // 
             // txtEW_PBP
             // 
             this.txtEW_PBP.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
@@ -390,7 +422,7 @@
             // textBox6
             // 
             this.textBox6.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.textBox6.Location = new System.Drawing.Point(717, 38);
+            this.textBox6.Location = new System.Drawing.Point(537, 38);
             this.textBox6.Name = "textBox6";
             this.textBox6.Size = new System.Drawing.Size(118, 24);
             this.textBox6.TabIndex = 2;
@@ -415,91 +447,146 @@
             this.txtNS_SP.TabIndex = 2;
             this.txtNS_SP.TextChanged += new System.EventHandler(this.TextBox2_TextChanged);
             // 
-            // folderBrowserDialog1
+            // tab
             // 
-            this.folderBrowserDialog1.HelpRequest += new System.EventHandler(this.folderBrowserDialog1_HelpRequest);
+            this.tab.Controls.Add(this.tabPage3);
+            this.tab.Controls.Add(this.tabPage1);
+            this.tab.Controls.Add(this.tabPage2);
+            this.tab.Location = new System.Drawing.Point(5, 8);
+            this.tab.Name = "tab";
+            this.tab.SelectedIndex = 0;
+            this.tab.Size = new System.Drawing.Size(1050, 526);
+            this.tab.TabIndex = 4;
             // 
-            // btnOpen
+            // tabPage3
             // 
-            this.btnOpen.Location = new System.Drawing.Point(834, 46);
-            this.btnOpen.Name = "btnOpen";
-            this.btnOpen.Size = new System.Drawing.Size(148, 23);
-            this.btnOpen.TabIndex = 7;
-            this.btnOpen.Text = "OpenDetached";
-            this.btnOpen.UseVisualStyleBackColor = true;
-            this.btnOpen.Click += new System.EventHandler(this.btnOpen_Click);
+            this.tabPage3.Controls.Add(this.propertyGrid1);
+            this.tabPage3.Controls.Add(this.btnUpdate);
+            this.tabPage3.Location = new System.Drawing.Point(4, 25);
+            this.tabPage3.Name = "tabPage3";
+            this.tabPage3.Size = new System.Drawing.Size(1042, 497);
+            this.tabPage3.TabIndex = 2;
+            this.tabPage3.Text = "ProjectInfo";
+            this.tabPage3.UseVisualStyleBackColor = true;
             // 
-            // lblNS_PBP
+            // tabPage1
             // 
-            this.lblNS_PBP.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.lblNS_PBP.Location = new System.Drawing.Point(121, 38);
-            this.lblNS_PBP.Name = "lblNS_PBP";
-            this.lblNS_PBP.Size = new System.Drawing.Size(118, 24);
-            this.lblNS_PBP.TabIndex = 2;
-            this.lblNS_PBP.TextChanged += new System.EventHandler(this.TextBox2_TextChanged);
+            this.tabPage1.Controls.Add(this.btnGetWorkset);
+            this.tabPage1.Controls.Add(this.checkedListBox1);
+            this.tabPage1.Controls.Add(this.worksetComboBox);
+            this.tabPage1.Controls.Add(this.progressBar1);
+            this.tabPage1.Controls.Add(this.txbFolderPath);
+            this.tabPage1.Controls.Add(this.btnSelSourceFile);
+            this.tabPage1.Controls.Add(this.label2);
+            this.tabPage1.Controls.Add(this.btnOpen);
+            this.tabPage1.Location = new System.Drawing.Point(4, 25);
+            this.tabPage1.Name = "tabPage1";
+            this.tabPage1.Padding = new System.Windows.Forms.Padding(3);
+            this.tabPage1.Size = new System.Drawing.Size(1042, 497);
+            this.tabPage1.TabIndex = 0;
+            this.tabPage1.Text = "Select Model";
+            this.tabPage1.UseVisualStyleBackColor = true;
+            // 
+            // tabPage2
+            // 
+            this.tabPage2.Controls.Add(this.groupBox3);
+            this.tabPage2.Location = new System.Drawing.Point(4, 25);
+            this.tabPage2.Name = "tabPage2";
+            this.tabPage2.Padding = new System.Windows.Forms.Padding(3);
+            this.tabPage2.Size = new System.Drawing.Size(1042, 497);
+            this.tabPage2.TabIndex = 1;
+            this.tabPage2.Text = "Workset";
+            this.tabPage2.UseVisualStyleBackColor = true;
+            // 
+            // btnUpdate
+            // 
+            this.btnUpdate.Location = new System.Drawing.Point(556, 4);
+            this.btnUpdate.Name = "btnUpdate";
+            this.btnUpdate.Size = new System.Drawing.Size(115, 36);
+            this.btnUpdate.TabIndex = 3;
+            this.btnUpdate.Text = "Update";
+            this.btnUpdate.UseVisualStyleBackColor = true;
+            this.btnUpdate.Click += new System.EventHandler(this.btnUpdate_Click);
+            // 
+            // propertyGrid1
+            // 
+            this.propertyGrid1.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.propertyGrid1.HelpVisible = false;
+            this.propertyGrid1.Location = new System.Drawing.Point(4, 4);
+            this.propertyGrid1.Margin = new System.Windows.Forms.Padding(4);
+            this.propertyGrid1.Name = "propertyGrid1";
+            this.propertyGrid1.Size = new System.Drawing.Size(545, 450);
+            this.propertyGrid1.TabIndex = 4;
             // 
             // ModelessForm1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(1066, 584);
-            this.Controls.Add(this.button2);
-            this.Controls.Add(this.button1);
-            this.Controls.Add(this.groupBox3);
-            this.Controls.Add(this.groupBox2);
-            this.Controls.Add(this.groupBox1);
+            this.Controls.Add(this.tab);
+            this.Controls.Add(this.btnOK);
+            this.Controls.Add(this.btnCancel);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedDialog;
             this.Name = "ModelessForm1";
             this.Text = "Project Set Up ";
             this.TopMost = true;
             this.Load += new System.EventHandler(this.ProjectInfoForm_Load);
-            this.groupBox1.ResumeLayout(false);
-            this.groupBox1.PerformLayout();
-            this.groupBox2.ResumeLayout(false);
-            this.groupBox2.PerformLayout();
             this.groupBox3.ResumeLayout(false);
             this.groupBox3.PerformLayout();
+            this.tab.ResumeLayout(false);
+            this.tabPage3.ResumeLayout(false);
+            this.tabPage1.ResumeLayout(false);
+            this.tabPage1.PerformLayout();
+            this.tabPage2.ResumeLayout(false);
             this.ResumeLayout(false);
 
         }
 
         #endregion
-        private System.Windows.Forms.GroupBox groupBox1;
-        private System.Windows.Forms.GroupBox groupBox2;
-        private System.Windows.Forms.Button button1;
-        private System.Windows.Forms.Button button2;
-        private System.Windows.Forms.TextBox textBox1;
+        private System.Windows.Forms.Button btnCancel;
+        private System.Windows.Forms.Button btnOK;
         private System.Windows.Forms.Label label2;
         private System.Windows.Forms.OpenFileDialog openFileDialog1;
         private System.Windows.Forms.Button btnSelSourceFile;
         private System.Windows.Forms.ProgressBar progressBar1;
-        private System.Windows.Forms.GroupBox groupBox3;
-        private System.Windows.Forms.Label label3;
-        private System.Windows.Forms.TextBox txtElev_PBP;
-        private System.Windows.Forms.Label label6;
-        private System.Windows.Forms.TextBox txtEW_PBP;
-        private System.Windows.Forms.Label label8;
-        private System.Windows.Forms.Label label9;
-        private System.Windows.Forms.TextBox txtAng_SP;
-        private System.Windows.Forms.TextBox txtAng_PBP;
-        private System.Windows.Forms.TextBox txtElev_SP;
-        private System.Windows.Forms.Label label11;
-        private System.Windows.Forms.Label label10;
-        private System.Windows.Forms.TextBox txtEW_SP;
-        private System.Windows.Forms.TextBox txtNS_SP;
-        private System.Windows.Forms.TextBox textBox12;
-        private System.Windows.Forms.TextBox textBox11;
-        private System.Windows.Forms.TextBox textBox10;
-        private System.Windows.Forms.TextBox textBox9;
-        private System.Windows.Forms.Label label13;
-        private System.Windows.Forms.Label label12;
-        private System.Windows.Forms.TextBox textBox8;
-        private System.Windows.Forms.TextBox textBox13;
-        private System.Windows.Forms.TextBox textBox7;
-        private System.Windows.Forms.TextBox textBox6;
         private System.Windows.Forms.FolderBrowserDialog folderBrowserDialog1;
         private System.Windows.Forms.ComboBox worksetComboBox;
         private System.Windows.Forms.Button btnOpen;
+        private System.Windows.Forms.Button btnGetWorkset;
+        private System.Windows.Forms.CheckedListBox checkedListBox1;
+        private System.Windows.Forms.GroupBox groupBox3;
+        private System.Windows.Forms.Label label9;
+        private System.Windows.Forms.Label label3;
+        private System.Windows.Forms.TextBox textBox12;
+        private System.Windows.Forms.TextBox txtAng_SP;
+        private System.Windows.Forms.TextBox textBox11;
+        private System.Windows.Forms.TextBox txtAng_PBP;
+        private System.Windows.Forms.TextBox textBox10;
+        private System.Windows.Forms.TextBox txtElev_SP;
+        private System.Windows.Forms.TextBox textBox9;
+        private System.Windows.Forms.TextBox txtElev_PBP;
+        private System.Windows.Forms.Label label13;
+        private System.Windows.Forms.Label label12;
+        private System.Windows.Forms.Label label11;
+        private System.Windows.Forms.Label label10;
+        private System.Windows.Forms.TextBox textBox8;
+        private System.Windows.Forms.Label label6;
+        private System.Windows.Forms.TextBox textBox13;
+        private System.Windows.Forms.TextBox textBox7;
+        private System.Windows.Forms.TextBox txtEW_SP;
         private System.Windows.Forms.TextBox lblNS_PBP;
+        private System.Windows.Forms.TextBox txtEW_PBP;
+        private System.Windows.Forms.TextBox textBox6;
+        private System.Windows.Forms.Label label8;
+        private System.Windows.Forms.TextBox txtNS_SP;
+        private System.Windows.Forms.TextBox txbFolderPath;
+        private System.Windows.Forms.TabControl tab;
+        private System.Windows.Forms.TabPage tabPage1;
+        private System.Windows.Forms.TabPage tabPage2;
+        private System.Windows.Forms.TabPage tabPage3;
+        private System.Windows.Forms.Button btnUpdate;
+        private System.Windows.Forms.PropertyGrid propertyGrid1;
     }
 }

@@ -41,11 +41,11 @@ namespace LucidToolbar
         /// <summary>
         /// "FlipLeftRight" request
         /// </summary>
-        FlipLeftRight = 2,
+        GetActiveWorkset = 2,
         /// <summary>
         /// "FlipInOut" request
         /// </summary>
-        FlipInOut = 3,
+        WorksetsInfo = 3,
         /// <summary>
         /// "MakeRight" request
         /// </summary>

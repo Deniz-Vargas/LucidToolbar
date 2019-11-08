@@ -1,16 +1,7 @@
 ﻿using Autodesk.Revit.UI;
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using Autodesk.Revit.DB.Plumbing;
-using Autodesk.Revit.UI.Selection;
 using System.Reflection;
 using System.Runtime.InteropServices;
-using System.Windows.Controls;
-using Autodesk.Revit.UI.Events;
-using Class;
-using System.Windows.Forms;
-using LucidToolbar.ProjectSetUp;
 
 namespace LucidToolbar
 {
