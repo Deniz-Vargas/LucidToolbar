@@ -37,6 +37,8 @@ using Autodesk.Revit.UI.Selection;
 using Autodesk.Revit.Creation;
 using System.Linq;
 
+using static LucidToolbar.ModelessForm1;
+
 namespace LucidToolbar
 {
     /// <summary>
@@ -51,6 +53,7 @@ namespace LucidToolbar
         // The value of the latest request made by the modeless form 
         private Request m_request = new Request();
         public List<Workset> worksets = new List<Workset>();
+        public string strworkset = null;
         /// <summary>
         /// A public property to access the current request value
         /// </summary>
@@ -63,7 +66,7 @@ namespace LucidToolbar
         ///   A method to identify this External Event Handler
         /// </summary>
         public String GetName()
-        {
+        { 
             return "R2019 External Event Sample";
         }
 
@@ -110,9 +113,9 @@ namespace LucidToolbar
                             ModifySelectedDoors(uiapp, "Make door Left", MakeLeft);
                             break;
                         }
-                    case RequestId.MakeRight:
+                    case RequestId.SetCurWorkset:
                         {
-                            ModifySelectedDoors(uiapp, "Make door Right", MakeRight);
+                            SetWorkset(uiapp);
                             break;
                         }
                     case RequestId.TurnOut:
@@ -236,7 +239,7 @@ namespace LucidToolbar
         /// This function gets the current active workset
         /// </summary>
         /// <param name="uiapp"></param>
-        private void GetWorkset(UIApplication uiapp)
+        public void GetWorkset(UIApplication uiapp)
         {
 
             using (Transaction trans = new Transaction(uiapp.ActiveUIDocument.Document))
@@ -249,7 +252,9 @@ namespace LucidToolbar
                 WorksetId activeId = worksetTable.GetActiveWorksetId();
                 // Find the workset with the Id
                 Workset workset = worksetTable.GetWorkset(activeId);
+                //strworkset = workset.Name.ToString();
                 TaskDialog.Show("The current active workset is: ", workset.Name.ToString());
+                //TaskDialog.Show("The current active workset is: ", strworkset);            
             }
 
             catch (System.Exception e)
@@ -260,7 +265,9 @@ namespace LucidToolbar
             }
             finally
             {
+               // return strworkset;
                 trans.Commit();
+                
             }
             
         }
@@ -271,15 +278,28 @@ namespace LucidToolbar
             using (Transaction trans = new Transaction(uiapp.ActiveUIDocument.Document))
                 try
                 {
-                    trans.Start("Link file");
-                    //Get the workset table from the document
-                    WorksetTable worksetTable = uiapp.ActiveUIDocument.Document.GetWorksetTable();
-                    //Get thee Id of the active workset
-                    WorksetId worksetId = worksetTable.GetActiveWorksetId();
+                    trans.Start("Set Current Workset");
+                    // Enumerating worksets in a document and getting basic information for each
+                    FilteredWorksetCollector collector = new FilteredWorksetCollector(uiapp.ActiveUIDocument.Document);
+                    // find all user worksets
+                    collector.OfKind(WorksetKind.UserWorkset);
+                    IList<Workset> worksets = collector.ToWorksets();
+
+                    //set active worksetid 
+
+                    //WorksetId worksetId = worksetTable.GetActiveWorksetId();
                     // Find the workset with the Id
-                    Workset workset = worksetTable.GetWorkset(worksetId);
-                    TaskDialog.Show("The current active workset is: ", workset.Name.ToString());
-                    worksetTable.SetActiveWorksetId(worksetId);
+                    //Workset workset = worksetTable.GetWorkset(worksetId);
+                    foreach(Workset workset in worksets)
+                    {
+                        //check if there is a workset with the same name as selected in combobox
+                        if (workset.Name == targetWorkset)
+                            activeId = workset.Id;
+                    }
+                    //TaskDialog.Show("The current active workset is: ", workset.Name.ToString());
+                    //Set the active workset to the targetworkset selected from the combobox
+                    uiapp.ActiveUIDocument.Document.GetWorksetTable().SetActiveWorksetId(activeId);
+                    TaskDialog.Show("The current selected workset is: ", targetWorkset);
                 }
 
                 catch (System.Exception e)
@@ -298,53 +318,43 @@ namespace LucidToolbar
         public void GetWorksetsInfo(UIApplication uiapp)
         {
             String message = String.Empty;
-            using (Transaction trans = new Transaction(uiapp.ActiveUIDocument.Document))
-                try
-                {   
-                    // Enumerating worksets in a document and getting basic information for each
-                    FilteredWorksetCollector collector = new FilteredWorksetCollector(uiapp.ActiveUIDocument.Document);
-                    // find all user worksets
-                    collector.OfKind(WorksetKind.UserWorkset);
-                    //worksets = collector.ToList();
-                    int count = 3; // show info for 3 worksets only
-                    foreach (Workset workset in worksets)
-                    {
-                        message += "Workset : " + workset.Name.ToString();
-                        message += "\nUnique Id : " + workset.UniqueId;
-                        //message += "\nOwner : " + workset.Owner;
-                        //    //message += "\nKind : " + workset.Kind;
-                        //    //message += "\nIs default : " + workset.IsDefaultWorkset;
-                        //    //message += "\nIs editable : " + workset.IsEditable;
-                        //    //message += "\nIs open : " + workset.IsOpen;
-                        //    //message += "\nIs visible by default : " + workset.IsVisibleByDefault;
-
-                        //    TaskDialog.Show("GetWorksetsInfo", message);
-
-                        if (0 == --count)
-                            break;
-                        //}
-
-                    }
-                }
-
-                catch(System.Exception e)
+            //using (Transaction trans = new Transaction(uiapp.ActiveUIDocument.Document))
+            try
+            {
+                    
+                // Enumerating worksets in a document and getting basic information for each
+                FilteredWorksetCollector collector = new FilteredWorksetCollector(uiapp.ActiveUIDocument.Document);
+                // find all user worksets
+                collector.OfKind(WorksetKind.UserWorkset);
+                IList<Workset> worksets = collector.ToWorksets();
+                //int count = 3; // show info for 3 worksets only
+                foreach (Workset workset in worksets)
                 {
-                    trans.RollBack();
-                    TaskDialog.Show("Unhandled Error", e.ToString());
+                    message += "Workset : " + workset.Name.ToString();
+                    message += "\nUnique Id : " + workset.UniqueId;
+                    
+                    //message += "\nOwner : " + workset.Owner;
+                    //    //message += "\nKind : " + workset.Kind;
+                    //    //message += "\nIs default : " + workset.IsDefaultWorkset;
+                    //    //message += "\nIs editable : " + workset.IsEditable;
+                    //    //message += "\nIs open : " + workset.IsOpen;
+                    //    //message += "\nIs visible by default : " + workset.IsVisibleByDefault;
+                    TaskDialog.Show("GetWorksetsInfo", message);
+
+                    //if (0 == --count)
 
                 }
-                finally
-                {
-                    trans.Commit();
-                }
-
-
-
-
-
-
+            }
+            catch(System.Exception e)
+            {
+                //trans.RollBack();
+                TaskDialog.Show("Unhandled Error", e.ToString());
+            }
+            finally
+            {
+                // trans.Commit();
+            }
             //get information for each workset
-
             
         }
         private void FlipHandAndFace(FamilyInstance e)
@@ -362,9 +372,22 @@ namespace LucidToolbar
             if (e.FacingFlipped ^ e.HandFlipped) e.flipHand();
         }
 
-        private void MakeRight(FamilyInstance e)
+        private void SetCurWorkset(UIApplication uiapp)
         {
-            if (!(e.FacingFlipped ^ e.HandFlipped)) e.flipHand();
+            try
+            {
+
+
+            }
+            catch (System.Exception e)
+            {
+                //trans.RollBack();
+                TaskDialog.Show("Unhandled Error", e.ToString());
+            }
+            finally
+            {
+                // trans.Commit();
+            }
         }
 
         // Note: The In|Out orientation depends on the position of the

@@ -14,8 +14,6 @@ using Autodesk.Revit.UI.Selection;
 using Autodesk.Revit.Creation;
 using Autodesk.Revit.ApplicationServices;
 
-using static LucidToolbar.TestCommand;
-
 namespace LucidToolbar
 {
     public partial class ModelessForm1 : System.Windows.Forms.Form
@@ -24,6 +22,9 @@ namespace LucidToolbar
         /// Wrapper for Project Info
         /// </summary>
         ProjectInfoWrapper m_projectInfoWrapper = null;
+        public static string targetWorkset = "";
+        public static WorksetId activeId = null;
+        List<KeyValuePair<string, string>> data = null;
 
         private RequestHandler m_Handler;
         private ExternalEvent m_ExEvent;
@@ -34,22 +35,22 @@ namespace LucidToolbar
             InitializeComponent();
             m_Handler = handler;
             m_ExEvent = exEvent;
-            lblNS_PBP.Text= TestCommand.NS_PBP;
-            txtEW_PBP.Text = TestCommand.EW_PBP;
-            txtElev_PBP.Text = TestCommand.Elev_PBP;
-            txtAng_PBP.Text = TestCommand.Ang_PBP;
+            //lblNS_PBP.Text= TestCommand.NS_PBP;
+            //txtEW_PBP.Text = TestCommand.EW_PBP;
+            //txtElev_PBP.Text = TestCommand.Elev_PBP;
+            //txtAng_PBP.Text = TestCommand.Ang_PBP;
 
-            txtNS_SP.Text = TestCommand.NS_SP;
-            txtEW_SP.Text = TestCommand.EW_SP;
-            txtElev_SP.Text = TestCommand.Elev_SP;
-            txtAng_SP.Text = TestCommand.Ang_SP;
+            //txtNS_SP.Text = TestCommand.NS_SP;
+            //txtEW_SP.Text = TestCommand.EW_SP;
+            //txtElev_SP.Text = TestCommand.Elev_SP;
+            //txtAng_SP.Text = TestCommand.Ang_SP;
         }
         
         public ModelessForm1(ProjectInfoWrapper projectInfoWrapper) :this()
         {
             
             m_projectInfoWrapper = projectInfoWrapper;
-
+            
             //Initialize propertyGrid with CustomDescriptor
             propertyGrid1.SelectedObject = new WrapperCustomDescriptor(m_projectInfoWrapper);
 
@@ -72,6 +73,7 @@ namespace LucidToolbar
             m_ExEvent.Dispose();
             m_ExEvent = null;
             m_Handler = null;
+
 
             // do not forget to call the base class
             base.OnFormClosed(e);
@@ -126,21 +128,35 @@ namespace LucidToolbar
         {
             EnableCommands(true);
         }
-        private void ProjectInfoForm_Load(object sender, EventArgs e)
+        public void ProjectInfoForm_Load(object sender, EventArgs e)
         {
-            //List<FakeWorksets> worksets = new List<FakeWorksets>{ new FakeWorksets("Workset1"),
-            //    new FakeWorksets("Workset2"),
-            //    new FakeWorksets("Workset3")
-            //};
-            //// Workset ComboBox
-            //this.worksetComboBox.DataSource = worksets;
+            // Create a List to store our KeyValuePairs
+            data = new List<KeyValuePair<string, string>>();
 
-            //WorksetsComboBox
-            //this.worksetComboBox.DataSource = m_projectInfo.Worksets;
-            //this.worksetComboBox.DisplayMember = "Name";
-            //this.worksetComboBox.DropDownStyle = ComboBoxStyle.DropDownList;
-            //this.worksetComboBox.Sorted = true;
-            //this.worksetComboBox.DropDown += new EventHandler(worksetComboBox_DropDown);
+            // Add data to the List
+            data.Add(new KeyValuePair<string, string>("ws1", "_Levels and Grids"));
+            data.Add(new KeyValuePair<string, string>("ws2", "Access and Penetrations"));
+            data.Add(new KeyValuePair<string, string>("ws3", "Electrical"));
+            data.Add(new KeyValuePair<string, string>("ws4", "Fire"));
+            data.Add(new KeyValuePair<string, string>("ws5", "Hydraulics"));
+            data.Add(new KeyValuePair<string, string>("ws6", "Mechanical"));
+            data.Add(new KeyValuePair<string, string>("ws7", "X_Architectural"));
+            data.Add(new KeyValuePair<string, string>("ws8", "X_Structural"));
+            //data.Add(new KeyValuePair<string, string>("ws9", RequestHandler.GetWorkset.ToString()));
+            // Clear the combobox
+            worksetComboBox1.DataSource = null;
+            worksetComboBox1.Items.Clear();
+
+            worksetComboBox.DataSource = null;
+            worksetComboBox.Items.Clear();
+            // Bind the combobox
+            worksetComboBox1.DataSource = new BindingSource(data, null);
+            worksetComboBox1.DisplayMember = "Value";
+            worksetComboBox1.ValueMember = "Key";
+
+            worksetComboBox.DataSource = new BindingSource(data, null);
+            worksetComboBox.DisplayMember = "Value";
+
         }
 
         private void GroupBox1_Enter(object sender, EventArgs e)
@@ -188,7 +204,7 @@ namespace LucidToolbar
             if (openFileDialog1.ShowDialog()==DialogResult.OK)//Check whether some files are selected 
             {
                 txbFolderPath.Text = Path.GetDirectoryName(openFileDialog1.FileNames[0]).ToString();
-                checkedListBox1.Items.Add("Check All");
+                //checkedListBox1.Items.Add("Check All");
                 for (int i = 0; i < openFileDialog1.FileNames.Length; i++)
                 {
 
@@ -236,7 +252,12 @@ namespace LucidToolbar
 
         private void WorksetComboBox_SelectedIndexChanged(object sender, EventArgs e)
         {
-            //btnOpen.Enabled = true;
+            // Get the selected item in the combobox
+            KeyValuePair<string, string> selectedPair = (KeyValuePair<string, string>)worksetComboBox1.SelectedItem;
+
+            // Show selected information on screen
+            //lblSelectedKey.Text = selectedPair.Key;
+            //lblSelectedValue.Text = selectedPair.Value;
         }
 
         private void worksetComboBox_DropDown(object sender, EventArgs e)
@@ -273,7 +294,7 @@ namespace LucidToolbar
         private void btnGetWorkset_Click(object sender, EventArgs e)
         {
             //MakeRequest(RequestId.GetActiveWorkset);
-            MakeRequest(RequestId.WorksetsInfo);
+            MakeRequest(RequestId.GetActiveWorkset);
         }
 
         private void ckbAll_CheckedChanged(object sender, EventArgs e)
@@ -334,6 +355,17 @@ namespace LucidToolbar
         private void btnUpdate_Click(object sender, EventArgs e)
         {
             MakeRequest(RequestId.WorksetsInfo);
+        }
+
+        private void btnSetWorkset_Click(object sender, EventArgs e)
+        {
+            MakeRequest(RequestId.SetCurWorkset);
+        }
+
+        private void worksetComboBox_SelectedIndexChanged_1(object sender, EventArgs e)
+        {
+            //targetWorkset.Set(worksetComboBox1.Text);
+            targetWorkset = worksetComboBox.Text;
         }
     }
 }

@@ -49,7 +49,7 @@ namespace LucidToolbar
         /// <summary>
         /// "MakeRight" request
         /// </summary>
-        MakeRight = 4,
+        SetCurWorkset = 4,
         /// <summary>
         /// "MakeLeft" request
         /// </summary>

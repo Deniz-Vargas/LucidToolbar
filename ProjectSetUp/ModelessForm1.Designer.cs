@@ -32,7 +32,7 @@
         {
             this.btnGetWorkset = new System.Windows.Forms.Button();
             this.checkedListBox1 = new System.Windows.Forms.CheckedListBox();
-            this.worksetComboBox = new System.Windows.Forms.ComboBox();
+            this.worksetComboBox1 = new System.Windows.Forms.ComboBox();
             this.progressBar1 = new System.Windows.Forms.ProgressBar();
             this.label2 = new System.Windows.Forms.Label();
             this.btnOpen = new System.Windows.Forms.Button();
@@ -69,10 +69,12 @@
             this.txtNS_SP = new System.Windows.Forms.TextBox();
             this.tab = new System.Windows.Forms.TabControl();
             this.tabPage3 = new System.Windows.Forms.TabPage();
+            this.propertyGrid1 = new System.Windows.Forms.PropertyGrid();
+            this.btnUpdate = new System.Windows.Forms.Button();
             this.tabPage1 = new System.Windows.Forms.TabPage();
             this.tabPage2 = new System.Windows.Forms.TabPage();
-            this.btnUpdate = new System.Windows.Forms.Button();
-            this.propertyGrid1 = new System.Windows.Forms.PropertyGrid();
+            this.btnSetWorkset = new System.Windows.Forms.Button();
+            this.worksetComboBox = new System.Windows.Forms.ComboBox();
             this.groupBox3.SuspendLayout();
             this.tab.SuspendLayout();
             this.tabPage3.SuspendLayout();
@@ -82,7 +84,7 @@
             // 
             // btnGetWorkset
             // 
-            this.btnGetWorkset.Location = new System.Drawing.Point(831, 141);
+            this.btnGetWorkset.Location = new System.Drawing.Point(727, 89);
             this.btnGetWorkset.Name = "btnGetWorkset";
             this.btnGetWorkset.Size = new System.Drawing.Size(155, 23);
             this.btnGetWorkset.TabIndex = 10;
@@ -100,15 +102,15 @@
             this.checkedListBox1.TabIndex = 9;
             this.checkedListBox1.SelectedIndexChanged += new System.EventHandler(this.checkedListBox1_SelectedIndexChanged_2);
             // 
-            // worksetComboBox
+            // worksetComboBox1
             // 
-            this.worksetComboBox.FormattingEnabled = true;
-            this.worksetComboBox.Location = new System.Drawing.Point(742, 102);
-            this.worksetComboBox.Name = "worksetComboBox";
-            this.worksetComboBox.Size = new System.Drawing.Size(256, 24);
-            this.worksetComboBox.TabIndex = 4;
-            this.worksetComboBox.DropDown += new System.EventHandler(this.worksetComboBox_DropDown);
-            this.worksetComboBox.SelectedIndexChanged += new System.EventHandler(this.WorksetComboBox_SelectedIndexChanged);
+            this.worksetComboBox1.FormattingEnabled = true;
+            this.worksetComboBox1.Location = new System.Drawing.Point(657, 47);
+            this.worksetComboBox1.Name = "worksetComboBox1";
+            this.worksetComboBox1.Size = new System.Drawing.Size(225, 24);
+            this.worksetComboBox1.TabIndex = 4;
+            this.worksetComboBox1.DropDown += new System.EventHandler(this.ckbAll_CheckedChanged);
+            this.worksetComboBox1.SelectedIndexChanged += new System.EventHandler(this.WorksetComboBox_SelectedIndexChanged);
             // 
             // progressBar1
             // 
@@ -123,7 +125,7 @@
             // label2
             // 
             this.label2.AutoSize = true;
-            this.label2.Location = new System.Drawing.Point(739, 74);
+            this.label2.Location = new System.Drawing.Point(657, 89);
             this.label2.Name = "label2";
             this.label2.Size = new System.Drawing.Size(64, 17);
             this.label2.TabIndex = 1;
@@ -133,7 +135,7 @@
             // btnOpen
             // 
             this.btnOpen.Enabled = false;
-            this.btnOpen.Location = new System.Drawing.Point(850, 63);
+            this.btnOpen.Location = new System.Drawing.Point(888, 43);
             this.btnOpen.Name = "btnOpen";
             this.btnOpen.Size = new System.Drawing.Size(148, 28);
             this.btnOpen.TabIndex = 7;
@@ -469,11 +471,35 @@
             this.tabPage3.Text = "ProjectInfo";
             this.tabPage3.UseVisualStyleBackColor = true;
             // 
+            // propertyGrid1
+            // 
+            this.propertyGrid1.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.propertyGrid1.HelpVisible = false;
+            this.propertyGrid1.Location = new System.Drawing.Point(4, 4);
+            this.propertyGrid1.Margin = new System.Windows.Forms.Padding(4);
+            this.propertyGrid1.Name = "propertyGrid1";
+            this.propertyGrid1.Size = new System.Drawing.Size(545, 450);
+            this.propertyGrid1.TabIndex = 4;
+            // 
+            // btnUpdate
+            // 
+            this.btnUpdate.Location = new System.Drawing.Point(556, 4);
+            this.btnUpdate.Name = "btnUpdate";
+            this.btnUpdate.Size = new System.Drawing.Size(115, 36);
+            this.btnUpdate.TabIndex = 3;
+            this.btnUpdate.Text = "Update";
+            this.btnUpdate.UseVisualStyleBackColor = true;
+            this.btnUpdate.Click += new System.EventHandler(this.btnUpdate_Click);
+            // 
             // tabPage1
             // 
+            this.tabPage1.Controls.Add(this.btnSetWorkset);
             this.tabPage1.Controls.Add(this.btnGetWorkset);
             this.tabPage1.Controls.Add(this.checkedListBox1);
             this.tabPage1.Controls.Add(this.worksetComboBox);
+            this.tabPage1.Controls.Add(this.worksetComboBox1);
             this.tabPage1.Controls.Add(this.progressBar1);
             this.tabPage1.Controls.Add(this.txbFolderPath);
             this.tabPage1.Controls.Add(this.btnSelSourceFile);
@@ -498,27 +524,25 @@
             this.tabPage2.Text = "Workset";
             this.tabPage2.UseVisualStyleBackColor = true;
             // 
-            // btnUpdate
+            // btnSetWorkset
             // 
-            this.btnUpdate.Location = new System.Drawing.Point(556, 4);
-            this.btnUpdate.Name = "btnUpdate";
-            this.btnUpdate.Size = new System.Drawing.Size(115, 36);
-            this.btnUpdate.TabIndex = 3;
-            this.btnUpdate.Text = "Update";
-            this.btnUpdate.UseVisualStyleBackColor = true;
-            this.btnUpdate.Click += new System.EventHandler(this.btnUpdate_Click);
+            this.btnSetWorkset.Location = new System.Drawing.Point(660, 141);
+            this.btnSetWorkset.Name = "btnSetWorkset";
+            this.btnSetWorkset.Size = new System.Drawing.Size(222, 23);
+            this.btnSetWorkset.TabIndex = 10;
+            this.btnSetWorkset.Text = "Change Current Workset to";
+            this.btnSetWorkset.UseVisualStyleBackColor = true;
+            this.btnSetWorkset.Click += new System.EventHandler(this.btnSetWorkset_Click);
             // 
-            // propertyGrid1
+            // worksetComboBox
             // 
-            this.propertyGrid1.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
-            | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
-            this.propertyGrid1.HelpVisible = false;
-            this.propertyGrid1.Location = new System.Drawing.Point(4, 4);
-            this.propertyGrid1.Margin = new System.Windows.Forms.Padding(4);
-            this.propertyGrid1.Name = "propertyGrid1";
-            this.propertyGrid1.Size = new System.Drawing.Size(545, 450);
-            this.propertyGrid1.TabIndex = 4;
+            this.worksetComboBox.FormattingEnabled = true;
+            this.worksetComboBox.Location = new System.Drawing.Point(891, 141);
+            this.worksetComboBox.Name = "worksetComboBox";
+            this.worksetComboBox.Size = new System.Drawing.Size(145, 24);
+            this.worksetComboBox.TabIndex = 4;
+            this.worksetComboBox.DropDown += new System.EventHandler(this.worksetComboBox_DropDown);
+            this.worksetComboBox.SelectedIndexChanged += new System.EventHandler(this.worksetComboBox_SelectedIndexChanged_1);
             // 
             // ModelessForm1
             // 
@@ -552,7 +576,7 @@
         private System.Windows.Forms.Button btnSelSourceFile;
         private System.Windows.Forms.ProgressBar progressBar1;
         private System.Windows.Forms.FolderBrowserDialog folderBrowserDialog1;
-        private System.Windows.Forms.ComboBox worksetComboBox;
+        private System.Windows.Forms.ComboBox worksetComboBox1;
         private System.Windows.Forms.Button btnOpen;
         private System.Windows.Forms.Button btnGetWorkset;
         private System.Windows.Forms.CheckedListBox checkedListBox1;
@@ -588,5 +612,7 @@
         private System.Windows.Forms.TabPage tabPage3;
         private System.Windows.Forms.Button btnUpdate;
         private System.Windows.Forms.PropertyGrid propertyGrid1;
+        private System.Windows.Forms.Button btnSetWorkset;
+        private System.Windows.Forms.ComboBox worksetComboBox;
     }
 }
