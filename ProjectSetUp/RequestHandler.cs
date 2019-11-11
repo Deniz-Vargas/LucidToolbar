@@ -92,7 +92,7 @@ namespace LucidToolbar
                             return;  // no request at this time -> we can leave immediately
                         }
                         ///use this one to test out opening up a document
-                    case RequestId.Delete:
+                    case RequestId.Linkfile:
                         {
                             //ModifySelectedDoors(uiapp, "Delete doors", e => e.Document.Delete(e.Id));
                             LinkFile(uiapp);
@@ -217,10 +217,10 @@ namespace LucidToolbar
                 trans.Start("Link file");
                 ModelPath mp = ModelPathUtils.ConvertUserVisiblePathToModelPath(TestCommand.filePath);
                 WorksetConfiguration worksetconfig = new WorksetConfiguration();
-                RevitLinkOptions option = new RevitLinkOptions(false,worksetconfig);
+                RevitLinkOptions option = new RevitLinkOptions(false,worksetconfig);                
                 //Create new revit link storing absolute path to a file
                 LinkLoadResult result = RevitLinkType.Create(uiapp.ActiveUIDocument.Document, mp, option);
-                
+                RevitLinkInstance instance = RevitLinkInstance.Create(uiapp.ActiveUIDocument.Document, result.ElementId, ImportPlacement.Origin);
             }
             
             catch (System.Exception e)
@@ -299,7 +299,7 @@ namespace LucidToolbar
                     //TaskDialog.Show("The current active workset is: ", workset.Name.ToString());
                     //Set the active workset to the targetworkset selected from the combobox
                     uiapp.ActiveUIDocument.Document.GetWorksetTable().SetActiveWorksetId(activeId);
-                    TaskDialog.Show("The current selected workset is: ", targetWorkset);
+                    //TaskDialog.Show("The current selected workset is: ", targetWorkset);
                 }
 
                 catch (System.Exception e)

@@ -134,29 +134,29 @@ namespace LucidToolbar
             data = new List<KeyValuePair<string, string>>();
 
             // Add data to the List
-            data.Add(new KeyValuePair<string, string>("ws1", "_Levels and Grids"));
+            data.Add(new KeyValuePair<string, string>("ws1", "X_Architectural"));
             data.Add(new KeyValuePair<string, string>("ws2", "Access and Penetrations"));
             data.Add(new KeyValuePair<string, string>("ws3", "Electrical"));
             data.Add(new KeyValuePair<string, string>("ws4", "Fire"));
             data.Add(new KeyValuePair<string, string>("ws5", "Hydraulics"));
             data.Add(new KeyValuePair<string, string>("ws6", "Mechanical"));
-            data.Add(new KeyValuePair<string, string>("ws7", "X_Architectural"));
+            data.Add(new KeyValuePair<string, string>("ws7", "_Levels and Grids"));
             data.Add(new KeyValuePair<string, string>("ws8", "X_Structural"));
             //data.Add(new KeyValuePair<string, string>("ws9", RequestHandler.GetWorkset.ToString()));
             // Clear the combobox
-            worksetComboBox1.DataSource = null;
-            worksetComboBox1.Items.Clear();
+            //worksetComboBox1.DataSource = null;
+            //worksetComboBox1.Items.Clear();
 
             worksetComboBox.DataSource = null;
             worksetComboBox.Items.Clear();
             // Bind the combobox
-            worksetComboBox1.DataSource = new BindingSource(data, null);
-            worksetComboBox1.DisplayMember = "Value";
-            worksetComboBox1.ValueMember = "Key";
+            //worksetComboBox1.DataSource = new BindingSource(data, null);
+            //worksetComboBox1.DisplayMember = "Value";
+           
 
             worksetComboBox.DataSource = new BindingSource(data, null);
             worksetComboBox.DisplayMember = "Value";
-
+            worksetComboBox.ValueMember = "Key";
         }
 
         private void GroupBox1_Enter(object sender, EventArgs e)
@@ -201,8 +201,9 @@ namespace LucidToolbar
 
         private void btnSelSourceFile_Click(object sender, EventArgs e)
         {
+            checkedListBox1.Items.Clear();
             if (openFileDialog1.ShowDialog()==DialogResult.OK)//Check whether some files are selected 
-            {
+            { 
                 txbFolderPath.Text = Path.GetDirectoryName(openFileDialog1.FileNames[0]).ToString();
                 //checkedListBox1.Items.Add("Check All");
                 for (int i = 0; i < openFileDialog1.FileNames.Length; i++)
@@ -253,7 +254,7 @@ namespace LucidToolbar
         private void WorksetComboBox_SelectedIndexChanged(object sender, EventArgs e)
         {
             // Get the selected item in the combobox
-            KeyValuePair<string, string> selectedPair = (KeyValuePair<string, string>)worksetComboBox1.SelectedItem;
+            KeyValuePair<string, string> selectedPair = (KeyValuePair<string, string>)worksetComboBox.SelectedItem;
 
             // Show selected information on screen
             //lblSelectedKey.Text = selectedPair.Key;
@@ -285,10 +286,12 @@ namespace LucidToolbar
             foreach (var item in checkedListBox1.CheckedItems) //need to grab each item from the list
             {
                 progressBar1.PerformStep();
-                MakeRequest(RequestId.Delete);
+                TestCommand.filePath = Path.Combine(txbFolderPath.Text, Path.GetFileName(item.ToString()));
+                //TaskDialog.Show("Target Directory",TestCommand.filePath.ToString());
+                MakeRequest(RequestId.Linkfile);
             }
 
-            
+
         }
 
         private void btnGetWorkset_Click(object sender, EventArgs e)
@@ -366,6 +369,25 @@ namespace LucidToolbar
         {
             //targetWorkset.Set(worksetComboBox1.Text);
             targetWorkset = worksetComboBox.Text;
+            MakeRequest(RequestId.SetCurWorkset);
+        }
+
+        private void ckbCheckAll_CheckedChanged(object sender, EventArgs e)
+        {
+            if (ckbCheckAll.Enabled == true)
+            {
+                for(int i = 0; i < checkedListBox1.Items.Count; i++)
+                {
+                    checkedListBox1.SetItemChecked(i, true);
+                }
+            }
+            else
+            {
+                for (int i = 0; i < checkedListBox1.Items.Count; i++)
+                {
+                    checkedListBox1.SetItemChecked(i, false);
+                }
+            }
         }
     }
 }

@@ -37,7 +37,7 @@ namespace LucidToolbar
         /// <summary>
         /// "Delete" request
         /// </summary>
-        Delete = 1,
+        Linkfile = 1,
         /// <summary>
         /// "FlipLeftRight" request
         /// </summary>
