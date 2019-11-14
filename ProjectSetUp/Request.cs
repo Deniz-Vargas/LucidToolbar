@@ -53,11 +53,11 @@ namespace LucidToolbar
         /// <summary>
         /// "MakeLeft" request
         /// </summary>
-        MakeLeft = 5,
+        TreeDiagram = 5,
         /// <summary>
         /// "TurnOut" request
         /// </summary>
-        TurnOut = 6,
+        ProjectInfo = 6,
         /// <summary>
         /// "TurnIn" request
         /// </summary>

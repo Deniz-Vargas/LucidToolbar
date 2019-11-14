@@ -18,18 +18,24 @@ namespace LucidToolbar
 {
     public partial class ModelessForm1 : System.Windows.Forms.Form
     {
+        #region Fields
         /// <summary>
-        /// Wrapper for Project Info
+        /// Wrapper for ProjectInfo
         /// </summary>
         ProjectInfoWrapper m_projectInfoWrapper = null;
-        public static string targetWorkset = "";
-        public static WorksetId activeId = null;
-        List<KeyValuePair<string, string>> data = null;
-
+        #endregion
+        public static string targetWorkset { get; set; }
+        public static WorksetId activeId { get; set; }
+        List<KeyValuePair<string, string>> data { get; set; }
+        public static int progressb { get; set; }
+        public static int revitlinks { get; set; }
         private RequestHandler m_Handler;
         private ExternalEvent m_ExEvent;
 
-       
+        public ModelessForm1()
+        {
+            InitializeComponent();
+        }
         public ModelessForm1(ExternalEvent exEvent, RequestHandler handler)
         {
             InitializeComponent();
@@ -57,11 +63,16 @@ namespace LucidToolbar
 
         }
 
-        public ModelessForm1()
-        {
-            InitializeComponent();
-        }
 
+
+        public void UpdateUI (MyProgress progress)
+        {
+            Invoke(new Action(() =>
+            {
+                //update UI based on progress;
+                MessageBox.Show(progress.Data);
+            }));
+        }
         /// <summary>
         /// Form closed event handler
         /// </summary>
@@ -107,7 +118,12 @@ namespace LucidToolbar
             DozeOff();
         }
 
-       
+        //private void DoRequest(RequestId request)
+        //{
+        //    d_Handler.Request.Make(request);
+        //    d_ExEvent.Raise();
+        //    DozeOff();
+        //}
 
 
         /// <summary>
@@ -132,6 +148,7 @@ namespace LucidToolbar
         {
             // Create a List to store our KeyValuePairs
             data = new List<KeyValuePair<string, string>>();
+            TestCommand.filePath = "";
 
             // Add data to the List
             data.Add(new KeyValuePair<string, string>("ws1", "X_Architectural"));
@@ -157,6 +174,10 @@ namespace LucidToolbar
             worksetComboBox.DataSource = new BindingSource(data, null);
             worksetComboBox.DisplayMember = "Value";
             worksetComboBox.ValueMember = "Key";
+
+            worksetComboBox.SelectedItem = null;
+            //worksetComboBox.SelectedText = "---Select---";
+
         }
 
         private void GroupBox1_Enter(object sender, EventArgs e)
@@ -218,7 +239,9 @@ namespace LucidToolbar
                 //FilePath fp = new FilePath(textBox1.Text);
                 //for (int i =0;i<openFileDialog1.FileName.Length;i++) //loop to iterate through the array of file names
             }
-            btnOpen.Enabled = true;
+            
+            ckbCheckAll.Enabled = true;
+            ckbCheckAll.Checked = false;
         }
 
         private void openFileDialog1_FileOk(object sender, CancelEventArgs e)
@@ -278,20 +301,17 @@ namespace LucidToolbar
 
         public void btnOpen_Click(object sender, EventArgs e)
         {
-            //string testFile = textBox1.Text.ToString();
-            //filePath = textBox1.Text.ToString();
-            //TaskDialog.Show("About to open file: ", textBox1.Text);
+            MakeRequest(RequestId.Linkfile);
+            
             progressBar1.Value = progressBar1.Minimum;//restore the progress bar between copy 
             progressBar1.Maximum = checkedListBox1.CheckedItems.Count; //
             foreach (var item in checkedListBox1.CheckedItems) //need to grab each item from the list
             {
-                progressBar1.PerformStep();
                 TestCommand.filePath = Path.Combine(txbFolderPath.Text, Path.GetFileName(item.ToString()));
                 //TaskDialog.Show("Target Directory",TestCommand.filePath.ToString());
                 MakeRequest(RequestId.Linkfile);
+                progressBar1.PerformStep();
             }
-
-
         }
 
         private void btnGetWorkset_Click(object sender, EventArgs e)
@@ -357,7 +377,8 @@ namespace LucidToolbar
 
         private void btnUpdate_Click(object sender, EventArgs e)
         {
-            MakeRequest(RequestId.WorksetsInfo);
+            //MakeRequest(RequestId.ProjectInfo);
+            //DoRequest();
         }
 
         private void btnSetWorkset_Click(object sender, EventArgs e)
@@ -368,13 +389,14 @@ namespace LucidToolbar
         private void worksetComboBox_SelectedIndexChanged_1(object sender, EventArgs e)
         {
             //targetWorkset.Set(worksetComboBox1.Text);
+            
             targetWorkset = worksetComboBox.Text;
             MakeRequest(RequestId.SetCurWorkset);
         }
 
         private void ckbCheckAll_CheckedChanged(object sender, EventArgs e)
         {
-            if (ckbCheckAll.Enabled == true)
+            if (ckbCheckAll.Checked == true)
             {
                 for(int i = 0; i < checkedListBox1.Items.Count; i++)
                 {
@@ -388,6 +410,21 @@ namespace LucidToolbar
                     checkedListBox1.SetItemChecked(i, false);
                 }
             }
+        }
+
+        private void worksetComboBox_Click(object sender, EventArgs e)
+        {
+            btnOpen.Enabled = true;
+        }
+
+        private void button1_Click_1(object sender, EventArgs e)
+        {
+            MakeRequest(RequestId.TreeDiagram);
+        }
+
+        private void propertyGrid1_Click_1(object sender, EventArgs e)
+        {
+
         }
     }
 }

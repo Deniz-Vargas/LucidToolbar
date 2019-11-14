@@ -6,7 +6,7 @@
         /// Required designer variable.
         /// </summary>
         private System.ComponentModel.IContainer components = null;
-        private ProjectInfo m_projectInfo;
+        //private ProjectInfo m_projectInfo;
 
         /// <summary>
         /// Clean up any resources being used.
@@ -71,10 +71,13 @@
             this.propertyGrid1 = new System.Windows.Forms.PropertyGrid();
             this.btnUpdate = new System.Windows.Forms.Button();
             this.tabPage1 = new System.Windows.Forms.TabPage();
+            this.treeView1 = new System.Windows.Forms.TreeView();
             this.ckbCheckAll = new System.Windows.Forms.CheckBox();
-            this.btnSetWorkset = new System.Windows.Forms.Button();
             this.worksetComboBox = new System.Windows.Forms.ComboBox();
             this.tabPage2 = new System.Windows.Forms.TabPage();
+            this.btnSetWorkset = new System.Windows.Forms.Button();
+            this.button1 = new System.Windows.Forms.Button();
+            this.label4 = new System.Windows.Forms.Label();
             this.groupBox3.SuspendLayout();
             this.tab.SuspendLayout();
             this.tabPage3.SuspendLayout();
@@ -84,7 +87,7 @@
             // 
             // btnGetWorkset
             // 
-            this.btnGetWorkset.Location = new System.Drawing.Point(658, 468);
+            this.btnGetWorkset.Location = new System.Drawing.Point(115, 543);
             this.btnGetWorkset.Name = "btnGetWorkset";
             this.btnGetWorkset.Size = new System.Drawing.Size(155, 23);
             this.btnGetWorkset.TabIndex = 10;
@@ -97,9 +100,9 @@
             // 
             this.checkedListBox1.FormattingEnabled = true;
             this.checkedListBox1.HorizontalScrollbar = true;
-            this.checkedListBox1.Location = new System.Drawing.Point(22, 68);
+            this.checkedListBox1.Location = new System.Drawing.Point(106, 68);
             this.checkedListBox1.Name = "checkedListBox1";
-            this.checkedListBox1.Size = new System.Drawing.Size(629, 395);
+            this.checkedListBox1.Size = new System.Drawing.Size(340, 344);
             this.checkedListBox1.TabIndex = 9;
             this.checkedListBox1.SelectedIndexChanged += new System.EventHandler(this.checkedListBox1_SelectedIndexChanged_2);
             // 
@@ -108,7 +111,7 @@
             this.progressBar1.Location = new System.Drawing.Point(22, 469);
             this.progressBar1.Minimum = 1;
             this.progressBar1.Name = "progressBar1";
-            this.progressBar1.Size = new System.Drawing.Size(629, 22);
+            this.progressBar1.Size = new System.Drawing.Size(1011, 22);
             this.progressBar1.Step = 1;
             this.progressBar1.TabIndex = 9;
             this.progressBar1.Value = 1;
@@ -116,40 +119,40 @@
             // label2
             // 
             this.label2.AutoSize = true;
-            this.label2.Location = new System.Drawing.Point(654, 47);
+            this.label2.Location = new System.Drawing.Point(488, 72);
             this.label2.Name = "label2";
             this.label2.Size = new System.Drawing.Size(64, 17);
             this.label2.TabIndex = 1;
-            this.label2.Text = "Workset ";
+            this.label2.Text = "Workset:";
             this.label2.Click += new System.EventHandler(this.Label1_Click);
             // 
             // btnOpen
             // 
             this.btnOpen.Enabled = false;
-            this.btnOpen.Location = new System.Drawing.Point(885, 68);
+            this.btnOpen.Location = new System.Drawing.Point(871, 61);
             this.btnOpen.Name = "btnOpen";
             this.btnOpen.Size = new System.Drawing.Size(148, 28);
             this.btnOpen.TabIndex = 7;
-            this.btnOpen.Text = "Link in checked files";
+            this.btnOpen.Text = "Link in checked file";
             this.btnOpen.UseVisualStyleBackColor = true;
             this.btnOpen.Click += new System.EventHandler(this.btnOpen_Click);
             // 
             // btnSelSourceFile
             // 
-            this.btnSelSourceFile.Location = new System.Drawing.Point(558, 17);
+            this.btnSelSourceFile.Location = new System.Drawing.Point(871, 15);
             this.btnSelSourceFile.Name = "btnSelSourceFile";
-            this.btnSelSourceFile.Size = new System.Drawing.Size(93, 24);
+            this.btnSelSourceFile.Size = new System.Drawing.Size(33, 24);
             this.btnSelSourceFile.TabIndex = 6;
-            this.btnSelSourceFile.Text = "Select Files";
+            this.btnSelSourceFile.Text = "...";
             this.btnSelSourceFile.UseVisualStyleBackColor = true;
             this.btnSelSourceFile.Click += new System.EventHandler(this.btnSelSourceFile_Click);
             // 
             // txbFolderPath
             // 
             this.txbFolderPath.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.txbFolderPath.Location = new System.Drawing.Point(22, 17);
+            this.txbFolderPath.Location = new System.Drawing.Point(190, 15);
             this.txbFolderPath.Name = "txbFolderPath";
-            this.txbFolderPath.Size = new System.Drawing.Size(530, 24);
+            this.txbFolderPath.Size = new System.Drawing.Size(675, 24);
             this.txbFolderPath.TabIndex = 2;
             // 
             // btnCancel
@@ -472,6 +475,7 @@
             this.propertyGrid1.Name = "propertyGrid1";
             this.propertyGrid1.Size = new System.Drawing.Size(545, 450);
             this.propertyGrid1.TabIndex = 4;
+            this.propertyGrid1.Click += new System.EventHandler(this.propertyGrid1_Click_1);
             // 
             // btnUpdate
             // 
@@ -485,14 +489,14 @@
             // 
             // tabPage1
             // 
+            this.tabPage1.Controls.Add(this.treeView1);
             this.tabPage1.Controls.Add(this.ckbCheckAll);
-            this.tabPage1.Controls.Add(this.btnSetWorkset);
-            this.tabPage1.Controls.Add(this.btnGetWorkset);
             this.tabPage1.Controls.Add(this.checkedListBox1);
             this.tabPage1.Controls.Add(this.worksetComboBox);
             this.tabPage1.Controls.Add(this.progressBar1);
             this.tabPage1.Controls.Add(this.txbFolderPath);
             this.tabPage1.Controls.Add(this.btnSelSourceFile);
+            this.tabPage1.Controls.Add(this.label4);
             this.tabPage1.Controls.Add(this.label2);
             this.tabPage1.Controls.Add(this.btnOpen);
             this.tabPage1.Location = new System.Drawing.Point(4, 25);
@@ -503,38 +507,36 @@
             this.tabPage1.Text = "Select Model";
             this.tabPage1.UseVisualStyleBackColor = true;
             // 
+            // treeView1
+            // 
+            this.treeView1.Location = new System.Drawing.Point(491, 122);
+            this.treeView1.Name = "treeView1";
+            this.treeView1.Size = new System.Drawing.Size(374, 290);
+            this.treeView1.TabIndex = 12;
+            // 
             // ckbCheckAll
             // 
             this.ckbCheckAll.AutoSize = true;
             this.ckbCheckAll.Enabled = false;
-            this.ckbCheckAll.Location = new System.Drawing.Point(25, 47);
+            this.ckbCheckAll.Location = new System.Drawing.Point(6, 20);
             this.ckbCheckAll.Name = "ckbCheckAll";
             this.ckbCheckAll.Size = new System.Drawing.Size(88, 21);
             this.ckbCheckAll.TabIndex = 11;
             this.ckbCheckAll.Text = "Check All";
             this.ckbCheckAll.UseVisualStyleBackColor = true;
+            this.ckbCheckAll.Visible = false;
             this.ckbCheckAll.CheckedChanged += new System.EventHandler(this.ckbCheckAll_CheckedChanged);
-            // 
-            // btnSetWorkset
-            // 
-            this.btnSetWorkset.Location = new System.Drawing.Point(814, 468);
-            this.btnSetWorkset.Name = "btnSetWorkset";
-            this.btnSetWorkset.Size = new System.Drawing.Size(222, 23);
-            this.btnSetWorkset.TabIndex = 10;
-            this.btnSetWorkset.Text = "Change Current Workset to";
-            this.btnSetWorkset.UseVisualStyleBackColor = true;
-            this.btnSetWorkset.Visible = false;
-            this.btnSetWorkset.Click += new System.EventHandler(this.btnSetWorkset_Click);
             // 
             // worksetComboBox
             // 
             this.worksetComboBox.FormattingEnabled = true;
-            this.worksetComboBox.Location = new System.Drawing.Point(658, 70);
+            this.worksetComboBox.Location = new System.Drawing.Point(570, 65);
             this.worksetComboBox.Name = "worksetComboBox";
-            this.worksetComboBox.Size = new System.Drawing.Size(222, 24);
+            this.worksetComboBox.Size = new System.Drawing.Size(295, 24);
             this.worksetComboBox.TabIndex = 4;
             this.worksetComboBox.DropDown += new System.EventHandler(this.worksetComboBox_DropDown);
             this.worksetComboBox.SelectedIndexChanged += new System.EventHandler(this.worksetComboBox_SelectedIndexChanged_1);
+            this.worksetComboBox.Click += new System.EventHandler(this.worksetComboBox_Click);
             // 
             // tabPage2
             // 
@@ -547,6 +549,37 @@
             this.tabPage2.Text = "Workset";
             this.tabPage2.UseVisualStyleBackColor = true;
             // 
+            // btnSetWorkset
+            // 
+            this.btnSetWorkset.Location = new System.Drawing.Point(286, 543);
+            this.btnSetWorkset.Name = "btnSetWorkset";
+            this.btnSetWorkset.Size = new System.Drawing.Size(222, 23);
+            this.btnSetWorkset.TabIndex = 10;
+            this.btnSetWorkset.Text = "Change Current Workset to";
+            this.btnSetWorkset.UseVisualStyleBackColor = true;
+            this.btnSetWorkset.Visible = false;
+            this.btnSetWorkset.Click += new System.EventHandler(this.btnSetWorkset_Click);
+            // 
+            // button1
+            // 
+            this.button1.Location = new System.Drawing.Point(658, 543);
+            this.button1.Name = "button1";
+            this.button1.Size = new System.Drawing.Size(155, 23);
+            this.button1.TabIndex = 10;
+            this.button1.Text = "Get Linked Models";
+            this.button1.UseVisualStyleBackColor = true;
+            this.button1.Click += new System.EventHandler(this.button1_Click_1);
+            // 
+            // label4
+            // 
+            this.label4.AutoSize = true;
+            this.label4.Location = new System.Drawing.Point(103, 20);
+            this.label4.Name = "label4";
+            this.label4.Size = new System.Drawing.Size(81, 17);
+            this.label4.TabIndex = 1;
+            this.label4.Text = "File source:";
+            this.label4.Click += new System.EventHandler(this.Label1_Click);
+            // 
             // ModelessForm1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
@@ -554,7 +587,10 @@
             this.ClientSize = new System.Drawing.Size(1066, 584);
             this.Controls.Add(this.tab);
             this.Controls.Add(this.btnOK);
+            this.Controls.Add(this.btnSetWorkset);
             this.Controls.Add(this.btnCancel);
+            this.Controls.Add(this.btnGetWorkset);
+            this.Controls.Add(this.button1);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedDialog;
             this.Name = "ModelessForm1";
             this.Text = "Project Set Up ";
@@ -617,5 +653,8 @@
         private System.Windows.Forms.Button btnSetWorkset;
         private System.Windows.Forms.ComboBox worksetComboBox;
         private System.Windows.Forms.CheckBox ckbCheckAll;
+        private System.Windows.Forms.TreeView treeView1;
+        private System.Windows.Forms.Button button1;
+        private System.Windows.Forms.Label label4;
     }
 }

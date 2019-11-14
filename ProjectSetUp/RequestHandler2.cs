@@ -13,7 +13,7 @@ using Application = Autodesk.Revit.ApplicationServices.Application;
 
 namespace LucidToolbar
 {
-    public class ProjectInfo 
+    public class RequestHandler2 
     {
         // Store the reference of the application in revit
         UIApplication m_revit;
@@ -32,7 +32,7 @@ namespace LucidToolbar
         /// This class get all the project information such as survey points, project base points and linked worksets 
         /// </summary>
         /// <param name="commandData"></param>
-        public ProjectInfo(ExternalCommandData commandData)
+        public RequestHandler2(ExternalCommandData commandData)
         {
             m_revit = commandData.Application;
             //GetProjectBasepoints();
@@ -57,24 +57,24 @@ namespace LucidToolbar
         /// </summary>
         private void GetSurvryPoints()
         {
-            FilteredElementCollector surveypointCollector = new FilteredElementCollector(m_revit.ActiveUIDocument.Document);
-            ElementCategoryFilter SurveyCategoryfilter = new ElementCategoryFilter(BuiltInCategory.OST_SharedBasePoint);
-            m_surveyElements = surveypointCollector.WherePasses(SurveyCategoryfilter).ToList<Element>();
+            //FilteredElementCollector surveypointCollector = new FilteredElementCollector(m_revit.ActiveUIDocument.Document);
+            //ElementCategoryFilter SurveyCategoryfilter = new ElementCategoryFilter(BuiltInCategory.OST_SharedBasePoint);
+            //m_surveyElements = surveypointCollector.WherePasses(SurveyCategoryfilter).ToList<Element>();
             //foreach (Element ele in m_surveyElements)
             //{
             //    Parameter paramX = ele.ParametersMap.get_Item("E/W");
             //    String x1 = ele.get_Parameter(BuiltInParameter.BASEPOINT_EASTWEST_PARAM).AsValueString();
             //    String X = paramX.AsValueString();
-            //    NS_SP = paramX.AsValueString();
+            //    TestCommand.NS_SP = paramX.AsValueString();
 
             //    Parameter paramY = ele.ParametersMap.get_Item("N/S");
             //    String y1 = ele.get_Parameter(BuiltInParameter.BASEPOINT_NORTHSOUTH_PARAM).AsValueString();
             //    String Y = paramY.AsValueString();
-            //    EW_SP = paramY.AsValueString();
+            //    TestCommand.EW_SP = paramY.AsValueString();
 
             //    Parameter Elevation = ele.ParametersMap.get_Item("Elev");
             //    String Ele = Elevation.AsValueString();
-            //    Elev_SP = Elevation.AsValueString();
+            //    TestCommand.Elev_SP = Elevation.AsValueString();
 
             //    //Parameter Angle = ele.ParametersMap.get_Item("Angle to True North");
             //    //String Ang = Angle.AsValueString();

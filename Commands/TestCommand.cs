@@ -48,70 +48,77 @@ namespace LucidToolbar
         public static string Ang_SP { get; internal set; }
 
         public static string filePath { get; internal set; }
-        
+        // Store the reference of the application in revit
+        UIApplication m_revit;
 
+        //Create a list to hold all elements relating to site elements           
+        IList<Element> m_siteElements = new List<Element>();
+        IList<Element> m_surveyElements = new List<Element>();
+        public void run()
+        {
+            //ModelessForm1 = new ModelessForm1();
+
+        }
         public Result Execute(ExternalCommandData commandData, ref string message, ElementSet elements)
         {
-            //RevitStartInfo.RevitApp = commandData.Application.Application;
-            //RevitStartInfo.RevitDoc = commandData.Application.ActiveUIDocument.Document;
-            //RevitStartInfo.RevitProduct = commandData.Application.Application.Product;
+            RevitStartInfo.RevitApp = commandData.Application.Application;
+            RevitStartInfo.RevitDoc = commandData.Application.ActiveUIDocument.Document;
+            RevitStartInfo.RevitProduct = commandData.Application.Application.Product;
+
+            Transaction documentTransaction = new Transaction(commandData.Application.ActiveUIDocument.Document, "Document");
+
             try
             {
-                // get current project information
-                //Autodesk.Revit.DB.ProjectInfo pi = commandData.Application.ActiveUIDocument.Document.ProjectInformation;
-                //Create a transaction
-
-                Transaction documentTransaction = new Transaction(commandData.Application.ActiveUIDocument.Document, "Document");
                 documentTransaction.Start();
+                //get current project information
+                Autodesk.Revit.DB.ProjectInfo pi = commandData.Application.ActiveUIDocument.Document.ProjectInformation;
+                // show main form
+                using (ModelessForm1 pif = new ModelessForm1(new ProjectInfoWrapper(pi)))
+
                 //ProjectInfo data = new ProjectInfo(commandData);
                 ExternalApplication.thisApp.ShowForm(commandData.Application);
+                //ProjectInfo(commandData);
                 documentTransaction.Commit();
                 return Result.Succeeded;
-
-                // Create a new instance of class RoomsData
-
-                //Transaction transaction = new Transaction(RevitStartInfo.RevitDoc, "ProjectInfo");
-                //try
-                //{
-                //    // Start transaction
-                //    transaction.Start();
-
-                //    // get current project information
-
-
-                //    // show main form
-                //    using (ModelessForm1 pif = new ModelessForm1(new ProjectInfoWrapper(pi)))
-                //    //using (ProjectInfoForm pif = new ProjectInfoForm(new SiteLocationWrapper(pi)))
-                //    {
-                //        pif.StartPosition = System.Windows.Forms.FormStartPosition.CenterParent;
-                //        if (pif.ShowDialog() == System.Windows.Forms.DialogResult.OK)
-                //        {
-                //            transaction.Commit();
-                //            return Result.Succeeded;
-                //        }
-                //        else
-                //        {
-                //            transaction.RollBack();
-                //            return Result.Cancelled;
-                //        }
-                //    }
-
-                //}
-                //catch (Exception ex)
-                //{
-                //    transaction.RollBack();
-                //    message = ex.ToString();
-                //    return Result.Failed;
-                //}
-
             }
             catch (Exception ex)
             {
                 // If there are something wrong, give error information and return failed
+                documentTransaction.RollBack();
                 message = ex.Message;
                 return Result.Failed;
             }
 
+
+        }
+        public void ProjectInfo(ExternalCommandData commandData)
+        {
+            m_revit = commandData.Application;
+            FilteredElementCollector surveypointCollector = new FilteredElementCollector(m_revit.ActiveUIDocument.Document);
+            ElementCategoryFilter SurveyCategoryfilter = new ElementCategoryFilter(BuiltInCategory.OST_SharedBasePoint);
+            m_surveyElements = surveypointCollector.WherePasses(SurveyCategoryfilter).ToList<Element>();
+            foreach (Element ele in m_surveyElements)
+            {
+                Parameter paramX = ele.ParametersMap.get_Item("E/W");
+                String x1 = ele.get_Parameter(BuiltInParameter.BASEPOINT_EASTWEST_PARAM).AsValueString();
+                String X = paramX.AsValueString();
+                TestCommand.NS_SP = paramX.AsValueString();
+
+                Parameter paramY = ele.ParametersMap.get_Item("N/S");
+                String y1 = ele.get_Parameter(BuiltInParameter.BASEPOINT_NORTHSOUTH_PARAM).AsValueString();
+                String Y = paramY.AsValueString();
+                TestCommand.EW_SP = paramY.AsValueString();
+
+                Parameter Elevation = ele.ParametersMap.get_Item("Elev");
+                String Ele = Elevation.AsValueString();
+                TestCommand.Elev_SP = Elevation.AsValueString();
+
+                //Parameter Angle = ele.ParametersMap.get_Item("Angle to True North");
+                //String Ang = Angle.AsValueString();
+                //Ang_SP = Angle.AsValueString();
+
+                //TaskDialog.Show("Revit Model Survey Point", string.Format("E/W is {0}: W/S is {1}: Elevation is {2}", X, Y, Ele));
+            }
 
         }
 
@@ -260,6 +267,7 @@ namespace LucidToolbar
 
 
         }
+        
         #endregion
 
         #region Methods
@@ -272,5 +280,6 @@ namespace LucidToolbar
             return GetElement(new ElementId(elementId));
         }
         #endregion
+
     }
 }

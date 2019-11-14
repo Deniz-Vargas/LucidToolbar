@@ -86,7 +86,7 @@
     <Compile Include="Commands\NaturalGasPipe.cs" />
     <Compile Include="Commands\OpenMyLib.cs" />
     <Compile Include="Commands\TestCommand.cs" />
-    <Compile Include="ProjectSetUp\ProjectInfo.cs" />
+    <Compile Include="ProjectSetUp\RequestHandler2.cs" />
     <Compile Include="AvoidObstruction\Resolver.cs" />
     <Compile Include="AvoidObstruction\Section.cs" />
     <Compile Include="ExternalApplication.cs" />

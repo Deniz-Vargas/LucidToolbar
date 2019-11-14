@@ -45,6 +45,13 @@ namespace LucidToolbar
     ///   A class with methods to execute requests made by the dialog user.
     /// </summary>
     /// 
+
+    public class MyProgress
+    {
+        //could add whatever other fields for data to pass to the UI
+        public string Data { get; set; }
+    }
+
     public class RequestHandler : IExternalEventHandler
     {
         // A trivial delegate, but handy
@@ -53,7 +60,9 @@ namespace LucidToolbar
         // The value of the latest request made by the modeless form 
         private Request m_request = new Request();
         public List<Workset> worksets = new List<Workset>();
-        public string strworkset = null;
+
+        public event Action<MyProgress> ProgressUpdated;
+        public string strworkset { get; set; }
         /// <summary>
         /// A public property to access the current request value
         /// </summary>
@@ -108,9 +117,9 @@ namespace LucidToolbar
                             GetWorksetsInfo(uiapp);
                             break;
                         }
-                    case RequestId.MakeLeft:
+                    case RequestId.TreeDiagram:
                         {
-                            ModifySelectedDoors(uiapp, "Make door Left", MakeLeft);
+                            LinkedModel(uiapp);
                             break;
                         }
                     case RequestId.SetCurWorkset:
@@ -118,9 +127,9 @@ namespace LucidToolbar
                             SetWorkset(uiapp);
                             break;
                         }
-                    case RequestId.TurnOut:
+                    case RequestId.ProjectInfo:
                         {
-                            ModifySelectedDoors(uiapp, "Place door Out", TurnOut);
+                            //ProjectInfo;
                             break;
                         }
                     case RequestId.TurnIn:
@@ -128,11 +137,12 @@ namespace LucidToolbar
                             ModifySelectedDoors(uiapp, "Place door In", TurnIn);
                             break;
                         }
-                    case RequestId.Rotate:
-                        {
-                            ModifySelectedDoors(uiapp, "Rotate door", FlipHandAndFace);
-                            break;
-                        }
+                    //case RequestId.TreeDiagram2:
+                    //    {
+                            
+                    //        LinkedModel(uiapp);
+                    //        break;
+                    //    }
                     default:
                         {
                             // some kind of a warning here should
@@ -148,15 +158,23 @@ namespace LucidToolbar
 
             return;
         }
-        //{
 
-        //    OpenOptions options1 = new OpenOptions();
-        //    options1.DetachFromCentralOption = DetachFromCentralOption.DetachAndPreserveWorksets;
-        //    Document openedDoc = uiapp.ActiveUIDocument.Application.Application.OpenDocumentFile(modelPath, options1);
-        //    return openedDoc;           
+        public void DoWork()
+        {
+            for (int i = 0; i < 10; i++)
+            {
+                //placeholder for IO work.
+                System.Threading.Thread.Sleep(1000);
 
-        //}
-
+                if (ProgressUpdated != null)
+                {
+                    ProgressUpdated(new MyProgress()
+                    {
+                        Data = i.ToString()
+                    });
+                }
+            }
+        }
 
         /// <summary>
         ///   The main door-modification subroutine - called from every request 
@@ -214,6 +232,7 @@ namespace LucidToolbar
             using (Transaction trans = new Transaction(uiapp.ActiveUIDocument.Document))
             try  
             {
+                FilteredElementCollector collector = new FilteredElementCollector(uiapp.ActiveUIDocument.Document);
                 trans.Start("Link file");
                 ModelPath mp = ModelPathUtils.ConvertUserVisiblePathToModelPath(TestCommand.filePath);
                 WorksetConfiguration worksetconfig = new WorksetConfiguration();
@@ -221,6 +240,13 @@ namespace LucidToolbar
                 //Create new revit link storing absolute path to a file
                 LinkLoadResult result = RevitLinkType.Create(uiapp.ActiveUIDocument.Document, mp, option);
                 RevitLinkInstance instance = RevitLinkInstance.Create(uiapp.ActiveUIDocument.Document, result.ElementId, ImportPlacement.Origin);
+                //TaskDialog.Show("File Linked", "File Linked");
+                foreach (Element element in collector.OfClass(typeof(RevitLinkType)))
+                {
+                    ExternalFileReference extFileRef = element.GetExternalFileReference();
+                    if (null == extFileRef || extFileRef.GetLinkedFileStatus() != LinkedFileStatus.Loaded) continue;
+                }
+                
             }
             
             catch (System.Exception e)
@@ -294,11 +320,18 @@ namespace LucidToolbar
                     {
                         //check if there is a workset with the same name as selected in combobox
                         if (workset.Name == targetWorkset)
+                        {
                             activeId = workset.Id;
+                            uiapp.ActiveUIDocument.Document.GetWorksetTable().SetActiveWorksetId(activeId); 
+                        }
+                        else 
+                        {
+
+                        }
                     }
                     //TaskDialog.Show("The current active workset is: ", workset.Name.ToString());
                     //Set the active workset to the targetworkset selected from the combobox
-                    uiapp.ActiveUIDocument.Document.GetWorksetTable().SetActiveWorksetId(activeId);
+                    
                     //TaskDialog.Show("The current selected workset is: ", targetWorkset);
                 }
 
@@ -357,9 +390,61 @@ namespace LucidToolbar
             //get information for each workset
             
         }
-        private void FlipHandAndFace(FamilyInstance e)
+        private void LinkedModel(UIApplication uiapp)
         {
-            e.flipFacing(); e.flipHand();
+            // get active document
+            Autodesk.Revit.DB.Document mainDoc = uiapp.ActiveUIDocument.Document;
+
+            // prepare to show the results...
+            TreeNode mainNode = new TreeNode();
+            mainNode.Text = mainDoc.PathName;
+
+            // start by the root links (no parent node)
+            FilteredElementCollector coll = new FilteredElementCollector(mainDoc);
+            coll.OfClass(typeof(RevitLinkInstance));
+            foreach (RevitLinkInstance inst in coll)
+            {
+                RevitLinkType type = mainDoc.GetElement(inst.GetTypeId()) as RevitLinkType;
+                if (type.GetParentId() == ElementId.InvalidElementId)
+                {
+                    TreeNode parentNode = new TreeNode(inst.Name);
+                    mainNode.Nodes.Add(parentNode);
+
+                    GetChilds(mainDoc, type.GetChildIds(), parentNode);
+                }
+            }
+
+            // show the results in a for
+            
+            System.Windows.Forms.Form resultForm = new System.Windows.Forms.Form();
+            TreeView treeView = new TreeView();
+            treeView.Size = resultForm.Size;
+            treeView.Anchor |= AnchorStyles.Bottom | AnchorStyles.Top;
+            treeView.Nodes.Add(mainNode);
+            resultForm.Controls.Add(treeView);
+            resultForm.ShowDialog();
+
+            //return Result.Succeeded;
+        }
+
+        public void ProjectInfo(UIApplication uiapp)
+        {
+
+        }
+        private void GetChilds(Autodesk.Revit.DB.Document mainDoc, ICollection<ElementId> ids,
+                                TreeNode parentNode)
+        {
+            foreach (ElementId id in ids)
+            {
+                // get the child information
+                RevitLinkType type = mainDoc.GetElement(id) as RevitLinkType;
+
+                TreeNode subNode = new TreeNode(type.Name);
+                parentNode.Nodes.Add(subNode);
+
+                // then go to the next level
+                GetChilds(mainDoc, type.GetChildIds(), subNode);
+            }
         }
 
         // Note: The door orientation [left/right] is according the common
@@ -406,6 +491,8 @@ namespace LucidToolbar
         {
             if (e.FacingFlipped) e.flipFacing();
         }
+
+        
 
     }  // class
 
