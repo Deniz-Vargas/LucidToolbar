@@ -129,7 +129,7 @@ namespace LucidToolbar
                         }
                     case RequestId.ProjectInfo:
                         {
-                            //ProjectInfo;
+                            ProjectInfo(uiapp);
                             break;
                         }
                     case RequestId.TurnIn:
@@ -415,8 +415,9 @@ namespace LucidToolbar
             }
 
             // show the results in a for
-            
+
             System.Windows.Forms.Form resultForm = new System.Windows.Forms.Form();
+            
             TreeView treeView = new TreeView();
             treeView.Size = resultForm.Size;
             treeView.Anchor |= AnchorStyles.Bottom | AnchorStyles.Top;
@@ -429,6 +430,22 @@ namespace LucidToolbar
 
         public void ProjectInfo(UIApplication uiapp)
         {
+            Transaction trans = new Transaction(uiapp.ActiveUIDocument.Document, "Edit Project Information");
+            RevitCommandId id = RevitCommandId.LookupPostableCommandId(PostableCommand.ProjectInformation);
+            try
+            {
+                trans.Start("Get Project Information");
+                uiapp.PostCommand(id);
+                
+            }
+            catch (Exception ex)
+            { 
+                trans.RollBack();
+            }
+            finally
+            {
+                trans.Commit();
+            }
 
         }
         private void GetChilds(Autodesk.Revit.DB.Document mainDoc, ICollection<ElementId> ids,

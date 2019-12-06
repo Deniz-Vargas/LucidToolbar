@@ -58,7 +58,7 @@ namespace LucidToolbar
             m_projectInfoWrapper = projectInfoWrapper;
             
             //Initialize propertyGrid with CustomDescriptor
-            propertyGrid1.SelectedObject = new WrapperCustomDescriptor(m_projectInfoWrapper);
+            //propertyGrid1.SelectedObject = new WrapperCustomDescriptor(m_projectInfoWrapper);
 
 
         }
@@ -377,7 +377,7 @@ namespace LucidToolbar
 
         private void btnUpdate_Click(object sender, EventArgs e)
         {
-            //MakeRequest(RequestId.ProjectInfo);
+            MakeRequest(RequestId.ProjectInfo);
             //DoRequest();
         }
 
@@ -425,6 +425,26 @@ namespace LucidToolbar
         private void propertyGrid1_Click_1(object sender, EventArgs e)
         {
 
+        }
+
+        private void tabPage3_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void groupBox1_Enter_1(object sender, EventArgs e)
+        {
+
+        }
+
+        private void button2_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void btnUpdate_Click_1(object sender, EventArgs e)
+        {
+            MakeRequest(RequestId.ProjectInfo);
         }
     }
 }

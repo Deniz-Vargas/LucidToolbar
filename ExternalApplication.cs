@@ -51,11 +51,11 @@ namespace LucidToolbar
             AvoidObstruction.LargeImage = GetImage(Properties.Resources.AvoidObstruction.GetHbitmap());
 
             PushButtonData ProjectSetUp =
-                new PushButtonData("ProjectSetUp", "Project Set Up", path, "LucidToolbar.ProjectSetUp");
+                new PushButtonData("ProjectSetUp", "Project Set Up", path, "LucidToolbar.TestCommand");
             ProjectSetUp.LargeImage = GetImage(Properties.Resources.ProjectInfo.GetHbitmap());
-
-            PushButtonData TestCommand =
-              new PushButtonData("TestCommand", "Test out a new command", path, "LucidToolbar.TestCommand");
+            
+            //PushButtonData TestCommand =
+             // new PushButtonData("TestCommand", "Test out a new command", path, "LucidToolbar.TestCommand");
             //ProjectSetUp.LargeImage = GetImage(Properties.Resources.ProjectInfo.GetHbitmap());
 
             RibbonItem ri1 = LucidHydPanel.AddItem(DomesticColdWater);
@@ -66,8 +66,8 @@ namespace LucidToolbar
 
             RibbonItem ri5 = LucidQAPanel.AddItem(ProjectSetUp);
             
-            LucidHydPanel.AddSeparator();
-            RibbonItem ri6 = LucidQAPanel.AddItem(TestCommand);
+            //LucidHydPanel.AddSeparator();
+            //RibbonItem ri6 = LucidQAPanel.AddItem(TestCommand);
             ///Setup document
             m_MyForm = null;   // no dialog needed yet; the command will bring it
             thisApp = this;  // static access to this application instance
