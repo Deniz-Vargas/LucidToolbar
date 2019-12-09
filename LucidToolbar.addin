@@ -7,8 +7,8 @@
     <AddInId>
       DE0460D8-435C-4E25-9D7E-D717C62C2BE8
     </AddInId>
-    <FullClassName>LucidToolbar.CommandTemplate</FullClassName>
-    <Text>CommandTemplate</Text>
+    <FullClassName>LucidToolbar.ProjectCoordinate</FullClassName>
+    <Text>ProjectCoordinate</Text>
     <Description>NewCommand</Description>
     <VendorId>Max Sun</VendorId>
     <VendorDescription>max.sun@lucidconsulting.com.au</VendorDescription>

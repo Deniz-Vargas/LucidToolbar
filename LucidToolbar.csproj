@@ -79,7 +79,7 @@
     <Compile Include="AvoidObstruction\AvoidObstruction.cs" />
     <Compile Include="Commands\Class.cs" />
     <Compile Include="AvoidObstruction\Detector.cs" />
-    <Compile Include="Commands\Command_1.cs" />
+    <Compile Include="Commands\ProjectCoordinate.cs" />
     <Compile Include="Commands\Command.cs" />
     <Compile Include="Commands\DomesticColdWater.cs" />
     <Compile Include="Commands\DomesticHotWater.cs" />

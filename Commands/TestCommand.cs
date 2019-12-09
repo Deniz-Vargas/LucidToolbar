@@ -37,15 +37,15 @@ namespace LucidToolbar
          /// Cancelled can be used to signify that the user cancelled the external operation 
          /// at some point. Failure should be returned if the application is unable to proceed with 
          /// the operation.</returns>
-        public static string NS_PBP { get; internal set; }
-        public static string EW_PBP { get; internal set; }
-        public static string Elev_PBP { get; internal set; }
-        public static string Ang_PBP { get; internal set; }
+        public static double NS_PBP { get; internal set; }
+        public static double EW_PBP { get; internal set; }
+        public static double Elev_PBP { get; internal set; } 
+        public static double Ang_PBP { get; internal set; }
 
-        public static string NS_SP { get; internal set; }
-        public static string EW_SP { get; internal set; }
-        public static string Elev_SP { get; internal set; }
-        public static string Ang_SP { get; internal set; }
+        public static double NS_SP { get; internal set; }
+        public static double EW_SP { get; internal set; }
+        public static double Elev_SP { get; internal set; }
+        public static double Ang_SP { get; internal set; }
 
         public static string filePath { get; internal set; }
         // Store the reference of the application in revit
@@ -102,16 +102,16 @@ namespace LucidToolbar
                 Parameter paramX = ele.ParametersMap.get_Item("E/W");
                 String x1 = ele.get_Parameter(BuiltInParameter.BASEPOINT_EASTWEST_PARAM).AsValueString();
                 String X = paramX.AsValueString();
-                TestCommand.NS_SP = paramX.AsValueString();
+                //TestCommand.NS_SP = paramX.AsValueString();
 
                 Parameter paramY = ele.ParametersMap.get_Item("N/S");
                 String y1 = ele.get_Parameter(BuiltInParameter.BASEPOINT_NORTHSOUTH_PARAM).AsValueString();
                 String Y = paramY.AsValueString();
-                TestCommand.EW_SP = paramY.AsValueString();
+                //TestCommand.EW_SP = paramY.AsValueString();
 
                 Parameter Elevation = ele.ParametersMap.get_Item("Elev");
                 String Ele = Elevation.AsValueString();
-                TestCommand.Elev_SP = Elevation.AsValueString();
+                //TestCommand.Elev_SP = Elevation.AsValueString();
 
                 //Parameter Angle = ele.ParametersMap.get_Item("Angle to True North");
                 //String Ang = Angle.AsValueString();

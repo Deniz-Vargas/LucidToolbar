@@ -41,7 +41,7 @@ namespace LucidToolbar
             InitializeComponent();
             m_Handler = handler;
             m_ExEvent = exEvent;
-            //lblNS_PBP.Text= TestCommand.NS_PBP;
+            //lblNS_PBP.Text = TestCommand.NS_PBP;
             //txtEW_PBP.Text = TestCommand.EW_PBP;
             //txtElev_PBP.Text = TestCommand.Elev_PBP;
             //txtAng_PBP.Text = TestCommand.Ang_PBP;
@@ -419,7 +419,7 @@ namespace LucidToolbar
 
         private void button1_Click_1(object sender, EventArgs e)
         {
-            MakeRequest(RequestId.TreeDiagram);
+            TaskDialog.Show("Test", "ok");
         }
 
         private void propertyGrid1_Click_1(object sender, EventArgs e)
