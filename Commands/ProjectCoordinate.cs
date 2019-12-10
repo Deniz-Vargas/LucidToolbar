@@ -134,68 +134,44 @@ namespace LucidToolbar
             m_revit = commandData.Application;
             FilteredElementCollector basepointCollector = new FilteredElementCollector(rvtlink.GetLinkDocument());
             FilteredElementCollector surveypointCollector = new FilteredElementCollector(rvtlink.GetLinkDocument());
-
+            FilteredElementCollector linkedelementCollector = new FilteredElementCollector(rvtlink.GetLinkDocument());
 
             ElementCategoryFilter BasepointCategoryfilter = new ElementCategoryFilter(BuiltInCategory.OST_ProjectBasePoint);
             ElementCategoryFilter SurveyCategoryfilter = new ElementCategoryFilter(BuiltInCategory.OST_SharedBasePoint);
-
+            //ElementParameterFilter RoomboundingFilter = new ElementParameterFilter(BuiltInParameter.WALL_ATTR_ROOM_BOUNDING);
 
             m_siteElements = basepointCollector.WherePasses(BasepointCategoryfilter).ToList<Element>();
             m_surveyElements = surveypointCollector.WherePasses(SurveyCategoryfilter).ToList<Element>();
 
             Transaction transaction = new Transaction(commandData.Application.ActiveUIDocument.Document, "Command");
+            
+            foreach (Element ele in m_siteElements)
+            {
+                TestCommand.EW_PBP = ele.get_Parameter(BuiltInParameter.BASEPOINT_EASTWEST_PARAM).AsDouble();
+                TestCommand.NS_PBP = ele.get_Parameter(BuiltInParameter.BASEPOINT_NORTHSOUTH_PARAM).AsDouble();
+                TestCommand.Elev_PBP = ele.get_Parameter(BuiltInParameter.BASEPOINT_ELEVATION_PARAM).AsDouble();
+                TestCommand.Ang_PBP = ele.get_Parameter(BuiltInParameter.BASEPOINT_ANGLETON_PARAM).AsDouble();
+
+                //TaskDialog.Show("Linked Revit Model Survey Point", string.Format("E/W is {0}: W/S is {1}: Elevation is {2}", X, Y, Ele));
+            }
+            foreach (Element ele in m_surveyElements)
+            {   
+                
+                TestCommand.EW_SP = ele.get_Parameter(BuiltInParameter.BASEPOINT_EASTWEST_PARAM).AsDouble();
+                TestCommand.NS_SP = ele.get_Parameter(BuiltInParameter.BASEPOINT_NORTHSOUTH_PARAM).AsDouble();
+                TestCommand.Elev_SP = ele.get_Parameter(BuiltInParameter.BASEPOINT_ELEVATION_PARAM).AsDouble();
+                //TestCommand.Ang_SP = ele.get_Parameter(BuiltInParameter.BASEPOINT_ANGLETON_PARAM).AsDouble();
+            }
+
+
             try
             {
                 transaction.Start();
-                //Do something here
-                //TaskDialog.Show("Revit Model Survey Point", "Test ");
-                //GetSurveyPoint_2(commandData);
-                //GetSurveyPoint(commandData);
-
-                foreach (Element ele in m_siteElements)
-                {
-                    Parameter paramX = ele.ParametersMap.get_Item("E/W");
-                    TestCommand.EW_PBP = ele.get_Parameter(BuiltInParameter.BASEPOINT_EASTWEST_PARAM).AsDouble();
-                    String X = paramX.AsValueString();
-                    
-
-                    Parameter paramY = ele.ParametersMap.get_Item("N/S");
-                    TestCommand.NS_PBP = ele.get_Parameter(BuiltInParameter.BASEPOINT_NORTHSOUTH_PARAM).AsDouble();
-                    String Y = paramY.AsValueString();
-                    
-
-                    Parameter Elevation = ele.ParametersMap.get_Item("Elev");
-                    TestCommand.Elev_PBP = ele.get_Parameter(BuiltInParameter.BASEPOINT_ELEVATION_PARAM).AsDouble();
-                    String Ele = Elevation.AsValueString();
-
-                    //Parameter Angle = ele.ParametersMap.get_Item("Angle to True North");
-                    //String Ang = Angle.AsValueString();
-                    //Ang_SP = Angle.AsValueString();
-
-                    //TaskDialog.Show("Linked Revit Model Survey Point", string.Format("E/W is {0}: W/S is {1}: Elevation is {2}", X, Y, Ele));
-                }
-                foreach (Element ele in m_surveyElements)
-                {
-                    Parameter paramX = ele.ParametersMap.get_Item("E/W");
-                    TestCommand.EW_SP = ele.get_Parameter(BuiltInParameter.BASEPOINT_EASTWEST_PARAM).AsDouble();
-                    String X = paramX.AsValueString();
-
-
-                    Parameter paramY = ele.ParametersMap.get_Item("N/S");
-                    TestCommand.NS_SP = ele.get_Parameter(BuiltInParameter.BASEPOINT_NORTHSOUTH_PARAM).AsDouble();
-                    String Y = paramY.AsValueString();
-
-
-                    Parameter Elevation = ele.ParametersMap.get_Item("Elev");
-                    TestCommand.Elev_SP = ele.get_Parameter(BuiltInParameter.BASEPOINT_ELEVATION_PARAM).AsDouble();
-                    String Ele = Elevation.AsValueString();
-
-                    //Parameter Angle = ele.ParametersMap.get_Item("Angle to True North");
-                    //String Ang = Angle.AsValueString();
-                    //Ang_SP = Angle.AsValueString();
-
-                    //TaskDialog.Show("Linked Revit Model Survey Point", string.Format("E/W is {0}: W/S is {1}: Elevation is {2}", X, Y, Ele));
-                }
+                ///HACK DO THINGS Here
+                ///
+                //SetSurveyPoint(commandData);
+                //rvtlink.get_Parameter(BuiltInParameter.WALL_ATTR_ROOM_BOUNDING).AsValueString();
+                //rvtlink.Pinned = true;
             }
             catch (System.Exception e)
             {
@@ -205,11 +181,15 @@ namespace LucidToolbar
             }
             finally
             {
-                //SetSurveyPoint(commandData);
-                GetSurveyPoint(commandData);
+                //GetSurveyPoint(commandData);
+                //RoomBounding(rvtlink);
                 SetBasePoint(commandData);
+                
+                //TaskDialog.Show("Roombounding", rvtlink.get_Parameter(BuiltInParameter.WALL_ATTR_ROOM_BOUNDING).AsValueString());
                 transaction.Commit();
             }
+
+
             return Autodesk.Revit.UI.Result.Succeeded;
         }
         public void GetSurveyPoint(ExternalCommandData commandData)
@@ -317,31 +297,35 @@ namespace LucidToolbar
             //Transform t = rvtlink.GetTotalTransform();
             //BasePoint bp;
 
-
+            //.Pinned = false;
             //bp.GetParameters(BuiltInParameter.)
+            
             foreach (Element ele in m_surveyElements)
             {
-                Parameter paramX = ele.ParametersMap.get_Item("E/W");
-                ele.get_Parameter(BuiltInParameter.BASEPOINT_EASTWEST_PARAM).Set(TestCommand.EW_SP);
-                //String X = paramX.AsValueString();
-                //TestCommand.NS_SP = paramX.AsValueString();
+                if (ele.Pinned = true)
+                    TaskDialog.Show("element is pinned","Pinned");
+                ele.Pinned = false;
+                    TaskDialog.Show("element is unpinned", "Un-Pinned");
 
-                Parameter paramY = ele.ParametersMap.get_Item("N/S");
-                ele.get_Parameter(BuiltInParameter.BASEPOINT_NORTHSOUTH_PARAM).Set(TestCommand.NS_SP);
-                //String Y = paramY.AsValueString();
-                //TestCommand.EW_SP = paramY.AsValueString();
-
-                Parameter Elevation = ele.ParametersMap.get_Item("Elev");
-
-                //TestCommand.Elev_SP = Elevation.AsValueString();
-
-                //Parameter Angle = ele.ParametersMap.get_Item("Angle to True North");
-                //String Ang = Angle.AsValueString();
+                //Parameter paramX = ele.ParametersMap.get_Item("E/W");
+                //ele.get_Parameter(BuiltInParameter.BASEPOINT_EASTWEST_PARAM).Set(TestCommand.EW_SP);
+                //ele.get_Parameter(BuiltInParameter.BASEPOINT_NORTHSOUTH_PARAM).Set(TestCommand.NS_SP);
+                //ele.get_Parameter(BuiltInParameter.BASEPOINT_ANGLETON_PARAM).Set(TestCommand.Ang_SP);
                 //Ang_SP = Angle.AsValueString();
-
-                TaskDialog.Show("Project Setup: Transfer Coordinates", "Survey Basepoint Reconciled");
-                //TaskDialog.Show("Revit Model Survey Point", string.Format("E/W is {0}: W/S is {1}: Elevation is {2}", TestCommand.EW_SP, TestCommand.NS_SP,""));
+                //TaskDialog.Show("Project Setup: Transfer Coordinates", "Survey Basepoint Reconciled");
+                TaskDialog.Show("Revit Model Survey Point", string.Format("E/W is {0}: W/S is {1}: Ang is {2}", TestCommand.EW_SP, TestCommand.NS_SP, TestCommand.Ang_PBP));
             }
         }
+
+        public void RoomBounding (ExternalCommandData commandData, RevitLinkInstance revitLink)
+        {
+            BuiltInParameter roombounding = BuiltInParameter.WALL_ATTR_ROOM_BOUNDING;
+            Parameter parameter = revitLink.get_Parameter(roombounding);
+            //revitLink.get_Parameter(BuiltInParameter.WALL_ATTR_ROOM_BOUNDING).AsValueString());
+            //roombounding.SetValueString("YES");
+            revitLink.get_Parameter(BuiltInParameter.WALL_ATTR_ROOM_BOUNDING).SetValueString("YES");
+           
+        }
+
     }
 }
