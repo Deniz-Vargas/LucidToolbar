@@ -8,13 +8,13 @@
       DE0460D8-435C-4E25-9D7E-D717C62C2BE8
     </AddInId>
     <FullClassName>LucidToolbar.ProjectCoordinate</FullClassName>
-    <Text>ProjectCoordinate</Text>
+    <Text>Reconcile Coodinates</Text>
     <Description>NewCommand</Description>
     <VendorId>Max Sun</VendorId>
     <VendorDescription>max.sun@lucidconsulting.com.au</VendorDescription>
   </AddIn>
   
-  <AddIn Type="Command">
+  <AddIn Type="Command"> 
     <Name>LucidToolbar</Name>
     <Assembly>LucidToolbar.dll</Assembly>
     <AddInId>
