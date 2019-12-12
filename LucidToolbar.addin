@@ -14,6 +14,19 @@
     <VendorDescription>max.sun@lucidconsulting.com.au</VendorDescription>
   </AddIn>
   
+  <AddIn Type="Command">
+    <Name>LucidToolbar</Name>
+    <Assembly>LucidToolbar.dll</Assembly>
+    <AddInId>
+      5B9AA177-47ED-4CAF-8FAD-A9993B4DBD8
+    </AddInId>
+    <FullClassName>LucidToolbar.CopyMonitor</FullClassName>
+    <Text>Copy Monitor</Text>
+    <Description>NewCommand</Description>
+    <VendorId>Max Sun</VendorId>
+    <VendorDescription>max.sun@lucidconsulting.com.au</VendorDescription>
+  </AddIn>
+  
   <AddIn Type="Command"> 
     <Name>LucidToolbar</Name>
     <Assembly>LucidToolbar.dll</Assembly>

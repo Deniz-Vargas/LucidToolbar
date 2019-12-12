@@ -12,7 +12,7 @@ namespace LucidToolbar
     [Autodesk.Revit.Attributes.Transaction(Autodesk.Revit.Attributes.TransactionMode.Manual)]
     [Autodesk.Revit.Attributes.Regeneration(Autodesk.Revit.Attributes.RegenerationOption.Manual)]
     [Autodesk.Revit.Attributes.Journaling(Autodesk.Revit.Attributes.JournalingMode.NoCommandData)]
-    class CommandTemplate : IExternalCommand
+    class CreateSheets : IExternalCommand
     {
 
         #region IExternalCommand Members
@@ -33,32 +33,50 @@ namespace LucidToolbar
         /// Cancelled can be used to signify that the user cancelled the external operation 
         /// at some point. Failure should be returned if the application is unable to proceed with 
         /// the operation.</returns>
-        public Autodesk.Revit.UI.Result Execute(ExternalCommandData commandData, ref string message, Autodesk.Revit.DB.ElementSet elements)
-        {
 
-            Transaction transaction = new Transaction(commandData.Application.ActiveUIDocument.Document, "Command");
+
+        //Transaction transaction = new Transaction(commandData.Application.ActiveUIDocument.Document, "Command");
+        public Result Execute(ExternalCommandData commandData, ref string message, ElementSet elements)
+        {
+            //Get UIDocument
+            UIDocument uidoc = commandData.Application.ActiveUIDocument;
+
+            //Get Document
+            Document doc = uidoc.Document;
+
+            //Get Family Symbol
+            FamilySymbol tBlock = new FilteredElementCollector(doc)
+                .OfCategory(BuiltInCategory.OST_TitleBlocks)
+                .WhereElementIsElementType()
+                .Cast<FamilySymbol>()
+                .First();
+
             try
             {
-                transaction.Start();
-                //Do something here
-                TaskDialog.Show("Congrats","You Have Successfully opened a command");
+                using (Transaction trans = new Transaction(doc, "Create Sheet"))
+                {
+                    trans.Start();
 
+                    //Create Sheet
+                    ViewSheet vSheet = ViewSheet.Create(doc, tBlock.Id);
+                    vSheet.Name = "My First Sheet";
+                    vSheet.SheetNumber = "J101";
 
+                    trans.Commit();
+                }
+
+                return Result.Succeeded;
             }
-            catch (System.Exception e)
+            catch (Exception e)
             {
-                transaction.RollBack();
-                message += e.ToString();
-                return Autodesk.Revit.UI.Result.Failed;
+                message = e.Message;
+                return Result.Failed;
             }
-            finally
-            {
-                transaction.Commit();
-            }
-            return Autodesk.Revit.UI.Result.Succeeded;
+
         }
 
         #endregion
+
 
     }
 }

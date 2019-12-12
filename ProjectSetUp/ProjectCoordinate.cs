@@ -171,7 +171,7 @@ namespace LucidToolbar
                 ///
                 //SetSurveyPoint(commandData);
                 //rvtlink.get_Parameter(BuiltInParameter.WALL_ATTR_ROOM_BOUNDING).AsValueString();
-                //rvtlink.Pinned = true;
+                rvtlink.Pinned = true;
             }
             catch (System.Exception e)
             {
@@ -188,7 +188,7 @@ namespace LucidToolbar
                 //TaskDialog.Show("Roombounding", rvtlink.get_Parameter(BuiltInParameter.WALL_ATTR_ROOM_BOUNDING).AsValueString());
                 transaction.Commit();
             }
-
+            TaskDialog.Show("Project Setup: Transfer Coordinates", string.Format("Project Basepoint is set to E / W: {0}. W/S: {1}: Angle to true North is {2}", TestCommand.EW_PBP, TestCommand.NS_PBP, TestCommand.Ang_PBP));
 
             return Autodesk.Revit.UI.Result.Succeeded;
         }
@@ -282,7 +282,7 @@ namespace LucidToolbar
                 //String Ang = Angle.AsValueString();
                 //Ang_SP = Angle.AsValueString();
 
-                TaskDialog.Show("Project Setup: Transfer Coordinates", "Shared Project Basepoint Reconciled"); 
+                //TaskDialog.Show("Project Setup: Transfer Coordinates", "Shared Project Basepoint Reconciled"); 
                 //TaskDialog.Show("Revit Model Survey Point", string.Format("E/W is {0}: W/S is {1}: Elevation is {2}", TestCommand.EW_SP, TestCommand.NS_SP,""));
             }
         }

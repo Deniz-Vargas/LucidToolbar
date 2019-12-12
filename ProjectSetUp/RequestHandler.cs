@@ -300,7 +300,7 @@ namespace LucidToolbar
 
         private void SetWorkset(UIApplication uiapp)
         {
-
+            ///Actural code in use
             using (Transaction trans = new Transaction(uiapp.ActiveUIDocument.Document))
                 try
                 {

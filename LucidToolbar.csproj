@@ -77,15 +77,17 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="AvoidObstruction\AvoidObstruction.cs" />
-    <Compile Include="Commands\Class.cs" />
+    <Compile Include="HydraulicTools\Class.cs" />
     <Compile Include="AvoidObstruction\Detector.cs" />
-    <Compile Include="Commands\ProjectCoordinate.cs" />
-    <Compile Include="Commands\Command.cs" />
-    <Compile Include="Commands\DomesticColdWater.cs" />
-    <Compile Include="Commands\DomesticHotWater.cs" />
-    <Compile Include="Commands\NaturalGasPipe.cs" />
+    <Compile Include="ProjectSetUp\CreateSheets.cs" />
+    <Compile Include="ProjectSetUp\PostCommand.cs" />
+    <Compile Include="ProjectSetUp\CopyMonitor.cs" />
+    <Compile Include="ProjectSetUp\ProjectCoordinate.cs" />
+    <Compile Include="HydraulicTools\DomesticColdWater.cs" />
+    <Compile Include="HydraulicTools\DomesticHotWater.cs" />
+    <Compile Include="HydraulicTools\NaturalGasPipe.cs" />
     <Compile Include="Commands\OpenMyLib.cs" />
-    <Compile Include="Commands\TestCommand.cs" />
+    <Compile Include="ProjectSetUp\TestCommand.cs" />
     <Compile Include="ProjectSetUp\RequestHandler2.cs" />
     <Compile Include="AvoidObstruction\Resolver.cs" />
     <Compile Include="AvoidObstruction\Section.cs" />
@@ -127,6 +129,15 @@
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>
+    <Content Include="Resources\CopyMonitor.png" />
+    <Content Include="Resources\icons8-bursts-32.png" />
+    <Content Include="Resources\icons8-change-theme-32.png" />
+    <Content Include="Resources\icons8-launch-browser32.png" />
+    <Content Include="Resources\Openbrowser.png" />
+    <Content Include="Resources\Tab.png" />
+    <Content Include="Resources\icons8-tune-32.png" />
+    <Content Include="Resources\Details.png" />
+    <Content Include="Resources\Reconcile.png" />
     <Content Include="Resources\ProjectInfo.png" />
     <None Include="Resources\AvoidObstruction.png" />
     <Content Include="Resources\NaturalGas.PNG">

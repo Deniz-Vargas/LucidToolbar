@@ -54,9 +54,14 @@ namespace LucidToolbar
                 new PushButtonData("ProjectSetUp", "Project Set Up", path, "LucidToolbar.TestCommand");
             ProjectSetUp.LargeImage = GetImage(Properties.Resources.ProjectInfo.GetHbitmap());
             
-            //PushButtonData TestCommand =
-             // new PushButtonData("TestCommand", "Test out a new command", path, "LucidToolbar.TestCommand");
-            //ProjectSetUp.LargeImage = GetImage(Properties.Resources.ProjectInfo.GetHbitmap());
+            PushButtonData Reconcile =
+                new PushButtonData("Reconcile Coordinate", "Reconcile Coordinate", path, "LucidToolbar.ProjectCoordinate");
+            Reconcile.LargeImage = GetImage(Properties.Resources.Reconcile.GetHbitmap());
+
+            PushButtonData CopyMonitor =
+                new PushButtonData("Copy L&Gs", "Copy Levels & Grids", path, "LucidToolbar.CopyMonitor");
+            CopyMonitor.LargeImage = GetImage(Properties.Resources.CopyMonitor.GetHbitmap());
+
 
             RibbonItem ri1 = LucidHydPanel.AddItem(DomesticColdWater);
             RibbonItem ri2 = LucidHydPanel.AddItem(DomesticHotWater);
@@ -65,9 +70,10 @@ namespace LucidToolbar
             RibbonItem ri4 = LucidHydPanel.AddItem(AvoidObstruction);
 
             RibbonItem ri5 = LucidQAPanel.AddItem(ProjectSetUp);
-            
+            RibbonItem ri6 = LucidQAPanel.AddItem(Reconcile);
+            RibbonItem ri7 = LucidQAPanel.AddItem(CopyMonitor);
             //LucidHydPanel.AddSeparator();
-            //RibbonItem ri6 = LucidQAPanel.AddItem(TestCommand);
+            //
             ///Setup document
             m_MyForm = null;   // no dialog needed yet; the command will bring it
             thisApp = this;  // static access to this application instance
