@@ -37,12 +37,13 @@ namespace LucidToolbar
         {
 
             Transaction transaction = new Transaction(commandData.Application.ActiveUIDocument.Document, "Command");
+            RevitCommandId id = RevitCommandId.LookupPostableCommandId(PostableCommand.NewSheet);
             try
             {
                 transaction.Start();
                 //Do something here
                 TaskDialog.Show("Congrats","You Have Successfully opened a command");
-
+                commandData.Application.PostCommand(id);
 
             }
             catch (System.Exception e)

@@ -130,9 +130,16 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="Resources\CopyMonitor.png" />
+    <Content Include="Resources\icons8-add-link-32.png" />
     <Content Include="Resources\icons8-bursts-32.png" />
     <Content Include="Resources\icons8-change-theme-32.png" />
+    <Content Include="Resources\icons8-floor-plan-32.png" />
+    <Content Include="Resources\icons8-grid-32.png" />
     <Content Include="Resources\icons8-launch-browser32.png" />
+    <Content Include="Resources\icons8-new-window-32.png" />
+    <Content Include="Resources\icons8-place-marker-32 %281%29.png" />
+    <Content Include="Resources\icons8-place-marker-32.png" />
+    <Content Include="Resources\icons8-save-to-grid-32.png" />
     <Content Include="Resources\Openbrowser.png" />
     <Content Include="Resources\Tab.png" />
     <Content Include="Resources\icons8-tune-32.png" />

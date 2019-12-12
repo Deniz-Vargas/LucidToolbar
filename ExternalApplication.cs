@@ -60,8 +60,15 @@ namespace LucidToolbar
 
             PushButtonData CopyMonitor =
                 new PushButtonData("Copy L&Gs", "Copy Levels & Grids", path, "LucidToolbar.CopyMonitor");
-            CopyMonitor.LargeImage = GetImage(Properties.Resources.CopyMonitor.GetHbitmap());
+            CopyMonitor.LargeImage = GetImage(Properties.Resources.save_to_grid.GetHbitmap());
 
+            PushButtonData AddFloorPlan =
+                new PushButtonData("Floor Plan View", "Add Floor Plan", path, "LucidToolbar.CreateSheets");
+            AddFloorPlan.LargeImage = GetImage(Properties.Resources.floorplan.GetHbitmap());
+
+            PushButtonData PlaceSpaceTag =
+                new PushButtonData("Place Space Tag", "Place Space Tag", path, "LucidToolbar.CreateSheets");
+            PlaceSpaceTag.LargeImage = GetImage(Properties.Resources.grid.GetHbitmap());
 
             RibbonItem ri1 = LucidHydPanel.AddItem(DomesticColdWater);
             RibbonItem ri2 = LucidHydPanel.AddItem(DomesticHotWater);
@@ -72,6 +79,9 @@ namespace LucidToolbar
             RibbonItem ri5 = LucidQAPanel.AddItem(ProjectSetUp);
             RibbonItem ri6 = LucidQAPanel.AddItem(Reconcile);
             RibbonItem ri7 = LucidQAPanel.AddItem(CopyMonitor);
+            LucidQAPanel.AddSeparator();
+            RibbonItem ri8 = LucidQAPanel.AddItem(AddFloorPlan);
+            RibbonItem ri9 = LucidQAPanel.AddItem(PlaceSpaceTag);
             //LucidHydPanel.AddSeparator();
             //
             ///Setup document
