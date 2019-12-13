@@ -63,12 +63,21 @@ namespace LucidToolbar
             CopyMonitor.LargeImage = GetImage(Properties.Resources.save_to_grid.GetHbitmap());
 
             PushButtonData AddFloorPlan =
-                new PushButtonData("Floor Plan View", "Add Floor Plan", path, "LucidToolbar.CreateSheets");
+                new PushButtonData("Add Floor Plan", "Add Floor Plan", path, "LucidToolbar.PostCommand");
             AddFloorPlan.LargeImage = GetImage(Properties.Resources.floorplan.GetHbitmap());
 
+            PushButtonData ArchCleanUp =
+                new PushButtonData("Arch Cleanup", "Arch Cleanup", path, "LucidToolbar.ArchCleanUp");
+            ArchCleanUp.LargeImage = GetImage(Properties.Resources.Cleanup.GetHbitmap());
+
             PushButtonData PlaceSpaceTag =
-                new PushButtonData("Place Space Tag", "Place Space Tag", path, "LucidToolbar.CreateSheets");
+                new PushButtonData("Place Space Tag", "Place Space Tag", path, "LucidToolbar.PostCommand");
             PlaceSpaceTag.LargeImage = GetImage(Properties.Resources.grid.GetHbitmap());
+
+            PushButtonData SetParameter =
+                new PushButtonData("Set Parameter", "Set Parameter", path, "LucidToolbar.SetParameter");
+            SetParameter.LargeImage = GetImage(Properties.Resources.Set.GetHbitmap());
+
 
             RibbonItem ri1 = LucidHydPanel.AddItem(DomesticColdWater);
             RibbonItem ri2 = LucidHydPanel.AddItem(DomesticHotWater);
@@ -79,9 +88,11 @@ namespace LucidToolbar
             RibbonItem ri5 = LucidQAPanel.AddItem(ProjectSetUp);
             RibbonItem ri6 = LucidQAPanel.AddItem(Reconcile);
             RibbonItem ri7 = LucidQAPanel.AddItem(CopyMonitor);
-            LucidQAPanel.AddSeparator();
             RibbonItem ri8 = LucidQAPanel.AddItem(AddFloorPlan);
-            RibbonItem ri9 = LucidQAPanel.AddItem(PlaceSpaceTag);
+            RibbonItem ri9 = LucidQAPanel.AddItem(ArchCleanUp);
+            LucidQAPanel.AddSeparator();
+            RibbonItem ri10 = LucidQAPanel.AddItem(PlaceSpaceTag);
+            RibbonItem ri11 = LucidQAPanel.AddItem(SetParameter);
             //LucidHydPanel.AddSeparator();
             //
             ///Setup document

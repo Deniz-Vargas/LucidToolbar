@@ -168,9 +168,9 @@ namespace LucidToolbar
             {
                 transaction.Start();
                 ///HACK DO THINGS Here
-                ///
-                //SetSurveyPoint(commandData);
-                //rvtlink.get_Parameter(BuiltInParameter.WALL_ATTR_ROOM_BOUNDING).AsValueString();
+                //
+                SetBasePoint(commandData);
+                SetSurveyPoint(commandData);
                 rvtlink.Pinned = true;
             }
             catch (System.Exception e)
@@ -183,12 +183,13 @@ namespace LucidToolbar
             {
                 //GetSurveyPoint(commandData);
                 //RoomBounding(rvtlink);
-                SetBasePoint(commandData);
+                
                 
                 //TaskDialog.Show("Roombounding", rvtlink.get_Parameter(BuiltInParameter.WALL_ATTR_ROOM_BOUNDING).AsValueString());
                 transaction.Commit();
             }
-            TaskDialog.Show("Project Setup: Transfer Coordinates", string.Format("Project Basepoint is set to E / W: {0}. W/S: {1}: Angle to true North is {2}", TestCommand.EW_PBP, TestCommand.NS_PBP, TestCommand.Ang_PBP));
+            //TaskDialog.Show("Project Setup: Transfer Coordinates", string.Format("Project Basepoint is set to E / W: {0}. W/S: {1}: Angle to true North is {2}", TestCommand.EW_PBP, TestCommand.NS_PBP, TestCommand.Ang_PBP));
+            //TaskDialog.Show("Project Setup: Transfer Coordinates", string.Format("Project Survey point is set to E / W: {0}. W/S: {1}: Elevation is {2}", TestCommand.EW_SP, TestCommand.NS_SP, TestCommand.Elev_SP));
 
             return Autodesk.Revit.UI.Result.Succeeded;
         }
@@ -302,10 +303,15 @@ namespace LucidToolbar
             
             foreach (Element ele in m_surveyElements)
             {
-                if (ele.Pinned = true)
-                    TaskDialog.Show("element is pinned","Pinned");
-                ele.Pinned = false;
-                    TaskDialog.Show("element is unpinned", "Un-Pinned");
+                Parameter paramX = ele.ParametersMap.get_Item("E/W");
+                Parameter paramY = ele.ParametersMap.get_Item("N/S");
+
+                bool bo = ele.get_Parameter(BuiltInParameter.BASEPOINT_NORTHSOUTH_PARAM).UserModifiable;
+
+                //String X = paramX.AsValueString();
+                //TestCommand.NS_SP = paramX.AsValueString();
+                ele.get_Parameter(BuiltInParameter.BASEPOINT_NORTHSOUTH_PARAM).Set(TestCommand.NS_SP);
+                ele.get_Parameter(BuiltInParameter.BASEPOINT_EASTWEST_PARAM).Set(TestCommand.EW_SP);
 
                 //Parameter paramX = ele.ParametersMap.get_Item("E/W");
                 //ele.get_Parameter(BuiltInParameter.BASEPOINT_EASTWEST_PARAM).Set(TestCommand.EW_SP);
@@ -313,8 +319,9 @@ namespace LucidToolbar
                 //ele.get_Parameter(BuiltInParameter.BASEPOINT_ANGLETON_PARAM).Set(TestCommand.Ang_SP);
                 //Ang_SP = Angle.AsValueString();
                 //TaskDialog.Show("Project Setup: Transfer Coordinates", "Survey Basepoint Reconciled");
-                TaskDialog.Show("Revit Model Survey Point", string.Format("E/W is {0}: W/S is {1}: Ang is {2}", TestCommand.EW_SP, TestCommand.NS_SP, TestCommand.Ang_PBP));
+               // TaskDialog.Show("Revit Model Survey Point", string.Format("E/W is {0}: W/S is {1}: Ang is {2}", TestCommand.EW_SP, TestCommand.NS_SP, TestCommand.Ang_PBP));
             }
+
         }
 
         public void RoomBounding (ExternalCommandData commandData, RevitLinkInstance revitLink)

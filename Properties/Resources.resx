@@ -139,6 +139,9 @@
   <data name="Reconcile" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\resources\reconcile.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
+  <data name="Cleanup" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\Cleanup.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
   <data name="Details" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\resources\details.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
@@ -166,14 +169,14 @@
   <data name="icons8_place_marker_32" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\resources\icons8-place-marker-32.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
-  <data name="icons8_tune_32" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\resources\icons8-tune-32.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
-  </data>
   <data name="Openbrowser" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\resources\openbrowser.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
   <data name="save_to_grid" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\resources\icons8-save-to-grid-32.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="Set" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\resources\icons8-tune-32.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
   <data name="Tab" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\resources\tab.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>

@@ -37,13 +37,38 @@ namespace LucidToolbar
         {
 
             Transaction transaction = new Transaction(commandData.Application.ActiveUIDocument.Document, "Command");
-            RevitCommandId id = RevitCommandId.LookupPostableCommandId(PostableCommand.NewSheet);
+            //Open Type property
+            //RevitCommandId id = RevitCommandId.LookupPostableCommandId(PostableCommand.TypeProperties);
+            RevitCommandId FPid = RevitCommandId.LookupPostableCommandId(PostableCommand.FloorPlan);
+            //RevitCommandId Tempid = RevitCommandId.LookupPostableCommandId(PostableCommand.ApplyTemplatePropertiesToCurrentView);
+
+            var uiapp = commandData.Application;
+            var uidoc = uiapp.ActiveUIDocument;
+            var doc = uidoc.Document;
+            var collector = new FilteredElementCollector(doc);
+            var linkedInstance = collector.OfClass(typeof(RevitLinkInstance)).FirstOrDefault();
+
+
+
+            IEnumerable<View> views = new FilteredElementCollector(doc)
+                .OfClass(typeof(View))
+                .Cast<View>()
+                .Where(v => v.Name.Equals("Architectural Cleanup"));
+            View template = views.FirstOrDefault();
+            ElementId templateId = template.Id;
+
+
+
+
             try
             {
                 transaction.Start();
                 //Do something here
-                TaskDialog.Show("Congrats","You Have Successfully opened a command");
-                commandData.Application.PostCommand(id);
+                //uidoc.Selection.SetElementIds(new[] { wallType.Id });
+                
+                //TaskDialog.Show("Congrats",string.Format("The {0} template id is:{1}",template.Name,templateId.ToString()));
+                commandData.Application.PostCommand(FPid);
+                //commandData.Application.PostCommand(Tempid);
 
             }
             catch (System.Exception e)

@@ -73,6 +73,16 @@ namespace LucidToolbar.Properties {
         /// <summary>
         ///   Looks up a localized resource of type System.Drawing.Bitmap.
         /// </summary>
+        internal static System.Drawing.Bitmap Cleanup {
+            get {
+                object obj = ResourceManager.GetObject("Cleanup", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
         internal static System.Drawing.Bitmap CopyMonitor {
             get {
                 object obj = ResourceManager.GetObject("CopyMonitor", resourceCulture);
@@ -193,16 +203,6 @@ namespace LucidToolbar.Properties {
         /// <summary>
         ///   Looks up a localized resource of type System.Drawing.Bitmap.
         /// </summary>
-        internal static System.Drawing.Bitmap icons8_tune_32 {
-            get {
-                object obj = ResourceManager.GetObject("icons8_tune_32", resourceCulture);
-                return ((System.Drawing.Bitmap)(obj));
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized resource of type System.Drawing.Bitmap.
-        /// </summary>
         internal static System.Drawing.Bitmap NaturalGas {
             get {
                 object obj = ResourceManager.GetObject("NaturalGas", resourceCulture);
@@ -246,6 +246,16 @@ namespace LucidToolbar.Properties {
         internal static System.Drawing.Bitmap save_to_grid {
             get {
                 object obj = ResourceManager.GetObject("save_to_grid", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap Set {
+            get {
+                object obj = ResourceManager.GetObject("Set", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
