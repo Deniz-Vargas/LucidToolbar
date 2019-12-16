@@ -42,7 +42,7 @@ namespace LucidToolbar
         {
             public bool AllowElement(Element e)
             {
-                return e is RevitLinkType;
+                return e is RevitLinkInstance;
             }
 
             public bool AllowReference(Reference r, XYZ p)
@@ -58,24 +58,52 @@ namespace LucidToolbar
             UIApplication uiapp = commandData.Application;
             UIDocument uidoc = uiapp.ActiveUIDocument;
             Document doc = uidoc.Document;
-            //Selection sel = uidoc.Selection;
+            Selection sel = uidoc.Selection;
 
-            //Reference r = sel.PickObject(
-            //ObjectType.Element,
-            //new LinkSelectionFilter(),
-            //"Please pick an import instance");
+            Reference r = sel.PickObject(
+                       ObjectType.Element,
+                       new LinkSelectionFilter(),
+                       "Please pick an import instance");
 
-            RevitLinkType rvtlink = doc.GetElement(doc) as RevitLinkType;
+            RevitLinkInstance rvtlink = doc.GetElement(r)
+              as RevitLinkInstance;
+
+            ElementId instanceId = doc.GetElement(r).Id as ElementId;
 
             if (rvtlink == null)
             {
                 return Result.Failed;
             }
 
-            string rb = rvtlink.get_Parameter(BuiltInParameter.WALL_ATTR_ROOM_BOUNDING).AsValueString();
+            RevitLinkType type = doc.GetElement(rvtlink.GetTypeId()) as RevitLinkType;
 
-            TaskDialog.Show("Result", rb);
-            
+            //var models = new FilteredElementCollector(rvtlink.GetLinkDocument());
+
+            //Transform t = rvtlink.GetTotalTransform();
+            string rb = type.get_Parameter(BuiltInParameter.WALL_ATTR_ROOM_BOUNDING).AsValueString();
+
+            Parameter param = type.get_Parameter(BuiltInParameter.WALL_ATTR_ROOM_BOUNDING);
+
+            //TaskDialog.Show("Result", rb);
+
+            TaskDialog.Show("Parameter Values", string.Format("Parameter storage type {0} and value {1}",
+                param.StorageType.ToString(),
+                param.AsValueString()));
+
+            using (Transaction trans = new Transaction(doc, "Set Parameter"))
+            {
+                trans.Start();
+
+                //Set room bounding from NO to YES (0 to 1)
+                param.Set(1);
+                doc.AcquireCoordinates(instanceId);
+
+                trans.Commit();
+            }
+            TaskDialog.Show("Parameter Values", string.Format("Parameter storage type {0} and value {1}",
+            param.StorageType.ToString(),
+            param.AsValueString()));
+
             return Result.Succeeded;
         }
 

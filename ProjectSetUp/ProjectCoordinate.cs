@@ -116,8 +116,16 @@ namespace LucidToolbar
             new LinkSelectionFilter(),
             "Please pick an import instance");
 
+            //Revit linkinstance
             RevitLinkInstance rvtlink = doc.GetElement(r)
               as RevitLinkInstance;
+
+            //Revit Instance ID
+            ElementId instanceId = doc.GetElement(r).Id as ElementId;
+
+            //Revit project room bounding property
+            RevitLinkType type = doc.GetElement(rvtlink.GetTypeId()) as RevitLinkType;
+            Parameter param = type.get_Parameter(BuiltInParameter.WALL_ATTR_ROOM_BOUNDING);
 
             if (rvtlink == null)
             {
@@ -169,8 +177,10 @@ namespace LucidToolbar
                 transaction.Start();
                 ///HACK DO THINGS Here
                 //
+                doc.AcquireCoordinates(instanceId);
                 SetBasePoint(commandData);
                 SetSurveyPoint(commandData);
+                param.Set(1);
                 rvtlink.Pinned = true;
             }
             catch (System.Exception e)
