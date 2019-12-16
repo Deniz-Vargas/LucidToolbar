@@ -48,6 +48,7 @@
             this.txtAng_SP = new System.Windows.Forms.TextBox();
             this.textBox11 = new System.Windows.Forms.TextBox();
             this.txtAng_PBP = new System.Windows.Forms.TextBox();
+            this.button2 = new System.Windows.Forms.Button();
             this.textBox10 = new System.Windows.Forms.TextBox();
             this.txtElev_SP = new System.Windows.Forms.TextBox();
             this.textBox9 = new System.Windows.Forms.TextBox();
@@ -68,24 +69,23 @@
             this.txtNS_SP = new System.Windows.Forms.TextBox();
             this.tab = new System.Windows.Forms.TabControl();
             this.tabPage1 = new System.Windows.Forms.TabPage();
-            this.ckbCheckAll = new System.Windows.Forms.CheckBox();
-            this.worksetComboBox = new System.Windows.Forms.ComboBox();
+            this.groupBox6 = new System.Windows.Forms.GroupBox();
+            this.groupBox5 = new System.Windows.Forms.GroupBox();
             this.label4 = new System.Windows.Forms.Label();
+            this.worksetComboBox = new System.Windows.Forms.ComboBox();
+            this.groupBox4 = new System.Windows.Forms.GroupBox();
+            this.btnUpdate = new System.Windows.Forms.Button();
+            this.label19 = new System.Windows.Forms.Label();
             this.tabPage2 = new System.Windows.Forms.TabPage();
+            this.ckbCheckAll = new System.Windows.Forms.CheckBox();
             this.btnSetWorkset = new System.Windows.Forms.Button();
             this.button1 = new System.Windows.Forms.Button();
-            this.groupBox4 = new System.Windows.Forms.GroupBox();
-            this.groupBox5 = new System.Windows.Forms.GroupBox();
-            this.groupBox6 = new System.Windows.Forms.GroupBox();
-            this.label19 = new System.Windows.Forms.Label();
-            this.btnUpdate = new System.Windows.Forms.Button();
-            this.button2 = new System.Windows.Forms.Button();
             this.groupBox3.SuspendLayout();
             this.tab.SuspendLayout();
             this.tabPage1.SuspendLayout();
-            this.tabPage2.SuspendLayout();
-            this.groupBox4.SuspendLayout();
             this.groupBox5.SuspendLayout();
+            this.groupBox4.SuspendLayout();
+            this.tabPage2.SuspendLayout();
             this.SuspendLayout();
             // 
             // btnGetWorkset
@@ -277,6 +277,16 @@
             this.txtAng_PBP.Size = new System.Drawing.Size(118, 24);
             this.txtAng_PBP.TabIndex = 2;
             this.txtAng_PBP.TextChanged += new System.EventHandler(this.TextBox2_TextChanged);
+            // 
+            // button2
+            // 
+            this.button2.Location = new System.Drawing.Point(395, 21);
+            this.button2.Name = "button2";
+            this.button2.Size = new System.Drawing.Size(247, 23);
+            this.button2.TabIndex = 10;
+            this.button2.Text = "Transfer Linked Model Basepoint";
+            this.button2.UseVisualStyleBackColor = true;
+            this.button2.Click += new System.EventHandler(this.button1_Click_1);
             // 
             // textBox10
             // 
@@ -470,18 +480,41 @@
             this.tabPage1.Text = "Pre-Project Setup";
             this.tabPage1.UseVisualStyleBackColor = true;
             // 
-            // ckbCheckAll
+            // groupBox6
             // 
-            this.ckbCheckAll.AutoSize = true;
-            this.ckbCheckAll.Enabled = false;
-            this.ckbCheckAll.Location = new System.Drawing.Point(240, 560);
-            this.ckbCheckAll.Name = "ckbCheckAll";
-            this.ckbCheckAll.Size = new System.Drawing.Size(88, 21);
-            this.ckbCheckAll.TabIndex = 11;
-            this.ckbCheckAll.Text = "Check All";
-            this.ckbCheckAll.UseVisualStyleBackColor = true;
-            this.ckbCheckAll.Visible = false;
-            this.ckbCheckAll.CheckedChanged += new System.EventHandler(this.ckbCheckAll_CheckedChanged);
+            this.groupBox6.Location = new System.Drawing.Point(9, 259);
+            this.groupBox6.Name = "groupBox6";
+            this.groupBox6.Size = new System.Drawing.Size(669, 204);
+            this.groupBox6.TabIndex = 14;
+            this.groupBox6.TabStop = false;
+            this.groupBox6.Text = "Step 3: ";
+            this.groupBox6.Visible = false;
+            // 
+            // groupBox5
+            // 
+            this.groupBox5.Controls.Add(this.txbFolderPath);
+            this.groupBox5.Controls.Add(this.btnOpen);
+            this.groupBox5.Controls.Add(this.label2);
+            this.groupBox5.Controls.Add(this.checkedListBox1);
+            this.groupBox5.Controls.Add(this.label4);
+            this.groupBox5.Controls.Add(this.worksetComboBox);
+            this.groupBox5.Controls.Add(this.btnSelSourceFile);
+            this.groupBox5.Location = new System.Drawing.Point(9, 64);
+            this.groupBox5.Name = "groupBox5";
+            this.groupBox5.Size = new System.Drawing.Size(669, 189);
+            this.groupBox5.TabIndex = 14;
+            this.groupBox5.TabStop = false;
+            this.groupBox5.Text = "Step 2: ";
+            // 
+            // label4
+            // 
+            this.label4.AutoSize = true;
+            this.label4.Location = new System.Drawing.Point(5, 26);
+            this.label4.Name = "label4";
+            this.label4.Size = new System.Drawing.Size(81, 17);
+            this.label4.TabIndex = 1;
+            this.label4.Text = "File source:";
+            this.label4.Click += new System.EventHandler(this.Label1_Click);
             // 
             // worksetComboBox
             // 
@@ -494,15 +527,36 @@
             this.worksetComboBox.SelectedIndexChanged += new System.EventHandler(this.worksetComboBox_SelectedIndexChanged_1);
             this.worksetComboBox.Click += new System.EventHandler(this.worksetComboBox_Click);
             // 
-            // label4
+            // groupBox4
             // 
-            this.label4.AutoSize = true;
-            this.label4.Location = new System.Drawing.Point(5, 26);
-            this.label4.Name = "label4";
-            this.label4.Size = new System.Drawing.Size(81, 17);
-            this.label4.TabIndex = 1;
-            this.label4.Text = "File source:";
-            this.label4.Click += new System.EventHandler(this.Label1_Click);
+            this.groupBox4.Controls.Add(this.btnUpdate);
+            this.groupBox4.Controls.Add(this.label19);
+            this.groupBox4.Location = new System.Drawing.Point(9, 6);
+            this.groupBox4.Name = "groupBox4";
+            this.groupBox4.Size = new System.Drawing.Size(669, 52);
+            this.groupBox4.TabIndex = 13;
+            this.groupBox4.TabStop = false;
+            this.groupBox4.Text = "Step 1: ";
+            // 
+            // btnUpdate
+            // 
+            this.btnUpdate.Location = new System.Drawing.Point(474, 20);
+            this.btnUpdate.Name = "btnUpdate";
+            this.btnUpdate.Size = new System.Drawing.Size(189, 25);
+            this.btnUpdate.TabIndex = 4;
+            this.btnUpdate.Text = "Edit Project Information";
+            this.btnUpdate.UseVisualStyleBackColor = true;
+            this.btnUpdate.Click += new System.EventHandler(this.btnUpdate_Click_1);
+            // 
+            // label19
+            // 
+            this.label19.AutoSize = true;
+            this.label19.Location = new System.Drawing.Point(33, 24);
+            this.label19.Name = "label19";
+            this.label19.Size = new System.Drawing.Size(365, 17);
+            this.label19.TabIndex = 1;
+            this.label19.Text = "Enter in the project and team information into the window";
+            this.label19.Click += new System.EventHandler(this.Label1_Click);
             // 
             // tabPage2
             // 
@@ -514,6 +568,19 @@
             this.tabPage2.TabIndex = 1;
             this.tabPage2.Text = "Coordinate";
             this.tabPage2.UseVisualStyleBackColor = true;
+            // 
+            // ckbCheckAll
+            // 
+            this.ckbCheckAll.AutoSize = true;
+            this.ckbCheckAll.Enabled = false;
+            this.ckbCheckAll.Location = new System.Drawing.Point(240, 560);
+            this.ckbCheckAll.Name = "ckbCheckAll";
+            this.ckbCheckAll.Size = new System.Drawing.Size(88, 21);
+            this.ckbCheckAll.TabIndex = 11;
+            this.ckbCheckAll.Text = "Check All";
+            this.ckbCheckAll.UseVisualStyleBackColor = true;
+            this.ckbCheckAll.Visible = false;
+            this.ckbCheckAll.CheckedChanged += new System.EventHandler(this.ckbCheckAll_CheckedChanged);
             // 
             // btnSetWorkset
             // 
@@ -536,72 +603,6 @@
             this.button1.UseVisualStyleBackColor = true;
             this.button1.Click += new System.EventHandler(this.button1_Click_1);
             // 
-            // groupBox4
-            // 
-            this.groupBox4.Controls.Add(this.btnUpdate);
-            this.groupBox4.Controls.Add(this.label19);
-            this.groupBox4.Location = new System.Drawing.Point(9, 6);
-            this.groupBox4.Name = "groupBox4";
-            this.groupBox4.Size = new System.Drawing.Size(669, 52);
-            this.groupBox4.TabIndex = 13;
-            this.groupBox4.TabStop = false;
-            this.groupBox4.Text = "Step 1: ";
-            // 
-            // groupBox5
-            // 
-            this.groupBox5.Controls.Add(this.txbFolderPath);
-            this.groupBox5.Controls.Add(this.btnOpen);
-            this.groupBox5.Controls.Add(this.label2);
-            this.groupBox5.Controls.Add(this.checkedListBox1);
-            this.groupBox5.Controls.Add(this.label4);
-            this.groupBox5.Controls.Add(this.worksetComboBox);
-            this.groupBox5.Controls.Add(this.btnSelSourceFile);
-            this.groupBox5.Location = new System.Drawing.Point(9, 64);
-            this.groupBox5.Name = "groupBox5";
-            this.groupBox5.Size = new System.Drawing.Size(669, 189);
-            this.groupBox5.TabIndex = 14;
-            this.groupBox5.TabStop = false;
-            this.groupBox5.Text = "Step 2: ";
-            // 
-            // groupBox6
-            // 
-            this.groupBox6.Location = new System.Drawing.Point(9, 259);
-            this.groupBox6.Name = "groupBox6";
-            this.groupBox6.Size = new System.Drawing.Size(669, 204);
-            this.groupBox6.TabIndex = 14;
-            this.groupBox6.TabStop = false;
-            this.groupBox6.Text = "Step 3: ";
-            // 
-            // label19
-            // 
-            this.label19.AutoSize = true;
-            this.label19.Location = new System.Drawing.Point(33, 24);
-            this.label19.Name = "label19";
-            this.label19.Size = new System.Drawing.Size(365, 17);
-            this.label19.TabIndex = 1;
-            this.label19.Text = "Enter in the project and team information into the window";
-            this.label19.Click += new System.EventHandler(this.Label1_Click);
-            // 
-            // btnUpdate
-            // 
-            this.btnUpdate.Location = new System.Drawing.Point(474, 20);
-            this.btnUpdate.Name = "btnUpdate";
-            this.btnUpdate.Size = new System.Drawing.Size(189, 25);
-            this.btnUpdate.TabIndex = 4;
-            this.btnUpdate.Text = "Edit Project Information";
-            this.btnUpdate.UseVisualStyleBackColor = true;
-            this.btnUpdate.Click += new System.EventHandler(this.btnUpdate_Click_1);
-            // 
-            // button2
-            // 
-            this.button2.Location = new System.Drawing.Point(395, 21);
-            this.button2.Name = "button2";
-            this.button2.Size = new System.Drawing.Size(247, 23);
-            this.button2.TabIndex = 10;
-            this.button2.Text = "Transfer Linked Model Basepoint";
-            this.button2.UseVisualStyleBackColor = true;
-            this.button2.Click += new System.EventHandler(this.button1_Click_1);
-            // 
             // ModelessForm1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
@@ -623,11 +624,11 @@
             this.groupBox3.PerformLayout();
             this.tab.ResumeLayout(false);
             this.tabPage1.ResumeLayout(false);
-            this.tabPage2.ResumeLayout(false);
-            this.groupBox4.ResumeLayout(false);
-            this.groupBox4.PerformLayout();
             this.groupBox5.ResumeLayout(false);
             this.groupBox5.PerformLayout();
+            this.groupBox4.ResumeLayout(false);
+            this.groupBox4.PerformLayout();
+            this.tabPage2.ResumeLayout(false);
             this.ResumeLayout(false);
             this.PerformLayout();
 

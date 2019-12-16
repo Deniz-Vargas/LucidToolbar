@@ -312,6 +312,7 @@ namespace LucidToolbar
                 MakeRequest(RequestId.Linkfile);
                 progressBar1.PerformStep();
             }
+            TaskDialog.Show("Link Model", "Revit Model Has Linked In");
         }
 
         private void btnGetWorkset_Click(object sender, EventArgs e)
