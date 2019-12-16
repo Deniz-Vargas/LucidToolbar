@@ -21,22 +21,24 @@ namespace LucidToolbar
     [Autodesk.Revit.Attributes.Journaling(Autodesk.Revit.Attributes.JournalingMode.NoCommandData)]
     class TestCommand : IExternalCommand
     {
-         /// <summary>
-         /// Implement this method as an external command for Revit.
-         /// </summary>
-         /// <param name="commandData">An object that is passed to the external application 
-         /// which contains data related to the command, 
-         /// such as the application object and active view.</param>
-         /// <param name="message">A message that can be set by the external application 
-         /// which will be displayed if a failure or cancellation is returned by 
-         /// the external command.</param>
-         /// <param name="elements">A set of elements to which the external application 
-         /// can add elements that are to be highlighted in case of failure or cancellation.</param>
-         /// <returns>Return the status of the external command. 
-         /// A result of Succeeded means that the API external method functioned as expected. 
-         /// Cancelled can be used to signify that the user cancelled the external operation 
-         /// at some point. Failure should be returned if the application is unable to proceed with 
-         /// the operation.</returns>
+        /// <summary>
+        /// Implement this method as an external command for Revit.
+        /// </summary>
+        /// <param name="commandData">An object that is passed to the external application 
+        /// which contains data related to the command, 
+        /// such as the application object and active view.</param>
+        /// <param name="message">A message that can be set by the external application 
+        /// which will be displayed if a failure or cancellation is returned by 
+        /// the external command.</param>
+        /// <param name="elements">A set of elements to which the external application 
+        /// can add elements that are to be highlighted in case of failure or cancellation.</param>
+        /// <returns>Return the status of the external command. 
+        /// A result of Succeeded means that the API external method functioned as expected. 
+        /// Cancelled can be used to signify that the user cancelled the external operation 
+        /// at some point. Failure should be returned if the application is unable to proceed with 
+        /// the operation.</returns>
+
+        #region Global Params Project Locations
         public static double NS_PBP { get; internal set; }
         public static double EW_PBP { get; internal set; }
         public static double Elev_PBP { get; internal set; } 
@@ -46,19 +48,9 @@ namespace LucidToolbar
         public static double EW_SP { get; internal set; }
         public static double Elev_SP { get; internal set; }
         public static double Ang_SP { get; internal set; }
-
         public static string filePath { get; internal set; }
-        // Store the reference of the application in revit
-        UIApplication m_revit;
+        #endregion
 
-        //Create a list to hold all elements relating to site elements           
-        IList<Element> m_siteElements = new List<Element>();
-        IList<Element> m_surveyElements = new List<Element>();
-        public void run()
-        {
-            //ModelessForm1 = new ModelessForm1();
-
-        }
         public Result Execute(ExternalCommandData commandData, ref string message, ElementSet elements)
         {
             RevitStartInfo.RevitApp = commandData.Application.Application;
@@ -70,12 +62,10 @@ namespace LucidToolbar
             try
             {
                 documentTransaction.Start();
-                //get current project information
+
                 Autodesk.Revit.DB.ProjectInfo pi = commandData.Application.ActiveUIDocument.Document.ProjectInformation;
                 // show main form
-                using (ModelessForm1 pif = new ModelessForm1(new ProjectInfoWrapper(pi)))
-
-                //ProjectInfo data = new ProjectInfo(commandData);
+                using (ModelessForm1 pif = new ModelessForm1(new ProjectInfoWrapper(pi)));
                 ExternalApplication.thisApp.ShowForm(commandData.Application);
                 //ProjectInfo(commandData);
                 documentTransaction.Commit();
@@ -88,41 +78,7 @@ namespace LucidToolbar
                 message = ex.Message;
                 return Result.Failed;
             }
-
-
         }
-        public void ProjectInfo(ExternalCommandData commandData)
-        {
-            m_revit = commandData.Application;
-            FilteredElementCollector surveypointCollector = new FilteredElementCollector(m_revit.ActiveUIDocument.Document);
-            ElementCategoryFilter SurveyCategoryfilter = new ElementCategoryFilter(BuiltInCategory.OST_SharedBasePoint);
-            m_surveyElements = surveypointCollector.WherePasses(SurveyCategoryfilter).ToList<Element>();
-            foreach (Element ele in m_surveyElements)
-            {
-                Parameter paramX = ele.ParametersMap.get_Item("E/W");
-                String x1 = ele.get_Parameter(BuiltInParameter.BASEPOINT_EASTWEST_PARAM).AsValueString();
-                String X = paramX.AsValueString();
-                //TestCommand.NS_SP = paramX.AsValueString();
-
-                Parameter paramY = ele.ParametersMap.get_Item("N/S");
-                String y1 = ele.get_Parameter(BuiltInParameter.BASEPOINT_NORTHSOUTH_PARAM).AsValueString();
-                String Y = paramY.AsValueString();
-                //TestCommand.EW_SP = paramY.AsValueString();
-
-                Parameter Elevation = ele.ParametersMap.get_Item("Elev");
-                String Ele = Elevation.AsValueString();
-                //TestCommand.Elev_SP = Elevation.AsValueString();
-
-                //Parameter Angle = ele.ParametersMap.get_Item("Angle to True North");
-                //String Ang = Angle.AsValueString();
-                //Ang_SP = Angle.AsValueString();
-
-                //TaskDialog.Show("Revit Model Survey Point", string.Format("E/W is {0}: W/S is {1}: Elevation is {2}", X, Y, Ele));
-            }
-
-        }
-
-
     }
     public static class RevitStartInfo
     {

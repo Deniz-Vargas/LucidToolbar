@@ -59,11 +59,14 @@ namespace LucidToolbar
 
             foreach (Element e in coll)
             {
-                if (e is View)
+                if (e is ViewPlan)
                 {
                     View view = e as View;
+
                     if (!view.IsTemplate)
+                    {
                         views.Add(view);
+                    }
                 }
                 else if (e is ViewSheet)
                 {
@@ -77,11 +80,11 @@ namespace LucidToolbar
             {
                 transaction.Start();
                 //Do something here
-                //foreach (View v in views)
-                //{
-                //    v.ViewTemplateId = templateId;
-                //}
-                TaskDialog.Show("Views",string.Format("There are {0} views and {1} viewsheets in this model",views.Count(), viewSheets.Count()));
+                foreach (View v in views)
+                {
+                    v.ViewTemplateId = templateId;
+                }
+                TaskDialog.Show("Views Architectural Clean Up",string.Format("Applied Architectural Clean Up template to {0} views in this model",views.Count()));
                 
                 //doc.ActiveView.ViewTemplateId = templateId;
 

@@ -482,9 +482,9 @@
             // 
             // groupBox6
             // 
-            this.groupBox6.Location = new System.Drawing.Point(9, 259);
+            this.groupBox6.Location = new System.Drawing.Point(9, 357);
             this.groupBox6.Name = "groupBox6";
-            this.groupBox6.Size = new System.Drawing.Size(669, 204);
+            this.groupBox6.Size = new System.Drawing.Size(669, 106);
             this.groupBox6.TabIndex = 14;
             this.groupBox6.TabStop = false;
             this.groupBox6.Text = "Step 3: ";
@@ -617,6 +617,7 @@
             this.Controls.Add(this.button1);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedDialog;
             this.Name = "ModelessForm1";
+            this.StartPosition = System.Windows.Forms.FormStartPosition.CenterParent;
             this.Text = "Project Set Up ";
             this.TopMost = true;
             this.Load += new System.EventHandler(this.ProjectInfoForm_Load);

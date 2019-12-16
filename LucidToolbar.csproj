@@ -79,6 +79,12 @@
     <Compile Include="AvoidObstruction\AvoidObstruction.cs" />
     <Compile Include="HydraulicTools\Class.cs" />
     <Compile Include="AvoidObstruction\Detector.cs" />
+    <Compile Include="ProjectSetUp\ApplyTemplateForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="ProjectSetUp\ApplyTemplateForm.Designer.cs">
+      <DependentUpon>ApplyTemplateForm.cs</DependentUpon>
+    </Compile>
     <Compile Include="ProjectSetUp\ArchCleanUp.cs" />
     <Compile Include="ProjectSetUp\SetParameter.cs" />
     <Compile Include="ProjectSetUp\CreateViews.cs" />
@@ -109,6 +115,13 @@
     <Compile Include="ProjectSetUp\ProjectInfoWrapper\Wrappers.cs" />
     <Compile Include="ProjectSetUp\Request.cs" />
     <Compile Include="ProjectSetUp\RequestHandler.cs" />
+    <Compile Include="ProjectSetUp\ViewTemplate\AllViews.cs" />
+    <Compile Include="ProjectSetUp\ViewTemplate\AllViewsForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="ProjectSetUp\ViewTemplate\AllViewsForm.Designer.cs">
+      <DependentUpon>AllViewsForm.cs</DependentUpon>
+    </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Properties\Resources.Designer.cs">
       <AutoGen>True</AutoGen>
@@ -122,9 +135,15 @@
     </None>
   </ItemGroup>
   <ItemGroup>
+    <EmbeddedResource Include="ProjectSetUp\ApplyTemplateForm.resx">
+      <DependentUpon>ApplyTemplateForm.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="ProjectSetUp\ModelessForm1.resx">
       <DependentUpon>ModelessForm1.cs</DependentUpon>
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </EmbeddedResource>
+    <EmbeddedResource Include="ProjectSetUp\ViewTemplate\AllViewsForm.resx">
+      <DependentUpon>AllViewsForm.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>

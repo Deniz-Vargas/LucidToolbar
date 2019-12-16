@@ -41,26 +41,11 @@ namespace LucidToolbar
             InitializeComponent();
             m_Handler = handler;
             m_ExEvent = exEvent;
-            //lblNS_PBP.Text = TestCommand.NS_PBP;
-            //txtEW_PBP.Text = TestCommand.EW_PBP;
-            //txtElev_PBP.Text = TestCommand.Elev_PBP;
-            //txtAng_PBP.Text = TestCommand.Ang_PBP;
-
-            //txtNS_SP.Text = TestCommand.NS_SP;
-            //txtEW_SP.Text = TestCommand.EW_SP;
-            //txtElev_SP.Text = TestCommand.Elev_SP;
-            //txtAng_SP.Text = TestCommand.Ang_SP;
         }
         
         public ModelessForm1(ProjectInfoWrapper projectInfoWrapper) :this()
         {
-            
             m_projectInfoWrapper = projectInfoWrapper;
-            
-            //Initialize propertyGrid with CustomDescriptor
-            //propertyGrid1.SelectedObject = new WrapperCustomDescriptor(m_projectInfoWrapper);
-
-
         }
 
 
@@ -311,8 +296,9 @@ namespace LucidToolbar
                 //TaskDialog.Show("Target Directory",TestCommand.filePath.ToString());
                 MakeRequest(RequestId.Linkfile);
                 progressBar1.PerformStep();
+                TaskDialog.Show("Link Model", string.Format("Revit model {0} has been linked In", Path.GetFileName(item.ToString())));
             }
-            TaskDialog.Show("Link Model", "Revit Model Has Linked In");
+            
         }
 
         private void btnGetWorkset_Click(object sender, EventArgs e)
@@ -323,37 +309,7 @@ namespace LucidToolbar
 
         private void ckbAll_CheckedChanged(object sender, EventArgs e)
         {
-            //if (ckbAll.Checked)
-            //{
-            //    for (int i =0;i<checkedListBox1.Items.Count; i++)
-            //    {
-            //        checkedListBox1.SetItemChecked(i, true);//check the box at index i
-
-            //    }
-            //}
-            //else
-            //    for (int i = 0; i < checkedListBox1.Items.Count; i++)
-            //    {
-            //        checkedListBox1.SetItemChecked(i, false);//check the box at index i
-
-            //    }
-
-
-
-            //if (checkedListBox1.GetItemChecked(0))
-            //{
-            //    for (int i = 1; i < checkedListBox1.Items.Count; i++)
-            //    {
-            //        checkedListBox1.SetItemChecked(i, true);//check the box at index i
-
-            //    }
-            //}
-            //else
-            //    for (int i = 1; i < checkedListBox1.Items.Count; i++)
-            //    {
-            //        checkedListBox1.SetItemChecked(i, false);//check the box at index i
-
-            //    }
+           
         }
 
         private void checkedListBox1_SelectedIndexChanged_1(object sender, EventArgs e)

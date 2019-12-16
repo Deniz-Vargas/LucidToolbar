@@ -78,6 +78,9 @@ namespace LucidToolbar
                 new PushButtonData("Set Parameter", "Set Parameter", path, "LucidToolbar.SetParameter");
             SetParameter.LargeImage = GetImage(Properties.Resources.Set.GetHbitmap());
 
+            PushButtonData AllViews =
+            new PushButtonData("Set AllViews", "Set AllViews", path, "LucidToolbar.AllViews");
+            AllViews.LargeImage = GetImage(Properties.Resources.CopyMonitor.GetHbitmap());
 
             RibbonItem ri1 = LucidHydPanel.AddItem(DomesticColdWater);
             RibbonItem ri2 = LucidHydPanel.AddItem(DomesticHotWater);
@@ -90,9 +93,10 @@ namespace LucidToolbar
             RibbonItem ri7 = LucidQAPanel.AddItem(CopyMonitor);
             RibbonItem ri8 = LucidQAPanel.AddItem(AddFloorPlan);
             RibbonItem ri9 = LucidQAPanel.AddItem(ArchCleanUp);
-            LucidQAPanel.AddSeparator();
             RibbonItem ri10 = LucidQAPanel.AddItem(PlaceSpaceTag);
             RibbonItem ri11 = LucidQAPanel.AddItem(SetParameter);
+            LucidQAPanel.AddSeparator();
+            RibbonItem ri12 = LucidQAPanel.AddItem(AllViews);
             //LucidHydPanel.AddSeparator();
             //
             ///Setup document
