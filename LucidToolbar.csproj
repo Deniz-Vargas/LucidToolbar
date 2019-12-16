@@ -133,6 +133,8 @@
     <None Include="LucidToolbar.addin">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
+    <None Include="Resources\Lucid Standard Project Template_detached.rvt" />
+    <None Include="Resources\X_LCE_TUTE1_Arch_19.rvt" />
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="ProjectSetUp\ApplyTemplateForm.resx">
