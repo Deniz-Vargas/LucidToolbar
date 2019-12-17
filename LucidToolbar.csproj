@@ -79,23 +79,19 @@
     <Compile Include="AvoidObstruction\AvoidObstruction.cs" />
     <Compile Include="HydraulicTools\Class.cs" />
     <Compile Include="AvoidObstruction\Detector.cs" />
-    <Compile Include="ProjectSetUp\ApplyTemplateForm.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="ProjectSetUp\ApplyTemplateForm.Designer.cs">
-      <DependentUpon>ApplyTemplateForm.cs</DependentUpon>
-    </Compile>
     <Compile Include="ProjectSetUp\ArchCleanUp.cs" />
+    <Compile Include="ProjectSetUp\CreateSpace.cs" />
     <Compile Include="ProjectSetUp\SetParameter.cs" />
     <Compile Include="ProjectSetUp\CreateViews.cs" />
     <Compile Include="ProjectSetUp\CreateSheets.cs" />
-    <Compile Include="ProjectSetUp\PostCommand.cs" />
+    <Compile Include="ProjectSetUp\AddFloorPlan.cs" />
     <Compile Include="ProjectSetUp\CopyMonitor.cs" />
     <Compile Include="ProjectSetUp\ProjectCoordinate.cs" />
     <Compile Include="HydraulicTools\DomesticColdWater.cs" />
     <Compile Include="HydraulicTools\DomesticHotWater.cs" />
     <Compile Include="HydraulicTools\NaturalGasPipe.cs" />
     <Compile Include="Commands\OpenMyLib.cs" />
+    <Compile Include="ProjectSetUp\SpaceManager.cs" />
     <Compile Include="ProjectSetUp\TestCommand.cs" />
     <Compile Include="ProjectSetUp\RequestHandler2.cs" />
     <Compile Include="AvoidObstruction\Resolver.cs" />
@@ -137,9 +133,6 @@
     <None Include="Resources\X_LCE_TUTE1_Arch_19.rvt" />
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="ProjectSetUp\ApplyTemplateForm.resx">
-      <DependentUpon>ApplyTemplateForm.cs</DependentUpon>
-    </EmbeddedResource>
     <EmbeddedResource Include="ProjectSetUp\ModelessForm1.resx">
       <DependentUpon>ModelessForm1.cs</DependentUpon>
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>

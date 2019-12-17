@@ -76,6 +76,8 @@ namespace LucidToolbar
         public static string EW_PBP { get; internal set; }
         public static string Elev_PBP { get; internal set; }
         public static string Ang_PBP { get; internal set; }
+        public static bool survryPointisPinned { get; internal set; }
+        public static ElementId surveyPointId { get; internal set; }
         #endregion
 
         #region IExternalCommand Members
@@ -83,6 +85,8 @@ namespace LucidToolbar
         //Create a list to hold all elements relating to site elements           
         IList<Element> m_siteElements = new List<Element>();
         IList<Element> m_surveyElements = new List<Element>();
+
+       
         // Store the reference of the application in revit
         UIApplication m_revit;
         #endregion
@@ -110,7 +114,7 @@ namespace LucidToolbar
             UIDocument uidoc = uiapp.ActiveUIDocument;
             Document doc = uidoc.Document;
             Selection sel = uidoc.Selection;
-
+            
             Reference r = sel.PickObject(
             ObjectType.Element,
             new LinkSelectionFilter(),
@@ -122,7 +126,7 @@ namespace LucidToolbar
 
             //Revit Instance ID
             ElementId instanceId = doc.GetElement(r).Id as ElementId;
-
+            
             //Revit project room bounding property
             RevitLinkType type = doc.GetElement(rvtlink.GetTypeId()) as RevitLinkType;
             Parameter param = type.get_Parameter(BuiltInParameter.WALL_ATTR_ROOM_BOUNDING);
@@ -177,11 +181,28 @@ namespace LucidToolbar
                 transaction.Start();
                 ///HACK DO THINGS Here
                 //
-                doc.AcquireCoordinates(instanceId);
-                SetBasePoint(commandData);
-                SetSurveyPoint(commandData);
-                param.Set(1);
-                rvtlink.Pinned = true;
+                
+                if (CheckIfPinned(commandData))
+                {
+                    TaskDialog.Show("Survey Point", "Survey point is clipped" + Environment.NewLine
+                            + " Please unclip to proceed");
+                    //SelSurveyPoint(commandData);
+                    ICollection<ElementId> selectedElementIds = commandData
+                        .Application.ActiveUIDocument.Selection.GetElementIds();
+                    ElementId surveyPointId = new ElementId(BuiltInCategory.OST_SharedBasePoint);
+                    selectedElementIds.Add(surveyPointId);
+                    commandData.Application.ActiveUIDocument.Selection.SetElementIds(selectedElementIds);
+
+                }
+                else
+                {
+                    doc.AcquireCoordinates(instanceId);
+                    SetBasePoint(commandData);
+                    SetSurveyPoint(commandData);
+                    param.Set(1);
+                    rvtlink.Pinned = true;
+                }
+                
             }
             catch (System.Exception e)
             {
@@ -266,36 +287,18 @@ namespace LucidToolbar
             FilteredElementCollector basepointCollector = new FilteredElementCollector(m_revit.ActiveUIDocument.Document);
             ElementCategoryFilter BaseCategoryfilter = new ElementCategoryFilter(BuiltInCategory.OST_ProjectBasePoint);
             m_siteElements = basepointCollector.WherePasses(BaseCategoryfilter).ToList<Element>();
-            // Transformation from linked file to host
 
-            //Transform t = rvtlink.GetTotalTransform();
-            //BasePoint bp;
-
-
-            //bp.GetParameters(BuiltInParameter.)
             foreach (Element ele in m_siteElements)
             {
                 Parameter paramX = ele.ParametersMap.get_Item("E/W");
                 ele.get_Parameter(BuiltInParameter.BASEPOINT_EASTWEST_PARAM).Set(TestCommand.EW_PBP);
-                //String X = paramX.AsValueString();
-                //TestCommand.NS_SP = paramX.AsValueString();
-
+                    
                 Parameter paramY = ele.ParametersMap.get_Item("N/S");
                 ele.get_Parameter(BuiltInParameter.BASEPOINT_NORTHSOUTH_PARAM).Set(TestCommand.NS_PBP);
-                //String Y = paramY.AsValueString();
-                //TestCommand.EW_SP = paramY.AsValueString();
 
                 Parameter Elevation = ele.ParametersMap.get_Item("Elev");
-
-                //TestCommand.Elev_SP = Elevation.AsValueString();
-
-                //Parameter Angle = ele.ParametersMap.get_Item("Angle to True North");
-                //String Ang = Angle.AsValueString();
-                //Ang_SP = Angle.AsValueString();
-
-                //TaskDialog.Show("Project Setup: Transfer Coordinates", "Shared Project Basepoint Reconciled"); 
-                //TaskDialog.Show("Revit Model Survey Point", string.Format("E/W is {0}: W/S is {1}: Elevation is {2}", TestCommand.EW_SP, TestCommand.NS_SP,""));
             }
+           
         }
         public void SetSurveyPoint(ExternalCommandData commandData)
         {
@@ -304,36 +307,19 @@ namespace LucidToolbar
             ElementCategoryFilter SurveyCategoryfilter = new ElementCategoryFilter(BuiltInCategory.OST_SharedBasePoint);
             m_surveyElements = surveypointCollector.WherePasses(SurveyCategoryfilter).ToList<Element>();
             // Transformation from linked file to host
-
-            //Transform t = rvtlink.GetTotalTransform();
-            //BasePoint bp;
-
-            //.Pinned = false;
-            //bp.GetParameters(BuiltInParameter.)
             
             foreach (Element ele in m_surveyElements)
             {
                 Parameter paramX = ele.ParametersMap.get_Item("E/W");
                 Parameter paramY = ele.ParametersMap.get_Item("N/S");
 
-                bool bo = ele.get_Parameter(BuiltInParameter.BASEPOINT_NORTHSOUTH_PARAM).UserModifiable;
-
-                //String X = paramX.AsValueString();
-                //TestCommand.NS_SP = paramX.AsValueString();
                 ele.get_Parameter(BuiltInParameter.BASEPOINT_NORTHSOUTH_PARAM).Set(TestCommand.NS_SP);
                 ele.get_Parameter(BuiltInParameter.BASEPOINT_EASTWEST_PARAM).Set(TestCommand.EW_SP);
 
-                //Parameter paramX = ele.ParametersMap.get_Item("E/W");
-                //ele.get_Parameter(BuiltInParameter.BASEPOINT_EASTWEST_PARAM).Set(TestCommand.EW_SP);
-                //ele.get_Parameter(BuiltInParameter.BASEPOINT_NORTHSOUTH_PARAM).Set(TestCommand.NS_SP);
-                //ele.get_Parameter(BuiltInParameter.BASEPOINT_ANGLETON_PARAM).Set(TestCommand.Ang_SP);
-                //Ang_SP = Angle.AsValueString();
-                //TaskDialog.Show("Project Setup: Transfer Coordinates", "Survey Basepoint Reconciled");
-               // TaskDialog.Show("Revit Model Survey Point", string.Format("E/W is {0}: W/S is {1}: Ang is {2}", TestCommand.EW_SP, TestCommand.NS_SP, TestCommand.Ang_PBP));
+                // TaskDialog.Show("Revit Model Survey Point", string.Format("E/W is {0}: W/S is {1}: Ang is {2}", TestCommand.EW_SP, TestCommand.NS_SP, TestCommand.Ang_PBP));
             }
 
         }
-
         public void RoomBounding (ExternalCommandData commandData, RevitLinkInstance revitLink)
         {
             BuiltInParameter roombounding = BuiltInParameter.WALL_ATTR_ROOM_BOUNDING;
@@ -343,6 +329,38 @@ namespace LucidToolbar
             revitLink.get_Parameter(BuiltInParameter.WALL_ATTR_ROOM_BOUNDING).SetValueString("YES");
            
         }
+        public bool CheckIfPinned(ExternalCommandData commandData)
+        {
+            m_revit = commandData.Application;
+            FilteredElementCollector surveypointCollector = new FilteredElementCollector(m_revit.ActiveUIDocument.Document);
+            ElementCategoryFilter SurveyCategoryfilter = new ElementCategoryFilter(BuiltInCategory.OST_SharedBasePoint);
+            m_surveyElements = surveypointCollector.WherePasses(SurveyCategoryfilter).ToList<Element>();
 
+            foreach (Element ele in m_surveyElements)
+            {
+                if (ele.ParametersMap.get_Item("E/W").IsReadOnly)
+                {
+                    //
+                    return true;
+                    
+                }
+            }
+            return false;
+
+        }
+
+        public void SelSurveyPoint(ExternalCommandData commandData)
+        {
+            UIApplication uiapp = commandData.Application;
+            UIDocument uidoc = uiapp.ActiveUIDocument;
+
+            Selection sel = uidoc.Selection;
+            List<ElementId> selId = new List<ElementId>();
+            ElementId surveyPointId = new ElementId(BuiltInCategory.OST_SharedBasePoint);
+            selId.Add(surveyPointId);
+            //List<ElementId> none = new List<ElementId>();
+            //sel.SetElementIds(none);
+            sel.SetElementIds(selId);
+        }
     }
 }

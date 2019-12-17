@@ -75,13 +75,14 @@ namespace LucidToolbar
                 ViewsMgr view = new ViewsMgr(doc);
 
                 newTran = new Transaction(doc);
-                newTran.Start("AllViews_Sample");
+                newTran.Start("AllViews_ApplyTemplates");
 
                 AllViewsForm dlg = new AllViewsForm(view);
 
                 if (dlg.ShowDialog() == DialogResult.OK)
                 {
-                    view.GenerateSheet(doc);
+                    view.ApplyTemplate(doc);
+                    //view.GenerateSheet(doc);
                 }
                 newTran.Commit();
 
@@ -107,14 +108,16 @@ namespace LucidToolbar
         private TreeNode m_allViewsNames = new TreeNode("Views (all)");
         private ViewSet m_allViews = new ViewSet();
         private ViewSet m_selectedViews = new ViewSet();
+        private List<Autodesk.Revit.DB.View> m_selectedViewLists = new List<Autodesk.Revit.DB.View>();
+        private ElementId m_selectedTemplateId;
         private FamilySymbol m_titleBlock;
+        private Autodesk.Revit.DB.View m_viewTemplate;
         private IList<Element> m_allTitleBlocks = new List<Element>();
         private IList<Element> m_allViewTemplates = new List<Element>();
         private ArrayList m_allTitleBlocksNames = new ArrayList();
         private ArrayList m_allViewTemplateNames = new ArrayList();
         private string m_sheetName;
         private double m_rows;
-
         private double TITLEBAR = 0.2;
         private double GOLDENSECTION = 0.618;
 
@@ -243,6 +246,7 @@ namespace LucidToolbar
         public void SelectViews()
         {
             ArrayList names = new ArrayList();
+            List<Autodesk.Revit.DB.View> views = new List<Autodesk.Revit.DB.View>();
             foreach (TreeNode t in AllViewsNames.Nodes)
             {
                 foreach (TreeNode n in t.Nodes)
@@ -250,6 +254,7 @@ namespace LucidToolbar
                     if (n.Checked && 0 == n.Nodes.Count)
                     {
                         names.Add(n.Text);
+                        //views.Add(n);
                     }
                 }
             }
@@ -261,6 +266,7 @@ namespace LucidToolbar
                     if (s.Equals(v.Name))
                     {
                         m_selectedViews.Insert(v);
+                        m_selectedViewLists.Add(v);
                         break;
                     }
                 }
@@ -287,6 +293,27 @@ namespace LucidToolbar
             PlaceViews(m_selectedViews, sheet);
         }
 
+        public void ApplyTemplate(Document doc)
+        {
+            if (null == doc)
+            {
+                throw new ArgumentNullException("no active document");
+            }
+
+            if (0 == m_selectedViews.Size)
+            {
+                throw new InvalidOperationException("No view be selected, generate sheet be canceled.");
+            }
+            foreach (Autodesk.Revit.DB.View v in m_selectedViewLists)
+            {
+                v.ViewTemplateId = m_selectedTemplateId;
+            }
+
+        }
+
+
+
+
         /// <summary>
         /// Retrieve the title block to be generate by its name.
         /// </summary>
@@ -307,6 +334,34 @@ namespace LucidToolbar
                }
             }
         }
+
+
+        public void ChooseViewTemplate(string name)
+        {
+            if (string.IsNullOrEmpty(name))
+            {
+                throw new ArgumentNullException("name");
+            }
+
+            foreach (Autodesk.Revit.DB.View view in m_allViewTemplates)
+            {
+                if (name.Equals(view.Name))
+                {
+                    m_viewTemplate = view;
+                    m_selectedTemplateId = view.Id;
+                    return;
+                }
+            }
+            //foreach (Autodesk.Revit.DB.View view in m_allViewTemplates)
+            //{
+            //    if (name.Equals(view.Name))
+            //    {
+            //        m_viewTemplate = view;
+            //        return;
+            //    }
+            //}
+        }
+
 
         /// <summary>
         /// Retrieve all available title blocks in the currently active document.
@@ -340,12 +395,26 @@ namespace LucidToolbar
             coll.OfClass(typeof(Autodesk.Revit.DB.View));
 
             m_allViewTemplates = coll.ToElements();
+            if (0 == m_allViewTemplates.Count)
+            {
+                throw new InvalidOperationException("There is no view template to assign.");
+            }
 
             foreach (Element element in m_allViewTemplates)
             {
-                Autodesk.Revit.DB.View v = element as Autodesk.Revit.DB.View;
-                AllViewTemplatesNames.Add(v.Name + ":" + v.Name);
-                //if (null = m)
+                if (element is ViewPlan)
+                {
+                    Autodesk.Revit.DB.View v = element as Autodesk.Revit.DB.View;
+                    if (v.IsTemplate)
+                    {
+                        AllViewTemplatesNames.Add(v.Name);
+                    }
+                    if(null == m_allViewTemplates)
+                    {
+                        m_viewTemplate = v;
+                        //m_selectedTemplateId = v.Id;
+                    }
+                }
             }
         }
         

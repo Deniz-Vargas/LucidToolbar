@@ -29,7 +29,7 @@ namespace LucidToolbar.ProjectSetUp.ViewTemplate
 
             foreach (string s in m_data.AllViewTemplatesNames)
             {
-                titleBlocksListBox.Items.Add(s);
+                viewTemplateListBox.Items.Add(s);
             }
 
 
@@ -42,12 +42,11 @@ namespace LucidToolbar.ProjectSetUp.ViewTemplate
         private void oKButton_Click(object sender, EventArgs e)
         {
             m_data.SelectViews();
-            m_data.SheetName = sheetNameTextBox.Text;
-
-            if (1 == titleBlocksListBox.SelectedItems.Count)
+            if (1 == viewTemplateListBox.SelectedItems.Count)
             {
-                string titleBlock = titleBlocksListBox.SelectedItems[0].ToString();
-                m_data.ChooseTitleBlock(titleBlock);
+                string viewTemplate = viewTemplateListBox.SelectedItems[0].ToString();
+                m_data.ChooseViewTemplate(viewTemplate);
+                //m_data.ChooseTitleBlock(titleBlock);
             }
         }
         #region CheckTreeNode
@@ -85,10 +84,10 @@ namespace LucidToolbar.ProjectSetUp.ViewTemplate
         /// <param name="e"></param>
         private void titleBlocksListBox_MouseClick(object sender, MouseEventArgs e)
         {
-            int idx = titleBlocksListBox.SelectedIndex;
+            int idx = viewTemplateListBox.SelectedIndex;
             if (0 < idx)
             {
-                titleBlocksListBox.SetSelected(idx, true);
+                viewTemplateListBox.SetSelected(idx, true);
             }
         }
         private void cancelButton_Click(object sender, EventArgs e)
@@ -99,6 +98,21 @@ namespace LucidToolbar.ProjectSetUp.ViewTemplate
         private void titleBlocksListBox_SelectedIndexChanged(object sender, EventArgs e)
         {
 
+        }
+
+        private void titleBlocksLabel_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void applyButton_Click(object sender, EventArgs e)
+        {
+            m_data.SelectViews();
+            if (1 == viewTemplateListBox.SelectedItems.Count)
+            {
+                string viewTemplate = viewTemplateListBox.SelectedItems[0].ToString();
+                m_data.ChooseViewTemplate(viewTemplate);
+            }
         }
     }
 }

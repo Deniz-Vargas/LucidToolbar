@@ -63,7 +63,7 @@ namespace LucidToolbar
             CopyMonitor.LargeImage = GetImage(Properties.Resources.save_to_grid.GetHbitmap());
 
             PushButtonData AddFloorPlan =
-                new PushButtonData("Add Floor Plan", "Add Floor Plan", path, "LucidToolbar.PostCommand");
+                new PushButtonData("Add Floor Plan", "Add Floor Plan", path, "LucidToolbar.AddFloorPlan");
             AddFloorPlan.LargeImage = GetImage(Properties.Resources.floorplan.GetHbitmap());
 
             PushButtonData ArchCleanUp =
@@ -71,7 +71,7 @@ namespace LucidToolbar
             ArchCleanUp.LargeImage = GetImage(Properties.Resources.Cleanup.GetHbitmap());
 
             PushButtonData PlaceSpaceTag =
-                new PushButtonData("Place Space Tag", "Place Space Tag", path, "LucidToolbar.PostCommand");
+                new PushButtonData("Place Space Tag", "Place Space Tag", path, "LucidToolbar.CreateSpace");
             PlaceSpaceTag.LargeImage = GetImage(Properties.Resources.grid.GetHbitmap());
 
             PushButtonData SetParameter =

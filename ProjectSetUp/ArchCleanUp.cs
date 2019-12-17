@@ -48,6 +48,7 @@ namespace LucidToolbar
                 .Cast<View>()
                 .Where(v => v.Name.Equals("Architectural Cleanup"));
             View template = viewTemp.FirstOrDefault();
+
             ElementId templateId = template.Id;
 
 
@@ -63,7 +64,7 @@ namespace LucidToolbar
                 {
                     View view = e as View;
 
-                    if (!view.IsTemplate)
+                    if (!view.IsTemplate && "Coordination View - Datum (TO BE DELETED)" != view.Name)
                     {
                         views.Add(view);
                     }
@@ -84,7 +85,7 @@ namespace LucidToolbar
                 {
                     v.ViewTemplateId = templateId;
                 }
-                TaskDialog.Show("Views Architectural Clean Up",string.Format("Applied Architectural Clean Up template to {0} views in this model",views.Count()));
+                TaskDialog.Show("Views Architectural Clean Up",string.Format("Applied the Architectural Clean-up template to {0} views in this model",views.Count()));
                 
                 //doc.ActiveView.ViewTemplateId = templateId;
 

@@ -54,7 +54,7 @@ namespace LucidToolbar
         {
             Invoke(new Action(() =>
             {
-                //update UI based on progress;
+                //update UI based on progress;v
                 MessageBox.Show(progress.Data);
             }));
         }
@@ -202,7 +202,7 @@ namespace LucidToolbar
 
         private void button1_Click(object sender, EventArgs e)
         {
-           
+            this.Close();
         }
 
         private void btnSelSourceFile_Click(object sender, EventArgs e)
@@ -402,6 +402,16 @@ namespace LucidToolbar
         private void btnUpdate_Click_1(object sender, EventArgs e)
         {
             MakeRequest(RequestId.ProjectInfo);
+        }
+
+        private void tabPage1_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void btnOK_Click(object sender, EventArgs e)
+        {
+            this.Close();
         }
     }
 }
