@@ -34,17 +34,17 @@ namespace LucidToolbar.ProjectSetUp.ViewTemplate
             m_ExEvent = exEvent;
         }
 
-        //protected override void OnFormClosed(FormClosedEventArgs e)
-        //{
-        //    // we own both the event and the handler
-        //    // we should dispose it before we are closed
-        //    m_ExEvent.Dispose();
-        //    m_ExEvent = null;
-        //    m_Handler = null;
+        protected override void OnFormClosed(FormClosedEventArgs e)
+        {
+            // we own both the event and the handler
+            // we should dispose it before we are closed
+            //m_ExEvent.Dispose();
+            m_ExEvent = null;
+            m_Handler = null;
 
-        //    //// do not forget to call the base class
-        //    base.OnFormClosed(e);
-        //}
+            //// do not forget to call the base class
+            base.OnFormClosed(e);
+        }
 
         private void EnableCommands(bool status)
         {
