@@ -77,6 +77,8 @@ namespace LucidToolbar
                 newTran = new Transaction(doc);
                 newTran.Start("AllViews_ApplyTemplates");
 
+
+               
                 AllViewsForm dlg = new AllViewsForm(view);
 
                 if (dlg.ShowDialog() == DialogResult.OK)
@@ -88,6 +90,9 @@ namespace LucidToolbar
                 {
                     view.ApplyTemplate(doc);
                 }
+               
+                //ExternalApplication.thisApp.ShowViewForm(commandData.Application);
+
                 newTran.Commit();
 
                 return Autodesk.Revit.UI.Result.Succeeded;
@@ -187,11 +192,11 @@ namespace LucidToolbar
         private void GetAllViews(Document doc)
         {
             FilteredElementCollector collector = new FilteredElementCollector(doc);
-            FilteredElementIterator itor = collector.OfClass(typeof(Autodesk.Revit.DB.View)).GetElementIterator();
+            FilteredElementIterator itor = collector.OfClass(typeof(Autodesk.Revit.DB.ViewPlan)).GetElementIterator();
             itor.Reset();
             while (itor.MoveNext())
             {
-                Autodesk.Revit.DB.View view = itor.Current as Autodesk.Revit.DB.View;
+                Autodesk.Revit.DB.ViewPlan view = itor.Current as Autodesk.Revit.DB.ViewPlan;
                 // skip view templates because they're invisible in project browser
                 if (null == view || view.IsTemplate)
                 {
@@ -200,6 +205,7 @@ namespace LucidToolbar
                 else
                 {
                     ElementType objType = doc.GetElement(view.GetTypeId()) as ElementType;
+                    //view.Discipline.ToString();
                     if (null == objType || objType.Name.Equals("Schedule")
                         || objType.Name.Equals("Drawing Sheet"))
                     {
@@ -208,7 +214,7 @@ namespace LucidToolbar
                     else
                     {
                         m_allViews.Insert(view);
-                        AssortViews(view.Name, objType.Name);
+                        AssortViews(view.Name, objType.Name, view.Discipline.ToString());
                     }
                 }
             }
@@ -219,26 +225,26 @@ namespace LucidToolbar
         /// </summary>
         /// <param name="view">The view assorting</param>
         /// <param name="type">The type of view</param>
-        private void AssortViews(string view, string type)
+        private void AssortViews(string view, string type, string disc)
         {
             foreach (TreeNode t in AllViewsNames.Nodes)
             {
-                if (t.Tag.Equals(type))
+                if (t.Tag.Equals(disc))
                 {
                     t.Nodes.Add(new TreeNode(view));
                     return;
                 }
             }
 
-            TreeNode categoryNode = new TreeNode(type);
-            categoryNode.Tag = type;
-            if (type.Equals("Building Elevation"))
+            TreeNode categoryNode = new TreeNode(disc);
+            categoryNode.Tag = disc;
+            if (disc.Equals("Building Elevation"))
             {
-                categoryNode.Text = "Elevations [" + type + "]";
+                categoryNode.Text = "Elevations [" + disc + "]";
             }
             else
             {
-                categoryNode.Text = type + "s";
+                categoryNode.Text = disc + "s";
             }
             categoryNode.Nodes.Add(new TreeNode(view));
             AllViewsNames.Nodes.Add(categoryNode);
@@ -310,6 +316,8 @@ namespace LucidToolbar
             }
             foreach (Autodesk.Revit.DB.View v in m_selectedViewLists)
             {
+                Element CreatedView = doc.GetElement(v.Duplicate(ViewDuplicateOption.Duplicate));
+                
                 v.ViewTemplateId = m_selectedTemplateId;
             }
 

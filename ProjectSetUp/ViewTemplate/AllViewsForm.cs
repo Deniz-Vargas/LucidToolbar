@@ -18,30 +18,33 @@ namespace LucidToolbar.ProjectSetUp.ViewTemplate
         /// </summary>
         /// <param name="data"></param>
          
-        private RequestHandler m_Handler;
+        private ViewerRequestHandler m_Handler;
         private ExternalEvent m_ExEvent;
         public AllViewsForm(ViewsMgr data)
         {
             m_data = data;
             InitializeComponent();
         }
-        public AllViewsForm(ExternalEvent exEvent, RequestHandler handler)
+
+
+        public AllViewsForm(ExternalEvent exEvent, ViewerRequestHandler handler)
         {
             InitializeComponent();
             m_Handler = handler;
             m_ExEvent = exEvent;
         }
-        protected override void OnFormClosed(FormClosedEventArgs e)
-        {
-            // we own both the event and the handler
-            // we should dispose it before we are closed
-            //m_ExEvent.Dispose();
-            //m_ExEvent = null;
-            //m_Handler = null;
 
-            //// do not forget to call the base class
-            //base.OnFormClosed(e);
-        }
+        //protected override void OnFormClosed(FormClosedEventArgs e)
+        //{
+        //    // we own both the event and the handler
+        //    // we should dispose it before we are closed
+        //    m_ExEvent.Dispose();
+        //    m_ExEvent = null;
+        //    m_Handler = null;
+
+        //    //// do not forget to call the base class
+        //    base.OnFormClosed(e);
+        //}
 
         private void EnableCommands(bool status)
         {
@@ -93,11 +96,6 @@ namespace LucidToolbar.ProjectSetUp.ViewTemplate
                 viewTemplateListBox.Items.Add(s);
             }
 
-
-            //foreach (string s in m_data.AllTitleBlocksNames)
-            //{
-            //    titleBlocksListBox.Items.Add(s);
-            //}
         }
 
         private void oKButton_Click(object sender, EventArgs e)
@@ -107,7 +105,7 @@ namespace LucidToolbar.ProjectSetUp.ViewTemplate
             {
                 string viewTemplate = viewTemplateListBox.SelectedItems[0].ToString();
                 m_data.ChooseViewTemplate(viewTemplate);
-                //m_data.ChooseTitleBlock(titleBlock);
+                
             }
         }
 

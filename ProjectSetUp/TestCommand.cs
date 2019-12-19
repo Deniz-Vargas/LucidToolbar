@@ -63,9 +63,9 @@ namespace LucidToolbar
             {
                 documentTransaction.Start();
 
-                Autodesk.Revit.DB.ProjectInfo pi = commandData.Application.ActiveUIDocument.Document.ProjectInformation;
+                //Autodesk.Revit.DB.ProjectInfo pi = commandData.Application.ActiveUIDocument.Document.ProjectInformation;
                 // show main form
-                using (ModelessForm1 pif = new ModelessForm1(new ProjectInfoWrapper(pi)));
+                //using (ModelessForm1 pif = new ModelessForm1(new ProjectInfoWrapper(pi)));
                 ExternalApplication.thisApp.ShowForm(commandData.Application);
                 //ProjectInfo(commandData);
                 documentTransaction.Commit();

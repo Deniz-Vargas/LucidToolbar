@@ -39,6 +39,7 @@ using System.Linq;
 
 using static LucidToolbar.ModelessForm1;
 
+
 namespace LucidToolbar
 {
     /// <summary>

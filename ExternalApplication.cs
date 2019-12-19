@@ -162,7 +162,7 @@ namespace LucidToolbar
             if (m_ViewForm == null || m_ViewForm.IsDisposed)
             {
                 // A new handler to handle request posting by the dialog
-                RequestHandler handler = new RequestHandler();
+                ViewerRequestHandler handler = new ViewerRequestHandler();
 
                 // External Event for the dialog to use (to post requests)
                 ExternalEvent exEvent = ExternalEvent.Create(handler);

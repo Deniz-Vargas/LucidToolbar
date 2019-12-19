@@ -58,8 +58,8 @@ namespace LucidToolbar.ProjectSetUp.ViewTemplate
             this.sheetNameLabel = new System.Windows.Forms.Label();
             this.sheetNameTextBox = new System.Windows.Forms.TextBox();
             this.cancelButton = new System.Windows.Forms.Button();
-            this.oKButton = new System.Windows.Forms.Button();
             this.applyButton = new System.Windows.Forms.Button();
+            this.oKButton = new System.Windows.Forms.Button();
             this.allViewsGroupBox.SuspendLayout();
             this.GenerateSheetGroupBox.SuspendLayout();
             this.SuspendLayout();
@@ -84,6 +84,7 @@ namespace LucidToolbar.ProjectSetUp.ViewTemplate
             this.allViewsTreeView.Name = "allViewsTreeView";
             this.allViewsTreeView.Size = new System.Drawing.Size(326, 280);
             this.allViewsTreeView.TabIndex = 0;
+            this.allViewsTreeView.AfterCheck += new System.Windows.Forms.TreeViewEventHandler(this.allViewsTreeView_AfterCheck);
             // 
             // GenerateSheetGroupBox
             // 
@@ -137,7 +138,7 @@ namespace LucidToolbar.ProjectSetUp.ViewTemplate
             // cancelButton
             // 
             this.cancelButton.DialogResult = System.Windows.Forms.DialogResult.Cancel;
-            this.cancelButton.Location = new System.Drawing.Point(137, 275);
+            this.cancelButton.Location = new System.Drawing.Point(139, 275);
             this.cancelButton.Margin = new System.Windows.Forms.Padding(4);
             this.cancelButton.Name = "cancelButton";
             this.cancelButton.Size = new System.Drawing.Size(100, 28);
@@ -145,6 +146,19 @@ namespace LucidToolbar.ProjectSetUp.ViewTemplate
             this.cancelButton.Text = "&Cancel";
             this.cancelButton.UseVisualStyleBackColor = true;
             this.cancelButton.Click += new System.EventHandler(this.cancelButton_Click);
+            // 
+            // applyButton
+            // 
+            this.applyButton.DialogResult = System.Windows.Forms.DialogResult.Yes;
+            this.applyButton.Location = new System.Drawing.Point(258, 275);
+            this.applyButton.Margin = new System.Windows.Forms.Padding(4);
+            this.applyButton.Name = "applyButton";
+            this.applyButton.Size = new System.Drawing.Size(100, 28);
+            this.applyButton.TabIndex = 3;
+            this.applyButton.Text = "&Apply\r\n";
+            this.applyButton.UseVisualStyleBackColor = true;
+            this.applyButton.Visible = false;
+            this.applyButton.Click += new System.EventHandler(this.applyButton_Click);
             // 
             // oKButton
             // 
@@ -157,18 +171,6 @@ namespace LucidToolbar.ProjectSetUp.ViewTemplate
             this.oKButton.Text = "&OK";
             this.oKButton.UseVisualStyleBackColor = true;
             this.oKButton.Click += new System.EventHandler(this.oKButton_Click);
-            // 
-            // applyButton
-            // 
-            this.applyButton.DialogResult = System.Windows.Forms.DialogResult.Yes;
-            this.applyButton.Location = new System.Drawing.Point(258, 275);
-            this.applyButton.Margin = new System.Windows.Forms.Padding(4);
-            this.applyButton.Name = "applyButton";
-            this.applyButton.Size = new System.Drawing.Size(100, 28);
-            this.applyButton.TabIndex = 3;
-            this.applyButton.Text = "&Apply\r\n";
-            this.applyButton.UseVisualStyleBackColor = true;
-            this.applyButton.Click += new System.EventHandler(this.applyButton_Click);
             // 
             // AllViewsForm
             // 
