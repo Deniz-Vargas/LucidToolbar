@@ -286,19 +286,19 @@ namespace LucidToolbar
 
         public void btnOpen_Click(object sender, EventArgs e)
         {
-            MakeRequest(RequestId.Linkfile);
+            //MakeRequest(RequestId.Linkfile);
             
-            progressBar1.Value = progressBar1.Minimum;//restore the progress bar between copy 
-            progressBar1.Maximum = checkedListBox1.CheckedItems.Count; //
+            //progressBar1.Value = progressBar1.Minimum;//restore the progress bar between copy 
+            //progressBar1.Maximum = checkedListBox1.CheckedItems.Count; //
             foreach (var item in checkedListBox1.CheckedItems) //need to grab each item from the list
             {
                 TestCommand.filePath = Path.Combine(txbFolderPath.Text, Path.GetFileName(item.ToString()));
                 //TaskDialog.Show("Target Directory",TestCommand.filePath.ToString());
                 MakeRequest(RequestId.Linkfile);
-                progressBar1.PerformStep();
-                TaskDialog.Show("Link Model", string.Format("Revit model {0} has been linked In", Path.GetFileName(item.ToString())));
+                //progressBar1.PerformStep();
+                
             }
-            
+            //TaskDialog.Show("Link Model", string.Format("Revit model {0} has been linked In", checkedListBox1.CheckedItems.ToString()));
         }
 
         private void btnGetWorkset_Click(object sender, EventArgs e)
@@ -412,6 +412,21 @@ namespace LucidToolbar
         private void btnOK_Click(object sender, EventArgs e)
         {
             this.Close();
+        }
+
+        private void groupBox4_Enter(object sender, EventArgs e)
+        {
+
+        }
+
+        private void btnSelSourceFile_Click_1(object sender, EventArgs e)
+        {
+
+        }
+
+        private void worksetComboBox_Click_1(object sender, EventArgs e)
+        {
+
         }
     }
 }

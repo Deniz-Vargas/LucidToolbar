@@ -185,7 +185,7 @@ namespace LucidToolbar
                 if (CheckIfPinned(commandData))
                 {
                     TaskDialog.Show("Survey Point", "Survey point is clipped" + Environment.NewLine
-                            + " Please unclip to proceed");
+                            + "Please unclip before reconcile");
                     //SelSurveyPoint(commandData);
                     ICollection<ElementId> selectedElementIds = commandData
                         .Application.ActiveUIDocument.Selection.GetElementIds();

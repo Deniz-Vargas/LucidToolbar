@@ -10,8 +10,9 @@ namespace LucidToolbar
         // class instance
         internal static ExternalApplication thisApp = null;
         // ModelessForm instance
+        private ProjectSetUp.ViewTemplate.AllViewsForm m_ViewForm;
         private ModelessForm1 m_MyForm;
-
+       
         public Result OnShutdown(UIControlledApplication application)
         {
             if (m_MyForm != null && m_MyForm.Visible)
@@ -19,6 +20,10 @@ namespace LucidToolbar
                 m_MyForm.Close();
             }
 
+            if (m_ViewForm != null && m_ViewForm.Visible)
+            {
+                m_ViewForm.Close();
+            }
             return Result.Succeeded;
 
         }
@@ -26,11 +31,12 @@ namespace LucidToolbar
         public Result OnStartup(UIControlledApplication application)
         {
             //create ribbon tabs
-            application.CreateRibbonTab("Lucid QA Tools");
-            RibbonPanel LucidQAPanel = application.CreateRibbonPanel("Lucid QA Tools", "Project Setup");
+            application.CreateRibbonTab("Project Set-up");
+            RibbonPanel LucidQAPanel = application.CreateRibbonPanel("Project Set-up", "Project Set-up");
+            //RibbonPanel LucidQAPanel2 = application.CreateRibbonPanel("Project Setup", "Test Command");
 
-            application.CreateRibbonTab("Lucid Hydraulic Tools");
-            RibbonPanel LucidHydPanel = application.CreateRibbonPanel("Lucid Hydraulic Tools", "Hydraulic Tools");
+            application.CreateRibbonTab("Hydraulic Tools");
+            RibbonPanel LucidHydPanel = application.CreateRibbonPanel("Hydraulic Tools", "Hydraulic Tools");
             string path = Assembly.GetExecutingAssembly().Location;
 
             //#region DockableWindow
@@ -50,12 +56,16 @@ namespace LucidToolbar
                 new PushButtonData("AvoidObstruction", "Avoid Obstruction", path, "LucidToolbar.AvoidObstruction");
             AvoidObstruction.LargeImage = GetImage(Properties.Resources.AvoidObstruction.GetHbitmap());
 
+            //PushButtonData ProjectInfo = 
+            //    new PushButtonData("Project Information", "Project Info", path, "LucidToolbar.TestCommand");
+            //ProjectSetUp.LargeImage = GetImage(Properties.Resources.ProjectInfo.GetHbitmap());
+
             PushButtonData ProjectSetUp =
-                new PushButtonData("ProjectSetUp", "Project Set Up", path, "LucidToolbar.TestCommand");
+                new PushButtonData("ProjectSetUp", "Project Set-up", path, "LucidToolbar.TestCommand");
             ProjectSetUp.LargeImage = GetImage(Properties.Resources.ProjectInfo.GetHbitmap());
             
             PushButtonData Reconcile =
-                new PushButtonData("Reconcile Coordinate", "Reconcile Coordinate", path, "LucidToolbar.ProjectCoordinate");
+                new PushButtonData("Reconcile Coordinate", "Reconcile Coordinates", path, "LucidToolbar.ProjectCoordinate");
             Reconcile.LargeImage = GetImage(Properties.Resources.Reconcile.GetHbitmap());
 
             PushButtonData CopyMonitor =
@@ -63,23 +73,23 @@ namespace LucidToolbar
             CopyMonitor.LargeImage = GetImage(Properties.Resources.save_to_grid.GetHbitmap());
 
             PushButtonData AddFloorPlan =
-                new PushButtonData("Add Floor Plan", "Add Floor Plan", path, "LucidToolbar.AddFloorPlan");
+                new PushButtonData("Add Floor Plan", "Add Floor Plans", path, "LucidToolbar.AddFloorPlan");
             AddFloorPlan.LargeImage = GetImage(Properties.Resources.floorplan.GetHbitmap());
 
             PushButtonData ArchCleanUp =
-                new PushButtonData("Arch Cleanup", "Arch Cleanup", path, "LucidToolbar.ArchCleanUp");
+                new PushButtonData("Arch Cleanup", "Arch Clean Up", path, "LucidToolbar.ArchCleanUp");
             ArchCleanUp.LargeImage = GetImage(Properties.Resources.Cleanup.GetHbitmap());
 
             PushButtonData PlaceSpaceTag =
                 new PushButtonData("Place Space Tag", "Place Space Tag", path, "LucidToolbar.CreateSpace");
             PlaceSpaceTag.LargeImage = GetImage(Properties.Resources.grid.GetHbitmap());
 
-            PushButtonData SetParameter =
-                new PushButtonData("Set Parameter", "Set Parameter", path, "LucidToolbar.SetParameter");
-            SetParameter.LargeImage = GetImage(Properties.Resources.Set.GetHbitmap());
+            //PushButtonData SetParameter =
+            //    new PushButtonData("Set Parameter", "Set Parameter", path, "LucidToolbar.SetParameter");
+            //SetParameter.LargeImage = GetImage(Properties.Resources.Set.GetHbitmap());
 
             PushButtonData AllViews =
-            new PushButtonData("Set AllViews", "Set AllViews", path, "LucidToolbar.AllViews");
+            new PushButtonData("Set AllViews", "Apply Templates", path, "LucidToolbar.AllViews");
             AllViews.LargeImage = GetImage(Properties.Resources.CopyMonitor.GetHbitmap());
 
             RibbonItem ri1 = LucidHydPanel.AddItem(DomesticColdWater);
@@ -94,14 +104,16 @@ namespace LucidToolbar
             RibbonItem ri8 = LucidQAPanel.AddItem(AddFloorPlan);
             RibbonItem ri9 = LucidQAPanel.AddItem(ArchCleanUp);
             RibbonItem ri10 = LucidQAPanel.AddItem(PlaceSpaceTag);
-            RibbonItem ri11 = LucidQAPanel.AddItem(SetParameter);
-            LucidQAPanel.AddSeparator();
             RibbonItem ri12 = LucidQAPanel.AddItem(AllViews);
+            //RibbonItem ri11 = LucidQAPanel.AddItem(SetParameter);
+            LucidQAPanel.AddSeparator();
+            
             //LucidHydPanel.AddSeparator();
             //
             ///Setup document
             m_MyForm = null;   // no dialog needed yet; the command will bring it
-            thisApp = this;  // static access to this application instance
+            m_ViewForm = null; // no dialog needed yet; the command will bring it
+            thisApp = this;    // static access to this application instance
 
             return Result.Succeeded;
 
@@ -143,6 +155,25 @@ namespace LucidToolbar
             }
         }
 
+
+        public void ShowViewForm(UIApplication uiapp)
+        {
+           // If we do not have a dialog yet, create and show it
+            if (m_ViewForm == null || m_ViewForm.IsDisposed)
+            {
+                // A new handler to handle request posting by the dialog
+                RequestHandler handler = new RequestHandler();
+
+                // External Event for the dialog to use (to post requests)
+                ExternalEvent exEvent = ExternalEvent.Create(handler);
+
+                // We give the objects to the new dialog;
+                // The dialog becomes the owner responsible fore disposing them, eventually.
+                //m_MyForm = new ModelessForm2(exEvent, handler);
+                m_ViewForm = new ProjectSetUp.ViewTemplate.AllViewsForm(exEvent, handler);
+                m_ViewForm.Show();
+            }
+        }
 
         /// <summary>
         ///   Waking up the dialog from its waiting state.

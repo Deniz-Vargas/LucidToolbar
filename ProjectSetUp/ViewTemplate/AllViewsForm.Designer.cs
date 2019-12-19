@@ -57,7 +57,6 @@ namespace LucidToolbar.ProjectSetUp.ViewTemplate
             this.viewTemplateListBox = new System.Windows.Forms.ListBox();
             this.sheetNameLabel = new System.Windows.Forms.Label();
             this.sheetNameTextBox = new System.Windows.Forms.TextBox();
-            this.titleBlocksLabel = new System.Windows.Forms.Label();
             this.cancelButton = new System.Windows.Forms.Button();
             this.oKButton = new System.Windows.Forms.Button();
             this.applyButton = new System.Windows.Forms.Button();
@@ -68,11 +67,11 @@ namespace LucidToolbar.ProjectSetUp.ViewTemplate
             // allViewsGroupBox
             // 
             this.allViewsGroupBox.Controls.Add(this.allViewsTreeView);
-            this.allViewsGroupBox.Location = new System.Drawing.Point(13, 26);
+            this.allViewsGroupBox.Location = new System.Drawing.Point(13, 13);
             this.allViewsGroupBox.Margin = new System.Windows.Forms.Padding(4);
             this.allViewsGroupBox.Name = "allViewsGroupBox";
             this.allViewsGroupBox.Padding = new System.Windows.Forms.Padding(4);
-            this.allViewsGroupBox.Size = new System.Drawing.Size(283, 298);
+            this.allViewsGroupBox.Size = new System.Drawing.Size(342, 311);
             this.allViewsGroupBox.TabIndex = 2;
             this.allViewsGroupBox.TabStop = false;
             this.allViewsGroupBox.Text = "All Views";
@@ -83,7 +82,7 @@ namespace LucidToolbar.ProjectSetUp.ViewTemplate
             this.allViewsTreeView.Location = new System.Drawing.Point(8, 23);
             this.allViewsTreeView.Margin = new System.Windows.Forms.Padding(4);
             this.allViewsTreeView.Name = "allViewsTreeView";
-            this.allViewsTreeView.Size = new System.Drawing.Size(265, 266);
+            this.allViewsTreeView.Size = new System.Drawing.Size(326, 280);
             this.allViewsTreeView.TabIndex = 0;
             // 
             // GenerateSheetGroupBox
@@ -92,15 +91,14 @@ namespace LucidToolbar.ProjectSetUp.ViewTemplate
             this.GenerateSheetGroupBox.Controls.Add(this.viewTemplateListBox);
             this.GenerateSheetGroupBox.Controls.Add(this.sheetNameLabel);
             this.GenerateSheetGroupBox.Controls.Add(this.sheetNameTextBox);
-            this.GenerateSheetGroupBox.Controls.Add(this.titleBlocksLabel);
             this.GenerateSheetGroupBox.Controls.Add(this.cancelButton);
             this.GenerateSheetGroupBox.Controls.Add(this.applyButton);
             this.GenerateSheetGroupBox.Controls.Add(this.oKButton);
-            this.GenerateSheetGroupBox.Location = new System.Drawing.Point(304, 35);
+            this.GenerateSheetGroupBox.Location = new System.Drawing.Point(363, 13);
             this.GenerateSheetGroupBox.Margin = new System.Windows.Forms.Padding(4);
             this.GenerateSheetGroupBox.Name = "GenerateSheetGroupBox";
             this.GenerateSheetGroupBox.Padding = new System.Windows.Forms.Padding(4);
-            this.GenerateSheetGroupBox.Size = new System.Drawing.Size(425, 289);
+            this.GenerateSheetGroupBox.Size = new System.Drawing.Size(366, 311);
             this.GenerateSheetGroupBox.TabIndex = 3;
             this.GenerateSheetGroupBox.TabStop = false;
             this.GenerateSheetGroupBox.Text = "Apply Templates";
@@ -109,10 +107,10 @@ namespace LucidToolbar.ProjectSetUp.ViewTemplate
             // 
             this.viewTemplateListBox.FormattingEnabled = true;
             this.viewTemplateListBox.ItemHeight = 16;
-            this.viewTemplateListBox.Location = new System.Drawing.Point(12, 50);
+            this.viewTemplateListBox.Location = new System.Drawing.Point(10, 23);
             this.viewTemplateListBox.Margin = new System.Windows.Forms.Padding(4);
             this.viewTemplateListBox.Name = "viewTemplateListBox";
-            this.viewTemplateListBox.Size = new System.Drawing.Size(387, 148);
+            this.viewTemplateListBox.Size = new System.Drawing.Size(347, 212);
             this.viewTemplateListBox.Sorted = true;
             this.viewTemplateListBox.TabIndex = 6;
             this.viewTemplateListBox.SelectedIndexChanged += new System.EventHandler(this.titleBlocksListBox_SelectedIndexChanged);
@@ -120,7 +118,7 @@ namespace LucidToolbar.ProjectSetUp.ViewTemplate
             // sheetNameLabel
             // 
             this.sheetNameLabel.AutoSize = true;
-            this.sheetNameLabel.Location = new System.Drawing.Point(8, 209);
+            this.sheetNameLabel.Location = new System.Drawing.Point(12, 248);
             this.sheetNameLabel.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.sheetNameLabel.Name = "sheetNameLabel";
             this.sheetNameLabel.Size = new System.Drawing.Size(108, 17);
@@ -129,28 +127,17 @@ namespace LucidToolbar.ProjectSetUp.ViewTemplate
             // 
             // sheetNameTextBox
             // 
-            this.sheetNameTextBox.Location = new System.Drawing.Point(133, 206);
+            this.sheetNameTextBox.Location = new System.Drawing.Point(128, 245);
             this.sheetNameTextBox.Margin = new System.Windows.Forms.Padding(4);
             this.sheetNameTextBox.Name = "sheetNameTextBox";
-            this.sheetNameTextBox.Size = new System.Drawing.Size(266, 22);
+            this.sheetNameTextBox.Size = new System.Drawing.Size(230, 22);
             this.sheetNameTextBox.TabIndex = 2;
             this.sheetNameTextBox.Text = "Unname";
-            // 
-            // titleBlocksLabel
-            // 
-            this.titleBlocksLabel.AutoSize = true;
-            this.titleBlocksLabel.Location = new System.Drawing.Point(13, 19);
-            this.titleBlocksLabel.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
-            this.titleBlocksLabel.Name = "titleBlocksLabel";
-            this.titleBlocksLabel.Size = new System.Drawing.Size(103, 17);
-            this.titleBlocksLabel.TabIndex = 3;
-            this.titleBlocksLabel.Text = "ViewTemplates";
-            this.titleBlocksLabel.Click += new System.EventHandler(this.titleBlocksLabel_Click);
             // 
             // cancelButton
             // 
             this.cancelButton.DialogResult = System.Windows.Forms.DialogResult.Cancel;
-            this.cancelButton.Location = new System.Drawing.Point(191, 252);
+            this.cancelButton.Location = new System.Drawing.Point(137, 275);
             this.cancelButton.Margin = new System.Windows.Forms.Padding(4);
             this.cancelButton.Name = "cancelButton";
             this.cancelButton.Size = new System.Drawing.Size(100, 28);
@@ -162,7 +149,7 @@ namespace LucidToolbar.ProjectSetUp.ViewTemplate
             // oKButton
             // 
             this.oKButton.DialogResult = System.Windows.Forms.DialogResult.OK;
-            this.oKButton.Location = new System.Drawing.Point(83, 252);
+            this.oKButton.Location = new System.Drawing.Point(15, 275);
             this.oKButton.Margin = new System.Windows.Forms.Padding(4);
             this.oKButton.Name = "oKButton";
             this.oKButton.Size = new System.Drawing.Size(100, 28);
@@ -173,7 +160,8 @@ namespace LucidToolbar.ProjectSetUp.ViewTemplate
             // 
             // applyButton
             // 
-            this.applyButton.Location = new System.Drawing.Point(299, 252);
+            this.applyButton.DialogResult = System.Windows.Forms.DialogResult.Yes;
+            this.applyButton.Location = new System.Drawing.Point(258, 275);
             this.applyButton.Margin = new System.Windows.Forms.Padding(4);
             this.applyButton.Name = "applyButton";
             this.applyButton.Size = new System.Drawing.Size(100, 28);
@@ -207,7 +195,6 @@ namespace LucidToolbar.ProjectSetUp.ViewTemplate
         private System.Windows.Forms.ListBox viewTemplateListBox;
         private System.Windows.Forms.Label sheetNameLabel;
         private System.Windows.Forms.TextBox sheetNameTextBox;
-        private System.Windows.Forms.Label titleBlocksLabel;
         private System.Windows.Forms.Button cancelButton;
         private System.Windows.Forms.Button oKButton;
         private System.Windows.Forms.Button applyButton;

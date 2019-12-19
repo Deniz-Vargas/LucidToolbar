@@ -93,7 +93,6 @@
     <Compile Include="Commands\OpenMyLib.cs" />
     <Compile Include="ProjectSetUp\SpaceManager.cs" />
     <Compile Include="ProjectSetUp\TestCommand.cs" />
-    <Compile Include="ProjectSetUp\RequestHandler2.cs" />
     <Compile Include="AvoidObstruction\Resolver.cs" />
     <Compile Include="AvoidObstruction\Section.cs" />
     <Compile Include="ExternalApplication.cs" />

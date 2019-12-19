@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Autodesk.Revit.UI;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
@@ -16,10 +17,70 @@ namespace LucidToolbar.ProjectSetUp.ViewTemplate
         /// constructor
         /// </summary>
         /// <param name="data"></param>
+         
+        private RequestHandler m_Handler;
+        private ExternalEvent m_ExEvent;
         public AllViewsForm(ViewsMgr data)
         {
             m_data = data;
             InitializeComponent();
+        }
+        public AllViewsForm(ExternalEvent exEvent, RequestHandler handler)
+        {
+            InitializeComponent();
+            m_Handler = handler;
+            m_ExEvent = exEvent;
+        }
+        protected override void OnFormClosed(FormClosedEventArgs e)
+        {
+            // we own both the event and the handler
+            // we should dispose it before we are closed
+            //m_ExEvent.Dispose();
+            //m_ExEvent = null;
+            //m_Handler = null;
+
+            //// do not forget to call the base class
+            //base.OnFormClosed(e);
+        }
+
+        private void EnableCommands(bool status)
+        {
+            foreach (Control ctrl in this.Controls)
+            {
+                ctrl.Enabled = status;
+            }
+            if (!status)
+            {
+                this.cancelButton.Enabled = true;
+            }
+        }
+
+        private void MakeRequest(RequestId request)
+        {
+            m_Handler.Request.Make(request);
+            m_ExEvent.Raise();
+
+            DozeOff();
+        }
+
+
+        /// <summary>
+        ///   DozeOff -> disable all controls (but the Exit button)
+        /// </summary>
+        /// 
+        private void DozeOff()
+        {
+            EnableCommands(false);
+        }
+
+
+        /// <summary>
+        ///   WakeUp -> enable all controls
+        /// </summary>
+        /// 
+        public void WakeUp()
+        {
+            EnableCommands(true);
         }
 
         private void AllViewsForm_Load(object sender, EventArgs e)
@@ -49,6 +110,7 @@ namespace LucidToolbar.ProjectSetUp.ViewTemplate
                 //m_data.ChooseTitleBlock(titleBlock);
             }
         }
+
         #region CheckTreeNode
         private void CheckNode(TreeNode node, bool check)
         {
@@ -92,7 +154,7 @@ namespace LucidToolbar.ProjectSetUp.ViewTemplate
         }
         private void cancelButton_Click(object sender, EventArgs e)
         {
-
+            Close();
         }
 
         private void titleBlocksListBox_SelectedIndexChanged(object sender, EventArgs e)

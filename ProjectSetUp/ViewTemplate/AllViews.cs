@@ -84,6 +84,10 @@ namespace LucidToolbar
                     view.ApplyTemplate(doc);
                     //view.GenerateSheet(doc);
                 }
+                else if (dlg.ShowDialog() == DialogResult.Yes)
+                {
+                    view.ApplyTemplate(doc);
+                }
                 newTran.Commit();
 
                 return Autodesk.Revit.UI.Result.Succeeded;
