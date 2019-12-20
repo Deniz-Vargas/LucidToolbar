@@ -305,6 +305,7 @@ namespace LucidToolbar
 
         public void ApplyTemplate(Document doc)
         {
+            Element CreatedView;
             if (null == doc)
             {
                 throw new ArgumentNullException("no active document");
@@ -316,8 +317,8 @@ namespace LucidToolbar
             }
             foreach (Autodesk.Revit.DB.View v in m_selectedViewLists)
             {
-                Element CreatedView = doc.GetElement(v.Duplicate(ViewDuplicateOption.Duplicate));
-                
+                CreatedView = doc.GetElement(v.Duplicate(ViewDuplicateOption.Duplicate));
+                CreatedView = null;
                 v.ViewTemplateId = m_selectedTemplateId;
             }
 

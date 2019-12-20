@@ -125,6 +125,7 @@ namespace LucidToolbar.ProjectSetUp.ViewTemplate
             this.sheetNameLabel.Size = new System.Drawing.Size(108, 17);
             this.sheetNameLabel.TabIndex = 5;
             this.sheetNameLabel.Text = "Template Name";
+            this.sheetNameLabel.Visible = false;
             // 
             // sheetNameTextBox
             // 
@@ -134,6 +135,7 @@ namespace LucidToolbar.ProjectSetUp.ViewTemplate
             this.sheetNameTextBox.Size = new System.Drawing.Size(230, 22);
             this.sheetNameTextBox.TabIndex = 2;
             this.sheetNameTextBox.Text = "Unname";
+            this.sheetNameTextBox.Visible = false;
             // 
             // cancelButton
             // 
